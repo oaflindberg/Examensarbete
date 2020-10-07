@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useFonts } from 'expo-font'
 import { StyledView, StyledText, Button, ButtonText } from './Styles'
 

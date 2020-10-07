@@ -2,8 +2,11 @@ import { StatusBar } from 'expo-status-bar'
 import { StyledView, StyledText, Button, ButtonText } from './Styles'
 import React from 'react'
 import { useFonts } from 'expo-font'
+import { RouteParamList, RouteStackParamList } from 'typings/RouteParams'
 
-export default function HomeScreen() {
+export default function HomeScreen({
+  navigation,
+}: RouteStackParamList<'Home'>) {
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
   })
@@ -17,10 +20,8 @@ export default function HomeScreen() {
       <StyledText>DET STORA</StyledText>
       <StyledText>BLÅVITT</StyledText>
       <StyledText>QUIZET!</StyledText>
-      <Button>
-        {/* <ButtonText onPress={() => navigation.navigate('Quiz')}> */}
-        <ButtonText>STARTA</ButtonText>
-        {/* </ButtonText> */}
+      <Button onPress={() => navigation.navigate('Quiz')}>
+        <ButtonText>Starta</ButtonText>
       </Button>
       <StatusBar style="auto" />
     </StyledView>
