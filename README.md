@@ -1,4 +1,4 @@
-### Examensarbete
+# Examensarbete
 
 ## Authors
 - [Viktor Sjöblom](https://twitter.com/ViktorSjoblom)
