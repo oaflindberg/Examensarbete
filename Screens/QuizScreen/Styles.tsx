@@ -14,6 +14,7 @@ export const StyledText = styled(Text)`
   font-size: 24px;
   font-family: 'Akkurat';
   width: 80%;
+  text-align: center;
   margin-bottom: 20%;
 `
 

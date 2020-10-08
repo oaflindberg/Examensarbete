@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font'
 import { StyledView, StyledText, Button, ButtonText } from './Styles'
 
 export default function QuizScreen() {
+  const [question, setQuestion] = useState<number>(0)
+
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
   })
@@ -24,11 +26,26 @@ export default function QuizScreen() {
         four: 'Magnus Erlingmark',
       },
     },
+    {
+      question: 'Vilket år grundades IFK Göteborg?',
+      answer: '1904',
+      alternatives: {
+        one: '1910',
+        two: '1901',
+        three: '1904',
+        four: '1906',
+      },
+    },
   ]
 
   const checkAnswer = (pressed: any, answer: any) => {
     if (pressed == answer) {
-      console.log('correct')
+      // SINCES THERE*S ONLY TWO QUESTIONS RIGHT NOW, I'VE SET A LIMIT HERE
+      if (question < 1) {
+        setQuestion(question + 1)
+      } else {
+        setQuestion(0)
+      }
     } else {
       console.log('wrong')
     }
@@ -36,25 +53,24 @@ export default function QuizScreen() {
 
   return (
     <StyledView>
-      {questions.map((question, i) => {
-        return (
-          <Fragment key={i}>
-            <StyledText>{question.question}</StyledText>
-            {Object.entries(question.alternatives).map(([key, value], i) => {
-              return (
-                <Button
-                  key={i}
-                  onPress={() => {
-                    checkAnswer(value, question.answer)
-                  }}
-                >
-                  <ButtonText>{value}</ButtonText>
-                </Button>
-              )
-            })}
-          </Fragment>
-        )
-      })}
+      <StyledText>
+        Fråga {question + 1} av {questions.length}
+      </StyledText>
+      <StyledText>{questions[question].question}</StyledText>
+      {Object.entries(questions[question].alternatives).map(
+        ([key, value], i) => {
+          return (
+            <Button
+              key={i}
+              onPress={() => {
+                checkAnswer(value, questions[question].answer)
+              }}
+            >
+              <ButtonText>{value}</ButtonText>
+            </Button>
+          )
+        }
+      )}
       <StatusBar style="auto" />
     </StyledView>
   )
