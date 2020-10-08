@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font'
 import { StyledView, StyledText, Button, ButtonText } from './Styles'
 
 export default function QuizScreen() {
-  const [question, setQuestion] = useState<number>(0)
+  const [index, setIndex] = useState<number>(0)
 
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
@@ -41,10 +41,10 @@ export default function QuizScreen() {
   const checkAnswer = (pressed: any, answer: any) => {
     if (pressed == answer) {
       // SINCES THERE*S ONLY TWO QUESTIONS RIGHT NOW, I'VE SET A LIMIT HERE
-      if (question < 1) {
-        setQuestion(question + 1)
+      if (index < 1) {
+        setIndex(index + 1)
       } else {
-        setQuestion(0)
+        setIndex(0)
       }
     } else {
       console.log('wrong')
@@ -54,23 +54,21 @@ export default function QuizScreen() {
   return (
     <StyledView>
       <StyledText>
-        Fråga {question + 1} av {questions.length}
+        Fråga {index + 1} av {questions.length}
       </StyledText>
-      <StyledText>{questions[question].question}</StyledText>
-      {Object.entries(questions[question].alternatives).map(
-        ([key, value], i) => {
-          return (
-            <Button
-              key={i}
-              onPress={() => {
-                checkAnswer(value, questions[question].answer)
-              }}
-            >
-              <ButtonText>{value}</ButtonText>
-            </Button>
-          )
-        }
-      )}
+      <StyledText>{questions[index].question}</StyledText>
+      {Object.entries(questions[index].alternatives).map(([key, value], i) => {
+        return (
+          <Button
+            key={i}
+            onPress={() => {
+              checkAnswer(value, questions[index].answer)
+            }}
+          >
+            <ButtonText>{value}</ButtonText>
+          </Button>
+        )
+      })}
       <StatusBar style="auto" />
     </StyledView>
   )
