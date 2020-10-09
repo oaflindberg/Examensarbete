@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { useFonts } from 'expo-font'
-import { StyledView, StyledText, Button, ButtonText } from './Styles'
+import { StyledView, Button, ButtonText } from './Styles'
+import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
@@ -38,7 +39,7 @@ export default function QuizScreen() {
     },
   ]
 
-  const checkAnswer = (pressed: any, answer: any) => {
+  const checkAnswer = (pressed: string, answer: string) => {
     if (pressed == answer) {
       // SINCES THERE*S ONLY TWO QUESTIONS RIGHT NOW, I'VE SET A LIMIT HERE
       if (index < 1) {
@@ -53,10 +54,10 @@ export default function QuizScreen() {
 
   return (
     <StyledView>
-      <StyledText>
-        Fråga {index + 1} av {questions.length}
-      </StyledText>
-      <StyledText>{questions[index].question}</StyledText>
+      <QuestionContainer
+        questionNumber={`Fråga ${index + 1} av ${questions.length}`}
+        question={questions[index].question}
+      />
       {Object.entries(questions[index].alternatives).map(([key, value], i) => {
         return (
           <Button
