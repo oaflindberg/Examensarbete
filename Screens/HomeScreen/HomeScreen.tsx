@@ -18,7 +18,7 @@ export default function HomeScreen({
   return (
     <StyledView>
       <StyledText>DET STORA</StyledText>
-      <StyledText>BLÅVITT</StyledText>
+      <StyledText>BLÅVITA</StyledText>
       <StyledText>QUIZZET!</StyledText>
       <Button onPress={() => navigation.navigate('Quiz')}>
         <ButtonText>Starta</ButtonText>
