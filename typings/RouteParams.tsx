@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 
-export type RouteParamList = {
+type RouteParamList = {
   Home: undefined
   Quiz: undefined
 }

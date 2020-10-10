@@ -1,8 +1,10 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyledView, StyledText, Button, ButtonText } from './Styles'
 import React from 'react'
 import { useFonts } from 'expo-font'
-import { RouteParamList, RouteStackParamList } from 'typings/RouteParams'
+import { StatusBar } from 'expo-status-bar'
+import { StyledText } from './Style'
+import { RouteStackParamList } from 'typings/RouteParams'
+import Button from './../../components/Button/Button'
+import Layout from './../../components/Layout/Layout'
 
 export default function HomeScreen({
   navigation,
@@ -16,14 +18,12 @@ export default function HomeScreen({
   }
 
   return (
-    <StyledView>
+    <Layout>
       <StyledText>DET STORA</StyledText>
       <StyledText>BLÅVITT</StyledText>
       <StyledText>QUIZZET!</StyledText>
-      <Button onPress={() => navigation.navigate('Quiz')}>
-        <ButtonText>Starta</ButtonText>
-      </Button>
+      <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
       <StatusBar style="auto" />
-    </StyledView>
+    </Layout>
   )
 }

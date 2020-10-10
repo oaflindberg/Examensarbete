@@ -1,8 +1,9 @@
-import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
-import { StyledView, Button, ButtonText } from './Styles'
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
+import Button from './../../components/Button/Button'
+import Layout from './../../components/Layout/Layout'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
@@ -53,7 +54,7 @@ export default function QuizScreen() {
   }
 
   return (
-    <StyledView>
+    <Layout>
       <QuestionContainer
         questionNumber={`Fråga ${index + 1} av ${questions.length}`}
         question={questions[index].question}
@@ -62,15 +63,14 @@ export default function QuizScreen() {
         return (
           <Button
             key={i}
-            onPress={() => {
+            handleClick={() => {
               checkAnswer(value, questions[index].answer)
             }}
-          >
-            <ButtonText>{value}</ButtonText>
-          </Button>
+            text={value}
+          />
         )
       })}
       <StatusBar style="auto" />
-    </StyledView>
+    </Layout>
   )
 }
