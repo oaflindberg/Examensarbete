@@ -20,7 +20,7 @@ export default function HomeScreen({
   return (
     <Layout>
       <StyledText>DET STORA</StyledText>
-      <StyledText>BLÅVITT</StyledText>
+      <StyledText>BLÅVITA</StyledText>
       <StyledText>QUIZZET!</StyledText>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
       <StatusBar style="auto" />
