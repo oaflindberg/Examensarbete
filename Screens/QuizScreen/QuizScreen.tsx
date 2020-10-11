@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
+import firebase from './../../firebase/firebase'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
+  const [question, setQuestion] = useState({})
+  const database = firebase.database()
+
+  useEffect(() => {
+    database
+      .ref('/questions')
+      .once('value')
+      .then((dataSnapshot) => {
+        setQuestion(dataSnapshot)
+      })
+  }, [])
 
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
@@ -53,6 +65,7 @@ export default function QuizScreen() {
     }
   }
 
+  console.log(question)
   return (
     <Layout>
       <QuestionContainer

@@ -2,7 +2,7 @@ import { StyledText } from './Style'
 import React, { Fragment } from 'react'
 
 interface QuestionContainerProps {
-  questionNumber: number | string
+  questionNumber: string
   question: string
 }
 
