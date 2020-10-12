@@ -18,9 +18,9 @@ export const StyledButton = styled(TouchableOpacity)<Correct>`
   ${({ correct, wrong }) => {
     switch (true) {
       case correct:
-        return `background : #abc354`
+        return `background: #abc354`
       case wrong:
-        return `background : #d40514`
+        return `background: #d40514`
       default: {
         return `background: #fefefe`
       }
