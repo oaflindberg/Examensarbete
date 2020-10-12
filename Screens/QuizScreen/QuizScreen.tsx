@@ -21,7 +21,6 @@ export default function QuizScreen() {
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
-        console.log(typeof questions)
         setCorrect(false)
         setIncorrect(false)
         setQuestion(questions)
