@@ -1,7 +1,13 @@
 import styled from 'styled-components/native'
 import { Text, TouchableOpacity } from 'react-native'
 
-export const StyledButton = styled(TouchableOpacity)`
+interface Correct {
+  correct?: boolean
+  background: string
+  wrong?: boolean
+}
+
+export const StyledButton = styled(TouchableOpacity)<Correct>`
   width: 50%;
   height: auto;
   padding: 10px 0;
@@ -9,7 +15,17 @@ export const StyledButton = styled(TouchableOpacity)`
   align-items: center;
   border-radius: 28px;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
-  background: #fefefe;
+  ${({ correct, wrong }) => {
+    switch (true) {
+      case correct:
+        return `background : #abc354`
+      case wrong:
+        return `background : #d40514`
+      default: {
+        return `background: #fefefe`
+      }
+    }
+  }}
 `
 
 export const ButtonText = styled(Text)`

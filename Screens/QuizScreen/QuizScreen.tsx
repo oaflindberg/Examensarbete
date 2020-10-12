@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
+import { StyledText } from './Style'
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
@@ -8,7 +9,9 @@ import firebase from './../../firebase/firebase'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
-  const [question, setQuestion] = useState<object>()
+  const [correct, setCorrect] = useState<boolean>(false)
+  const [incorrect, setIncorrect] = useState<boolean>(false)
+  const [question, setQuestion] = useState<any>()
   const database = firebase.database()
 
   useEffect(() => {
@@ -16,11 +19,12 @@ export default function QuizScreen() {
       .ref(`/questions/${index}`)
       .once('value')
       .then((dataSnapshot) => {
-        setQuestion(dataSnapshot)
+        let questions = dataSnapshot.toJSON()
+        setCorrect(false)
+        setIncorrect(false)
+        setQuestion(questions)
       })
-  }, [])
-
-  // console.log(question.question)
+  }, [index])
 
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
@@ -32,35 +36,58 @@ export default function QuizScreen() {
 
   const checkAnswer = (pressed: string, answer: string) => {
     if (pressed == answer) {
-      // SINCES THERE*S ONLY TWO QUESTIONS RIGHT NOW, I'VE SET A LIMIT HERE
+      setCorrect(true)
       if (index < 1) {
-        setIndex(index + 1)
+        setTimeout(() => {
+          setIndex(index + 1)
+        }, 750)
       } else {
-        setIndex(0)
+        setTimeout(() => {
+          setIndex(0)
+        }, 750)
       }
     } else {
-      console.log('wrong')
+      setIncorrect(true)
+      if (index < 1) {
+        setTimeout(() => {
+          setIndex(index + 1)
+        }, 750)
+      } else {
+        setTimeout(() => {
+          setIndex(0)
+        }, 750)
+      }
     }
+  }
+
+  if (question == undefined || question == null) {
+    return (
+      <Layout>
+        <StyledText>Loading...</StyledText>
+      </Layout>
+    )
   }
 
   return (
     <Layout>
       <QuestionContainer
         questionNumber={`Fråga ${index + 1}`}
-        question={'hej'}
+        question={question.question}
       />
-      {/* {Object.entries(questions[index].alternatives).map(([key, value], i) => {
+      {Object.entries(question.alternatives).map(([key, value], i) => {
         return (
           <Button
+            correct={correct}
+            wrong={incorrect}
             key={i}
             handleClick={() => {
-              checkAnswer(value, questions[index].answer)
+              checkAnswer(value, question.answer)
             }}
             text={value}
           />
         )
       })}
-      <StatusBar style="auto" /> */}
+      <StatusBar style="auto" />
     </Layout>
   )
 }
