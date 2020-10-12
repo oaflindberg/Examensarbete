@@ -3,7 +3,7 @@ import { Text, TouchableOpacity } from 'react-native'
 
 interface Correct {
   correct?: boolean
-  background: string
+  background?: string
   wrong?: boolean
 }
 

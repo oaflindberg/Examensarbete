@@ -12,7 +12,7 @@ export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
   const [correct, setCorrect] = useState<boolean>(false)
   const [incorrect, setIncorrect] = useState<boolean>(false)
-  const [question, setQuestion] = useState<QuestionProps>()
+  const [question, setQuestion] = useState<QuestionProps | any>()
   const database = firebase.database()
 
   useEffect(() => {
