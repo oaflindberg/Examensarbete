@@ -5,10 +5,11 @@ import QuestionContainer from './../../components/QuestionContainer/QuestionCont
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
 import firebase from './../../firebase/firebase'
+import { CheckBox, Text } from 'react-native'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
-  const [question, setQuestion] = useState<object>()
+  const [question, setQuestion] = useState<any>()
   const database = firebase.database()
 
   useEffect(() => {
@@ -16,9 +17,10 @@ export default function QuizScreen() {
       .ref(`/questions/${index}`)
       .once('value')
       .then((dataSnapshot) => {
-        setQuestion(dataSnapshot)
+        let questions = dataSnapshot.toJSON();
+        setQuestion(questions)
       })
-  }, [])
+  }, [index])
 
   // console.log(question.question)
 
@@ -30,7 +32,7 @@ export default function QuizScreen() {
     return null
   }
 
-  const checkAnswer = (pressed: string, answer: string) => {
+  const checkAnswer = (pressed: any, answer: any) => {
     if (pressed == answer) {
       // SINCES THERE*S ONLY TWO QUESTIONS RIGHT NOW, I'VE SET A LIMIT HERE
       if (index < 1) {
@@ -43,24 +45,33 @@ export default function QuizScreen() {
     }
   }
 
+  if (question === null || question === undefined) {
+    return (
+      <Layout>
+        <Text>Loading!</Text>
+      </Layout>
+    )
+  }
+
   return (
     <Layout>
       <QuestionContainer
         questionNumber={`Fråga ${index + 1}`}
-        question={'hej'}
+        question={question.question}
       />
-      {/* {Object.entries(questions[index].alternatives).map(([key, value], i) => {
+     {Object.entries(question.alternatives).map(([key, value], i) => {
         return (
           <Button
-            key={i}
-            handleClick={() => {
-              checkAnswer(value, questions[index].answer)
-            }}
-            text={value}
+          wrong
+          key={i}
+          handleClick={() => {
+            checkAnswer(value, question.answer)
+          }}
+          text={value}
           />
-        )
-      })}
-      <StatusBar style="auto" /> */}
+          )
+        })}
+      <StatusBar style="auto" /> 
     </Layout>
   )
 }
