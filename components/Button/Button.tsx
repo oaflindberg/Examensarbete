@@ -15,8 +15,8 @@ export default function Button({
   handleClick,
 }: ButtonProps) {
   return (
-    <StyledButton correct={correct} wrong={wrong}>
-      <ButtonText onPress={handleClick}>{text}</ButtonText>
+    <StyledButton onPress={handleClick} correct={correct} wrong={wrong}>
+      <ButtonText>{text}</ButtonText>
     </StyledButton>
   )
 }
