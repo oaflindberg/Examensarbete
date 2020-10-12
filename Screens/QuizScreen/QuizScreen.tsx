@@ -6,12 +6,13 @@ import QuestionContainer from './../../components/QuestionContainer/QuestionCont
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
 import firebase from './../../firebase/firebase'
+import QuestionProps from '../../typings/QuestionProps'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
   const [correct, setCorrect] = useState<boolean>(false)
   const [incorrect, setIncorrect] = useState<boolean>(false)
-  const [question, setQuestion] = useState<any>()
+  const [question, setQuestion] = useState<QuestionProps>()
   const database = firebase.database()
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function QuizScreen() {
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
+        console.log(typeof questions)
         setCorrect(false)
         setIncorrect(false)
         setQuestion(questions)
@@ -34,7 +36,7 @@ export default function QuizScreen() {
     return null
   }
 
-  const checkAnswer = (pressed: any, answer: any) => {
+  const checkAnswer = (pressed: string, answer: string) => {
     if (pressed == answer) {
       setCorrect(true)
       if (index < 1) {
@@ -60,7 +62,7 @@ export default function QuizScreen() {
     }
   }
 
-  if (question == undefined || question == null) {
+  if (question == undefined) {
     return (
       <Layout>
         <StyledText>Loading...</StyledText>
@@ -74,19 +76,21 @@ export default function QuizScreen() {
         questionNumber={`Fråga ${index + 1}`}
         question={question.question}
       />
-      {Object.entries(question.alternatives).map(([key, value], i) => {
-        return (
-          <Button
-            correct={correct}
-            wrong={incorrect}
-            key={i}
-            handleClick={() => {
-              checkAnswer(value, question.answer)
-            }}
-            text={value}
-          />
-        )
-      })}
+      {Object.entries(question.alternatives).map(
+        ([key, value]: [string, any], i: number) => {
+          return (
+            <Button
+              correct={correct}
+              wrong={incorrect}
+              key={i}
+              handleClick={() => {
+                checkAnswer(value, question.answer)
+              }}
+              text={value}
+            />
+          )
+        }
+      )}
       <StatusBar style="auto" />
     </Layout>
   )
