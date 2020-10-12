@@ -10,8 +10,8 @@ import QuestionProps from '../../typings/QuestionProps'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
-  const [correct, setCorrect] = useState<boolean>(false)
-  const [incorrect, setIncorrect] = useState<boolean>(false)
+  const [isCorrect, setIsCorrect] = useState<boolean | undefined>()
+  const [isIncorrect, setIsIncorrect] = useState<boolean | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const database = firebase.database()
 
@@ -21,8 +21,8 @@ export default function QuizScreen() {
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
-        setCorrect(false)
-        setIncorrect(false)
+        setIsCorrect(false)
+        setIsIncorrect(false)
         setQuestion(questions)
       })
   }, [index])
@@ -37,7 +37,7 @@ export default function QuizScreen() {
 
   const checkAnswer = (pressed: string, answer: string) => {
     if (pressed == answer) {
-      setCorrect(true)
+      setIsCorrect(true)
       if (index < 1) {
         setTimeout(() => {
           setIndex(index + 1)
@@ -48,7 +48,7 @@ export default function QuizScreen() {
         }, 750)
       }
     } else {
-      setIncorrect(true)
+      setIsIncorrect(true)
       if (index < 1) {
         setTimeout(() => {
           setIndex(index + 1)
@@ -79,8 +79,8 @@ export default function QuizScreen() {
         ([key, value]: [string, any], i: number) => {
           return (
             <Button
-              correct={correct}
-              wrong={incorrect}
+              correct={isCorrect}
+              incorrect={isIncorrect}
               key={i}
               handleClick={() => {
                 checkAnswer(value, question.answer)
