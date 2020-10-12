@@ -34,7 +34,7 @@ export default function QuizScreen() {
     return null
   }
 
-  const checkAnswer = (pressed: string, answer: string) => {
+  const checkAnswer = (pressed: any, answer: any) => {
     if (pressed == answer) {
       setCorrect(true)
       if (index < 1) {
