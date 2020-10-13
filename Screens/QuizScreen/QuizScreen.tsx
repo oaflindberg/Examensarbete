@@ -7,16 +7,16 @@ import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
 import firebase from './../../firebase/firebase'
 import QuestionProps from '../../typings/QuestionProps'
-// import { setBackground } from './../../components/Button/Style'
+import score from './../../utils/ScoreTimer'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
-  const [isCorrect, setIsCorrect] = useState<boolean>()
+  const [isCorrect, setIsCorrect] = useState<boolean | null>()
+  const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
+  const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
-  const database = firebase.database()
-  const [selectedAnswer, setSelectedAnswer] = useState<string>()
-  const [correctAnswer, setCorrectAnswer] = useState<string>()
 
+  const database = firebase.database()
   useEffect(() => {
     database
       .ref(`/questions/${index}`)
@@ -25,6 +25,7 @@ export default function QuizScreen() {
         let questions = dataSnapshot.toJSON()
         setIsCorrect(false)
         setQuestion(questions)
+        setClickedButton(undefined)
       })
   }, [index])
 
@@ -36,10 +37,21 @@ export default function QuizScreen() {
     return null
   }
 
-  const checkAnswer = (pressed: string, answer: string) => {
-    if (pressed == answer) {
+  const checkAnswer = (pressed: string) => {
+    if (pressed == question.answer) {
       setIsCorrect(true)
-      if (index < 1) {
+      if (index < 2) {
+        setTimeout(() => {
+          setIndex(index + 1)
+        }, 750)
+      } else {
+        setTimeout(() => {
+          setIndex(0)
+        }, 750)
+      }
+    } else if (pressed != question.answer) {
+      setIsIncorrect(true)
+      if (index < 2) {
         setTimeout(() => {
           setIndex(index + 1)
         }, 750)
@@ -49,15 +61,16 @@ export default function QuizScreen() {
         }, 750)
       }
     } else {
-      if (index < 1) {
-        setTimeout(() => {
-          setIndex(index + 1)
-        }, 750)
-      } else {
-        setTimeout(() => {
-          setIndex(0)
-        }, 750)
-      }
+      setIsCorrect(undefined)
+      setIsIncorrect(undefined)
+    }
+  }
+
+  const saveButtonClick = (buttonValue: string, index: number) => {
+    if (buttonValue == question.answer) {
+      setClickedButton(index)
+    } else {
+      setClickedButton(index)
     }
   }
 
@@ -69,6 +82,10 @@ export default function QuizScreen() {
     )
   }
 
+  // if (question != undefined) {
+  //   score(isCorrect)
+  // }
+
   return (
     <Layout>
       <QuestionContainer
@@ -79,14 +96,12 @@ export default function QuizScreen() {
         ([key, value]: [string, any], i: number) => {
           return (
             <Button
-              selectedAnswer={selectedAnswer}
-              correctAnswer={correctAnswer}
-              correct={isCorrect}
+              correct={clickedButton === i && isCorrect}
+              incorrect={clickedButton === i && isIncorrect}
               key={i}
               handleClick={() => {
-                checkAnswer(value, question.answer)
-                setCorrectAnswer(question.answer)
-                setSelectedAnswer(value)
+                checkAnswer(value)
+                saveButtonClick(value, i)
               }}
               text={value}
             />

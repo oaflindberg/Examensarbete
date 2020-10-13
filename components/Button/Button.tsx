@@ -1,41 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyledButton, ButtonText } from './Style'
 
 interface ButtonProps {
   text: string
   handleClick?: () => void
-  correct?: boolean
-  selectedAnswer?: string
-  correctAnswer?: string
+  correct?: boolean | undefined | null
+  incorrect?: boolean | undefined | null
 }
 
 export default function Button({
   text,
   correct,
-  selectedAnswer,
-  correctAnswer,
+  incorrect,
   handleClick,
 }: ButtonProps) {
-  const [isCorrect, setIsCorrect] = useState<boolean | undefined>()
-
-  const checkAnswer = () => {
-    if (selectedAnswer == correctAnswer) {
-      setIsCorrect(true)
-    } else if (selectedAnswer != correctAnswer) {
-      setIsCorrect(false)
-    } else {
-      setIsCorrect(undefined)
-    }
-  }
-
   return (
-    <StyledButton
-      selectedAnswer={selectedAnswer}
-      correctAnswer={correctAnswer}
-      onPress={checkAnswer && handleClick}
-      correct={isCorrect}
-    >
-      <ButtonText correct={correct}>{text}</ButtonText>
+    <StyledButton onPress={handleClick} correct={correct} incorrect={incorrect}>
+      <ButtonText>{text}</ButtonText>
     </StyledButton>
   )
 }
