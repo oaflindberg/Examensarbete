@@ -4,8 +4,8 @@ import { StyledButton, ButtonText } from './Style'
 interface ButtonProps {
   text: string
   handleClick?: () => void
-  correct?: boolean | undefined | null
-  incorrect?: boolean | undefined | null
+  correct?: boolean | null
+  incorrect?: boolean | null
 }
 
 export default function Button({

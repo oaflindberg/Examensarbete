@@ -2,8 +2,8 @@ import styled from 'styled-components/native'
 import { Text, TouchableOpacity } from 'react-native'
 
 interface Correct {
-  correct?: boolean | undefined | null
-  incorrect?: boolean | undefined | null
+  correct?: boolean | null
+  incorrect?: boolean | null
 }
 
 export const StyledButton = styled(TouchableOpacity)<Correct>`

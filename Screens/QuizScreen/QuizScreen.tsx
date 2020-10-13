@@ -82,9 +82,9 @@ export default function QuizScreen() {
     )
   }
 
-  // if (question != undefined) {
-  //   score(isCorrect)
-  // }
+  if (question != undefined) {
+    console.log(score(isCorrect, isIncorrect))
+  }
 
   return (
     <Layout>
