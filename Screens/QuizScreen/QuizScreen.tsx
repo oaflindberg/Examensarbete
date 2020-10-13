@@ -37,8 +37,8 @@ export default function QuizScreen() {
     return null
   }
 
-  const checkAnswer = (pressed: string) => {
-    if (pressed == question.answer) {
+  const checkAnswer = (selectedAnswer: string) => {
+    if (selectedAnswer == question.answer) {
       setIsCorrect(true)
       if (index < 2) {
         setTimeout(() => {
@@ -49,7 +49,7 @@ export default function QuizScreen() {
           setIndex(0)
         }, 750)
       }
-    } else if (pressed != question.answer) {
+    } else if (selectedAnswer != question.answer) {
       setIsIncorrect(true)
       if (index < 2) {
         setTimeout(() => {
