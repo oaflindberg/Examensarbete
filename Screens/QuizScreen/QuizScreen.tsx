@@ -7,13 +7,15 @@ import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
 import firebase from './../../firebase/firebase'
 import QuestionProps from '../../typings/QuestionProps'
+// import { setBackground } from './../../components/Button/Style'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
-  const [isCorrect, setIsCorrect] = useState<boolean | undefined>()
-  const [isIncorrect, setIsIncorrect] = useState<boolean | undefined>()
+  const [isCorrect, setIsCorrect] = useState<boolean>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const database = firebase.database()
+  const [selectedAnswer, setSelectedAnswer] = useState<string>()
+  const [correctAnswer, setCorrectAnswer] = useState<string>()
 
   useEffect(() => {
     database
@@ -22,7 +24,6 @@ export default function QuizScreen() {
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
         setIsCorrect(false)
-        setIsIncorrect(false)
         setQuestion(questions)
       })
   }, [index])
@@ -48,7 +49,6 @@ export default function QuizScreen() {
         }, 750)
       }
     } else {
-      setIsIncorrect(true)
       if (index < 1) {
         setTimeout(() => {
           setIndex(index + 1)
@@ -79,11 +79,14 @@ export default function QuizScreen() {
         ([key, value]: [string, any], i: number) => {
           return (
             <Button
+              selectedAnswer={selectedAnswer}
+              correctAnswer={correctAnswer}
               correct={isCorrect}
-              incorrect={isIncorrect}
               key={i}
               handleClick={() => {
                 checkAnswer(value, question.answer)
+                setCorrectAnswer(question.answer)
+                setSelectedAnswer(value)
               }}
               text={value}
             />
