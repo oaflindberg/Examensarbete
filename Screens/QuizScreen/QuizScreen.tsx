@@ -1,13 +1,20 @@
+//REACT & EXPO
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
-import { StyledText } from './Style'
+
+// COMPONENTS & STYLES
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
+import { StyledText } from './Style'
+
+// FUNCTIONS & FIREBASE
+import calculateScore from '../../utils/SetScore'
 import firebase from './../../firebase/firebase'
+
+// TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
-import score from './../../utils/ScoreTimer'
 
 export default function QuizScreen() {
   const [index, setIndex] = useState<number>(0)
@@ -81,10 +88,7 @@ export default function QuizScreen() {
       </Layout>
     )
   }
-
-  if (question != undefined) {
-    console.log(score(isCorrect, isIncorrect))
-  }
+  console.log(calculateScore(question, isCorrect, isIncorrect))
 
   return (
     <Layout>
