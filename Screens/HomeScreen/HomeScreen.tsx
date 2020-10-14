@@ -1,10 +1,15 @@
+// REACT & EXPO
 import React from 'react'
-import { useFonts } from 'expo-font'
 import { StatusBar } from 'expo-status-bar'
-import { StyledText } from './Style'
-import { RouteStackParamList } from 'typings/RouteParams'
+import { useFonts } from 'expo-font'
+
+// COMPONENTS & STYLES
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
+import { StyledText } from './Style'
+
+// TYPINGS
+import { RouteStackParamList } from 'typings/RouteParams'
 
 export default function HomeScreen({
   navigation,

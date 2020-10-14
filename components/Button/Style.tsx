@@ -20,7 +20,6 @@ export const StyledButton = styled(TouchableOpacity)<Correct>`
         return `background: #c2fc0a`
       case incorrect == true:
         return `background: #fc0a49`
-      // return `background: #fefefe`
       default: {
         return `background: #fefefe`
       }
