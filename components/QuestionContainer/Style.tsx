@@ -7,5 +7,5 @@ export const StyledText = styled(Text)`
   font-family: 'Akkurat';
   width: 80%;
   text-align: center;
-  margin-bottom: 20%;
+  margin-bottom: 10%;
 `

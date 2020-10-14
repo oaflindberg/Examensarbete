@@ -22,7 +22,7 @@ const calculateScore = (
         clearInterval(intervalId)
       }
 
-      if (timeElapsed >= 20) {
+      if (timeElapsed <= 0 && correct == true) {
         points += 125
         clearInterval(intervalId)
       }
