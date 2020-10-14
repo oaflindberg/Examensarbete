@@ -22,6 +22,7 @@ export default function QuizScreen() {
   const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
+  const [score, setScore] = useState<number>(0)
 
   const database = firebase.database()
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function QuizScreen() {
   const checkAnswer = (selectedAnswer: string) => {
     if (selectedAnswer == question.answer) {
       setIsCorrect(true)
+      setScore(score + 2500)
       if (index < 2) {
         setTimeout(() => {
           setIndex(index + 1)
@@ -54,10 +56,12 @@ export default function QuizScreen() {
       } else {
         setTimeout(() => {
           setIndex(0)
+          setScore(0)
         }, 750)
       }
     } else if (selectedAnswer != question.answer) {
       setIsIncorrect(true)
+      setScore(score + 0)
       if (index < 2) {
         setTimeout(() => {
           setIndex(index + 1)
@@ -65,6 +69,7 @@ export default function QuizScreen() {
       } else {
         setTimeout(() => {
           setIndex(0)
+          setScore(0)
         }, 750)
       }
     } else {
@@ -88,12 +93,14 @@ export default function QuizScreen() {
       </Layout>
     )
   }
-  console.log(calculateScore(question, isCorrect, isIncorrect))
+
+  // console.log(calculateScore(question, isCorrect, isIncorrect))
 
   return (
     <Layout>
       <QuestionContainer
-        questionNumber={`Fråga ${index + 1}`}
+        // questionNumber={`Fråga ${index + 1}`}
+        score={score}
         question={question.question}
       />
       {Object.entries(question.alternatives).map(
