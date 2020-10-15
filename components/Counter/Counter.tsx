@@ -3,22 +3,20 @@ import { CounterText } from "./Style"
 
 interface CounterProps {
     correct?: any
-    
 }
-
 
 const Counter = ({
     correct,
 }: CounterProps) => {
     const [points, setPoints] = useState<any>(0)
     const [time, setTime] = useState<any>(20)
+    const timer = () => setTime(time - 1)
 
-        const timer = () => setTime(time - 1)
         useEffect(() => {
             if (time >= 0 && correct == true) {
-                    setPoints (points + (time * 125))
-                    setTimeout(() => {
-                      setTime(20)
+                setPoints (points + (time * 125))
+                setTimeout(() => {
+                setTime(20)
                  }, 750)
             }
 
