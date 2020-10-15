@@ -7,6 +7,7 @@ const calculateScore = (
 ): number => {
   let endTime = Math.floor(Date.now() + 22000)
   let points: number = 0
+
   if (question != undefined) {
     let intervalId = setInterval(() => {
       let startTime = Date.now()
@@ -26,13 +27,9 @@ const calculateScore = (
         points += 125
         clearInterval(intervalId)
       }
-
-      if (timeElapsed <= 0) {
-        clearInterval(intervalId)
-      }
     }, 1000)
   }
   return points
-}
 
+}
 export default calculateScore
