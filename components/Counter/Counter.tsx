@@ -1,52 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
-import { StyledCounter } from "./Style";
+import React, { useEffect, useState } from "react"
+import { CounterText } from "./Style"
 
 interface CounterProps {
-    correct?: boolean | null
-    incorrect?: boolean | null
+    correct?: any
+    
 }
 
 
 const Counter = ({
     correct,
-    incorrect
 }: CounterProps) => {
-    const [points, setPoints] = useState<any>(0);
-    
-    let endTime = Math.floor(Date.now() + 22000)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            let startTime = Date.now()
-            let timeElapsed = Math.floor((endTime - startTime) / 1000)
-            
-            if (correct == true) {
-                setPoints(points + Math.floor(timeElapsed * 125))
-                endTime = Math.floor(Date.now() + 22000)
-                clearInterval(interval)
+    const [points, setPoints] = useState<any>(0)
+    const [time, setTime] = useState<any>(20)
+
+        const timer = () => setTime(time - 1)
+        useEffect(() => {
+            if (time >= 0 && correct == true) {
+                    setPoints (points + (time * 125))
+                    setTimeout(() => {
+                      setTime(20)
+                 }, 750)
             }
-            if (incorrect == true) {
-                setPoints(points + 0)
-                endTime = Math.floor(Date.now() + 22000)
-                clearInterval(interval)
+
+            if (time <= 0 && correct == true) {
+                setPoints (points + 125)
+                setTimeout(() => {
+                    setTime(20)
+                  }, 750)
             }
-            if (timeElapsed <= 0 && correct == true) {
-                setPoints(points + 125)
-                endTime = Math.floor(Date.now() + 22000)
-                clearInterval(interval)
-            }
-            console.log(endTime)
-            console.log(timeElapsed)
-        }, 1000);
+        const interval = setInterval(timer, 1000);
         return () => clearInterval(interval);
-    }, [points])
+    }, [time])
+    console.log(time)
+    console.log(points)
     return ( 
-        <StyledCounter
+        
+        <CounterText
         correct={correct}
-        incorrect={incorrect}
-        >{points}</StyledCounter>
+        >
+            Poäng: {points}
+        </CounterText>
+            
        
     )
 }
 
-export default Counter;
+export default Counter
