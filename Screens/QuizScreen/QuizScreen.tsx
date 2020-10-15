@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font'
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
+import Counter from './../../components/Counter/Counter'
 import { StyledText } from './Style'
 
 // FUNCTIONS & FIREBASE
@@ -94,10 +95,14 @@ export default function QuizScreen() {
     )
   }
 
-  // console.log(calculateScore(question, isCorrect, isIncorrect))
+  console.log(calculateScore(question, isCorrect, isIncorrect))
 
   return (
     <Layout>
+      <Counter
+      correct={isCorrect}
+      incorrect={isIncorrect}
+      ></Counter>
       <QuestionContainer
         // questionNumber={`Fråga ${index + 1}`}
         score={score}
