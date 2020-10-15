@@ -11,7 +11,6 @@ import Counter from './../../components/Counter/Counter'
 import { StyledText } from './Style'
 
 // FUNCTIONS & FIREBASE
-import calculateScore from '../../utils/SetScore'
 import firebase from './../../firebase/firebase'
 
 // TYPINGS

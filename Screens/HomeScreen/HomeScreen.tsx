@@ -28,6 +28,7 @@ export default function HomeScreen({
       <StyledText>BLÅVITA</StyledText>
       <StyledText>QUIZZET!</StyledText>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
+      <Button handleClick={() => navigation.navigate('Login')} text="Logga in" />
       <StatusBar style="auto" />
     </Layout>
   )
