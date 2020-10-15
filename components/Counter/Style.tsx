@@ -6,29 +6,19 @@ interface Correct {
   incorrect?: boolean | null
 }
 
-export const StyledCounter = styled(Text)<Correct>`
-  width: 50%;
-  height: auto;
-  padding: 10px 0;
-  margin: 10px;
-  align-items: center;
-  border-radius: 28px;
-  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
+export const CounterText = styled(Text)<Correct>`
+  font-size: 18px;
+  font-family: 'Akkurat';
+  margin-bottom: 10px;
   ${({ correct, incorrect }) => {
     switch (true) {
       case correct == true:
-        return `background: #c2fc0a`
+        return `color: #fefefe`
       case incorrect == true:
-        return `background: #fc0a49`
+        return `color: #fefefe`
       default: {
-        return `background: #fefefe`
+        return `color: #fefefe`
       }
     }
   }}
-`
-
-export const CounterText = styled(Text)<Correct>`
-  color: #303030;
-  font-size: 18px;
-  font-family: 'Akkurat';
 `

@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeScreen from './screens/HomeScreen/HomeScreen'
-import QuizScreen from './screens/QuizScreen/QuizScreen'
+import HomeScreen from './Screens/HomeScreen/HomeScreen'
+import QuizScreen from './Screens/QuizScreen/QuizScreen'
 import React from 'react'
 
 export default function App() {

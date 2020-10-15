@@ -95,17 +95,13 @@ export default function QuizScreen() {
     )
   }
 
-  console.log(calculateScore(question, isCorrect, isIncorrect))
-
   return (
     <Layout>
       <Counter
       correct={isCorrect}
-      incorrect={isIncorrect}
       ></Counter>
       <QuestionContainer
         // questionNumber={`Fråga ${index + 1}`}
-        score={score}
         question={question.question}
       />
       {Object.entries(question.alternatives).map(
