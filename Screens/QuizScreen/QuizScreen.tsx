@@ -96,9 +96,7 @@ export default function QuizScreen() {
 
   return (
     <Layout>
-      <Counter
-      correct={isCorrect}
-      ></Counter>
+      <Counter correct={isCorrect} />
       <QuestionContainer
         // questionNumber={`Fråga ${index + 1}`}
         question={question.question}
