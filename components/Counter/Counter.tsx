@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { CounterText } from './Style'
+import PointsContext from './../../context/PointsContext'
 
 interface CounterProps {
   correct?: boolean | null
 }
 
 const Counter = ({ correct }: CounterProps) => {
-  const [points, setPoints] = useState<number>(0)
+  const [points, setPoints] = useContext(PointsContext)
   const [time, setTime] = useState<number>(20)
   const timer = () => setTime(time - 1)
 
@@ -27,8 +28,7 @@ const Counter = ({ correct }: CounterProps) => {
     const interval = setInterval(timer, 1000)
     return () => clearInterval(interval)
   }, [time])
-  console.log(time)
-  console.log(points)
+
   return <CounterText correct={correct}>Poäng: {points}</CounterText>
 }
 

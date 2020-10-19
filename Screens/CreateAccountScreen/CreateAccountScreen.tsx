@@ -1,8 +1,7 @@
 // REACT & EXPO
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useFonts } from 'expo-font'
-import { Text, TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
 import Button from './../../components/Button/Button'
@@ -20,11 +19,10 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [user, setUser] = useState<any>()
   const validate = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code
@@ -35,8 +33,9 @@ export default function LoginScreen({
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      setUser(user)
-      navigation.navigate('Home')
+      setEmail('')
+      setPassword('')
+      navigation.navigate('Login')
     } else {
     }
   })
@@ -51,7 +50,7 @@ export default function LoginScreen({
 
   return (
     <Layout>
-      <StyledText>Välkommen!</StyledText>
+      <StyledText>Skapa konto!</StyledText>
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
@@ -63,10 +62,7 @@ export default function LoginScreen({
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <Button text={'Logga in'} handleClick={validate} />
-      <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
-        <Text>Har du inget konto? Klicka här för att skapa ett</Text>
-      </TouchableOpacity>
+      <Button text={'Skapa konto'} handleClick={validate} />
       <StatusBar style="auto" />
     </Layout>
   )
