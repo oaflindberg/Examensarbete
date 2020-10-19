@@ -1,5 +1,5 @@
 // REACT & EXPO
-import React, { useState } from 'react'
+import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
@@ -16,7 +16,6 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function HomeScreen({
   navigation,
 }: RouteStackParamList<'Home'>) {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
   let user = firebase.auth().currentUser
 
   const signOut = () => {
@@ -29,12 +28,6 @@ export default function HomeScreen({
       .catch(function (error) {
         // An error happened.
       })
-  }
-
-  if (user != null) {
-    setLoggedIn(true)
-  } else {
-    setLoggedIn(false)
   }
 
   return (
