@@ -1,13 +1,12 @@
 // REACT & EXPO
 import React, { useState, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { useFonts } from 'expo-font'
 import { Text, TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
 import Button from './../../components/Button/Button'
 import Layout from './../../components/Layout/Layout'
-import { StyledText, StyledInput } from './Style'
+import { StyledText, StyledInput, CreateAccount } from './Style'
 
 // FUNCTIONS & FIREBASE
 import firebase from './../../firebase/firebase'
@@ -20,7 +19,6 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [user, setUser] = useState<any>()
   const validate = () => {
     firebase
       .auth()
@@ -35,19 +33,11 @@ export default function LoginScreen({
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      setUser(user)
+      console.log(user)
       navigation.navigate('Home')
     } else {
     }
   })
-
-  const [loaded, error] = useFonts({
-    Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
-  })
-
-  if (!loaded) {
-    return null
-  }
 
   return (
     <Layout>
@@ -65,7 +55,9 @@ export default function LoginScreen({
       />
       <Button text={'Logga in'} handleClick={validate} />
       <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
-        <Text>Har du inget konto? Klicka här för att skapa ett</Text>
+        <CreateAccount>
+          Har du inget konto? Klicka här för att skapa ett
+        </CreateAccount>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </Layout>
