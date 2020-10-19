@@ -1,7 +1,6 @@
 //REACT & EXPO
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { useFonts } from 'expo-font'
 
 // COMPONENTS & STYLES
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
@@ -31,27 +30,15 @@ export default function QuizScreen() {
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
-        if (questions == null) {
-          setQuizCompleted(true)
-          setIsCorrect(false)
-          setClickedButton(undefined)
-        }
         setIsCorrect(false)
         setQuestion(questions)
         setClickedButton(undefined)
+
+        if (questions == null) {
+          setQuizCompleted(true)
+        }
       })
   }, [index])
-
-  const [loaded, error] = useFonts({
-    Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
-  })
-  {
-    console.log(question)
-  }
-
-  if (!loaded) {
-    return null
-  }
 
   const checkAnswer = (selectedAnswer: string) => {
     if (selectedAnswer == question.answer) {
@@ -95,7 +82,7 @@ export default function QuizScreen() {
 
   return (
     <Layout>
-      <Counter correct={isCorrect} />
+      <Counter quizCompleted={quizCompleted} correct={isCorrect} />
       <QuestionContainer
         questionNumber={`Fråga ${index + 1}`}
         question={question.question}

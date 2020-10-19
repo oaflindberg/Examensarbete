@@ -3,6 +3,7 @@ import { Text } from 'react-native'
 
 interface Correct {
   correct?: boolean | null
+  quizCompleted?: boolean | null
 }
 
 export const CounterText = styled(Text)<Correct>`

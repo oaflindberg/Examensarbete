@@ -1,7 +1,6 @@
 // REACT & EXPO
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { useFonts } from 'expo-font'
 
 // COMPONENTS & STYLES
 import Button from './../../components/Button/Button'
@@ -19,6 +18,8 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
+  const [userExists, setUserExists] = useState(false)
   const validate = () => {
     firebase
       .auth()
@@ -31,21 +32,44 @@ export default function LoginScreen({
       })
   }
 
+  let user = firebase.auth().currentUser
+
+  const updateUsername = () => {
+    if (user != undefined) {
+      user
+        .updateProfile({
+          displayName: username,
+        })
+        .then(function () {
+          navigation.navigate('Login')
+        })
+        .catch(function (error) {
+          // An error happened.
+        })
+    }
+  }
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      setEmail('')
-      setPassword('')
-      navigation.navigate('Login')
+      // navigation.navigate('Login')
+      setUserExists(true)
     } else {
     }
   })
 
-  const [loaded, error] = useFonts({
-    Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
-  })
-
-  if (!loaded) {
-    return null
+  if (userExists == true) {
+    return (
+      <Layout>
+        <StyledText>Välj användarnamn</StyledText>
+        <StyledInput
+          onChangeText={(text) => setUsername(text)}
+          autoCapitalize="none"
+          placeholder={'hej'}
+        />
+        <Button text={'OK'} handleClick={updateUsername} />
+        <StatusBar style="auto" />
+      </Layout>
+    )
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 
 const PointsContext = createContext<any>(0)
 export const PointsProvider = PointsContext.Provider
