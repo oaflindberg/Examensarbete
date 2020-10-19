@@ -1,7 +1,6 @@
 // REACT & EXPO
-import React from 'react'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { RefreshControl } from 'react-native'
 
 // FIREBASE
 import firebase from './../../firebase/firebase'
@@ -14,24 +13,29 @@ import { StyledText } from './Style'
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-const wait = (timeout: any) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout)
-  })
-}
-
 export default function HomeScreen({
   navigation,
 }: RouteStackParamList<'Home'>) {
-  const [refreshing, setRefreshing] = React.useState(false)
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true)
-
-    wait(2000).then(() => setRefreshing(false))
-  }, [])
-
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
   let user = firebase.auth().currentUser
+
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        // Sign-out successful.
+      })
+      .catch(function (error) {
+        // An error happened.
+      })
+  }
+
+  if (user != null) {
+    setLoggedIn(true)
+  } else {
+    setLoggedIn(false)
+  }
 
   return (
     <Layout>
@@ -45,20 +49,7 @@ export default function HomeScreen({
           text="Logga in"
         />
       ) : (
-        <Button
-          handleClick={() => {
-            firebase
-              .auth()
-              .signOut()
-              .then(function () {
-                // Sign-out successful.
-              })
-              .catch(function (error) {
-                // An error happened.
-              })
-          }}
-          text="Logga ut"
-        />
+        <Button handleClick={signOut} text="Logga ut" />
       )}
       <StatusBar style="auto" />
     </Layout>

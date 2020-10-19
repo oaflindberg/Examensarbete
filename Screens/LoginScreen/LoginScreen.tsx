@@ -19,7 +19,7 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const validate = () => {
+  const signIn = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -53,7 +53,7 @@ export default function LoginScreen({
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <Button text={'Logga in'} handleClick={validate} />
+      <Button text={'Logga in'} handleClick={signIn} />
       <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
         <CreateAccount>
           Har du inget konto? Klicka här för att skapa ett

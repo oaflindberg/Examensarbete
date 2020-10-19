@@ -20,7 +20,7 @@ export default function LoginScreen({
   const [password, setPassword] = useState<string>('')
   const [username, setUsername] = useState<string>('')
   const [userExists, setUserExists] = useState(false)
-  const validate = () => {
+  const createAccount = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -86,7 +86,7 @@ export default function LoginScreen({
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <Button text={'Skapa konto'} handleClick={validate} />
+      <Button text={'Skapa konto'} handleClick={createAccount} />
       <StatusBar style="auto" />
     </Layout>
   )
