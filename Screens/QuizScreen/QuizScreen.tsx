@@ -22,7 +22,7 @@ export default function QuizScreen() {
   const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
-  const [score, setScore] = useState<number>(0)
+  const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
 
   const database = firebase.database()
   useEffect(() => {
@@ -31,6 +31,11 @@ export default function QuizScreen() {
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
+        if (questions == null) {
+          setQuizCompleted(true)
+          setIsCorrect(false)
+          setClickedButton(undefined)
+        }
         setIsCorrect(false)
         setQuestion(questions)
         setClickedButton(undefined)
@@ -40,6 +45,9 @@ export default function QuizScreen() {
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
   })
+  {
+    console.log(question)
+  }
 
   if (!loaded) {
     return null
@@ -48,33 +56,15 @@ export default function QuizScreen() {
   const checkAnswer = (selectedAnswer: string) => {
     if (selectedAnswer == question.answer) {
       setIsCorrect(true)
-      setScore(score + 2500)
-      if (index < 2) {
-        setTimeout(() => {
-          setIndex(index + 1)
-        }, 750)
-      } else {
-        setTimeout(() => {
-          setIndex(0)
-          setScore(0)
-        }, 750)
-      }
-    } else if (selectedAnswer != question.answer) {
+      setTimeout(() => {
+        setIndex(index + 1)
+      }, 750)
+    }
+    if (selectedAnswer != question.answer) {
       setIsIncorrect(true)
-      setScore(score + 0)
-      if (index < 2) {
-        setTimeout(() => {
-          setIndex(index + 1)
-        }, 750)
-      } else {
-        setTimeout(() => {
-          setIndex(0)
-          setScore(0)
-        }, 750)
-      }
-    } else {
-      setIsCorrect(undefined)
-      setIsIncorrect(undefined)
+      setTimeout(() => {
+        setIndex(index + 1)
+      }, 750)
     }
   }
 
@@ -86,10 +76,19 @@ export default function QuizScreen() {
     }
   }
 
-  if (question == undefined) {
+  if (question == undefined && quizCompleted == false) {
     return (
       <Layout>
         <StyledText>Loading...</StyledText>
+      </Layout>
+    )
+  }
+
+  if (quizCompleted) {
+    return (
+      <Layout>
+        <StyledText>Grattis....</StyledText>
+        <Counter />
       </Layout>
     )
   }
@@ -98,7 +97,7 @@ export default function QuizScreen() {
     <Layout>
       <Counter correct={isCorrect} />
       <QuestionContainer
-        // questionNumber={`Fråga ${index + 1}`}
+        questionNumber={`Fråga ${index + 1}`}
         question={question.question}
       />
       {Object.entries(question.alternatives).map(
