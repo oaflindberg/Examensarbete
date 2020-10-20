@@ -23,21 +23,9 @@ export default function HomeScreen({
     if (user) {
       setLoggedIn(true)
     } else {
+      setLoggedIn(false)
     }
   })
-
-
-  const signOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        setLoggedIn(false)
-      })
-      .catch(function (error) {
-        // An error happened.
-      })
-  }
 
   return (
     <Layout>
@@ -52,7 +40,6 @@ export default function HomeScreen({
         />
       ) : (
         <>
-        <Button handleClick={signOut} text="Logga ut" />
         <Button
         handleClick={() => navigation.navigate('Profile')}
         text="Profilsida"

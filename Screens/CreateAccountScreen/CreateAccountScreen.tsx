@@ -19,7 +19,6 @@ export default function LoginScreen({
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [username, setUsername] = useState<string>('')
-  const [userExists, setUserExists] = useState<boolean>(false)
   const createAccount = () => {
     firebase
       .auth()
@@ -32,46 +31,12 @@ export default function LoginScreen({
       })
   }
 
-  // let user = firebase.auth().currentUser
-
-  
-  // const updateUsername = () => {
-  //   if (user != undefined) {
-     
-  //   }
-  // }
-  
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // navigation.navigate('Login')
-      user
-      .updateProfile({
-        displayName: username,
-      })
-      .then(function () {
-        navigation.navigate('Login')
-      })
-      .catch(function (error) {
-        // An error happened.
-      })
+      navigation.navigate('Profile')
     } else {
     }
   })
-
-  // if (userExists == true) {
-  //   return (
-  //     <Layout>
-  //       <StyledText>Välj användarnamn</StyledText>
-  //       <StyledInput
-  //         onChangeText={(text) => setUsername(text)}
-  //         autoCapitalize="none"
-  //         placeholder={'hej'}
-  //       />
-  //       <Button text={'OK'} handleClick={updateUsername} />
-  //       <StatusBar style="auto" />
-  //     </Layout>
-  //   )
-  // }
 
   return (
     <Layout>
@@ -86,11 +51,6 @@ export default function LoginScreen({
         autoCapitalize="none"
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
-      />
-      <StyledInput
-        onChangeText={(text) => setUsername(text)}
-        autoCapitalize="none"
-        placeholder={'Tobias Hysén'}
       />
       <Button text={'Skapa konto'} handleClick={createAccount} />
       <StatusBar style="auto" />
