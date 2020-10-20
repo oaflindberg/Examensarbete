@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs: 
 
+  prettify:
   run:
     runs-on: ubuntu-latest
 
@@ -16,7 +17,9 @@ jobs:
     - run: npm install
     - run: npm run pretty
   
-    run: 
+  check:
+  run: 
+    runs-on: ubuntu-latest
 
     name: Check with prettier
 
