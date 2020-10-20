@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "npx prettier --check *.tsx"
+    "test": "npx prettier --check *.tsx",
+    "pretty": "npx prettier --write *.tsx && npx prettier --write */*.tsx && npx prettier --write */*/*.tsx"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
