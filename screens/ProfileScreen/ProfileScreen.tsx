@@ -68,12 +68,15 @@ export default function ProfileScreen({
     if (user.displayName === null) {
       return (
         <Layout>
+          <StyledText style={{ marginBottom: '20%' }}>
+            Välj användarnamn
+          </StyledText>
           <StyledInput
             onChangeText={(text: string) => setUsername(text)}
             autoCapitalize="none"
             placeholder={'Tobias Hysén'}
           ></StyledInput>
-          <Button text={'Spara användarnamn'} handleClick={updateUsername} />
+          <Button text={'OK'} handleClick={updateUsername} />
         </Layout>
       )
     }

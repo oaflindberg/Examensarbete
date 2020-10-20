@@ -17,7 +17,6 @@ export default function HomeScreen({
   navigation,
 }: RouteStackParamList<'Home'>) {
   const [loggedIn, setLoggedIn] = useState(false)
-  // let user = firebase.auth().currentUser
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -31,7 +30,7 @@ export default function HomeScreen({
     <Layout>
       <StyledText>DET STORA</StyledText>
       <StyledText>BLÅVITA</StyledText>
-      <StyledText>QUIZZET!</StyledText>
+      <StyledText style={{ marginBottom: '20%' }}>QUIZZET!</StyledText>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
       {!loggedIn ? (
         <Button
@@ -39,12 +38,10 @@ export default function HomeScreen({
           text="Logga in"
         />
       ) : (
-        <>
-          <Button
-            handleClick={() => navigation.navigate('Profile')}
-            text="Profilsida"
-          />
-        </>
+        <Button
+          handleClick={() => navigation.navigate('Profile')}
+          text="Profilsida"
+        />
       )}
       <StatusBar style="auto" />
     </Layout>
