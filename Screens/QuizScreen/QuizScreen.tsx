@@ -1,6 +1,7 @@
 //REACT & EXPO
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
+
 
 // COMPONENTS & STYLES
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
@@ -27,6 +28,7 @@ export default function QuizScreen({
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
+
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -74,6 +76,8 @@ export default function QuizScreen({
     }
   }
 
+  
+  
   if (question == undefined && quizCompleted == false) {
     return (
       <Layout>
@@ -81,11 +85,13 @@ export default function QuizScreen({
       </Layout>
     )
   }
-
+  
   if (quizCompleted) {
 
+    // THIS WILL BE HIGHSCORE IN THE FUTURE
+
     //  function writeUserData(userId:string, highscore:string) {
-    //    firebase.database().ref('/questions/').set({
+    //    firebase.database().ref('/highscore/').set({
     //      highscore : highscore,
     //      user : userId
     //    });
@@ -105,6 +111,9 @@ export default function QuizScreen({
     )
   }
 
+  
+    const questionsArray = Object.entries(question.alternatives).sort( () => Math.random() - 0.5)
+
   return (
     <Layout>
       <Counter quizCompleted={quizCompleted} correct={isCorrect} />
@@ -112,7 +121,7 @@ export default function QuizScreen({
         questionNumber={`Fråga ${index + 1}`}
         question={question.question}
       />
-      {Object.entries(question.alternatives).map(
+      {questionsArray.map(
         ([key, value]: [string, any], i: number) => {
           return (
             <Button

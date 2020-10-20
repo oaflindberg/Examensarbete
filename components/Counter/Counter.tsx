@@ -31,8 +31,8 @@ const Counter = ({ correct, quizCompleted }: CounterProps) => {
       return
     }
 
-    const interval = setInterval(timer, 1000)
-    return () => clearInterval(interval)
+    const countDown = setInterval(timer, 1000)
+    return () => clearInterval(countDown)
   }, [time])
 
   return (
