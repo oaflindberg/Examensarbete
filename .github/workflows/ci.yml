@@ -3,9 +3,9 @@ name: CI
 on: [push, pull_request]
 
 jobs: 
-
-  prettify:
   run:
+
+  job1:
     runs-on: ubuntu-latest
 
     name: Prettify
@@ -17,8 +17,7 @@ jobs:
     - run: npm install
     - run: npm run pretty
   
-  check:
-  run: 
+  job2:
     runs-on: ubuntu-latest
 
     name: Check with prettier
