@@ -14,14 +14,25 @@ import firebase from './../../firebase/firebase'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
+import { RouteStackParamList } from 'typings/RouteParams'
+import { useCardAnimation } from '@react-navigation/stack'
 
-export default function QuizScreen() {
+export default function QuizScreen({
+  navigation,
+}: RouteStackParamList<'Quiz'>) {
   const [index, setIndex] = useState<number>(0)
+  const [user, setUser] = useState<any>()
   const [isCorrect, setIsCorrect] = useState<boolean | null>()
   const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      setUser(user)
+    }
+  })
 
   const database = firebase.database()
   useEffect(() => {
@@ -72,10 +83,24 @@ export default function QuizScreen() {
   }
 
   if (quizCompleted) {
+
+    //  function writeUserData(userId:string, highscore:string) {
+    //    firebase.database().ref('/questions/').set({
+    //      highscore : highscore,
+    //      user : userId
+    //    });
+    //  }
+
+    // writeUserData(user.uid, points);
+
     return (
       <Layout>
         <StyledText>Grattis....</StyledText>
         <Counter />
+        <Button
+          handleClick={() => navigation.navigate('Home')}
+          text="Tillbaka"
+        />
       </Layout>
     )
   }

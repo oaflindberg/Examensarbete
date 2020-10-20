@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from './Screens/HomeScreen/HomeScreen'
 import QuizScreen from './Screens/QuizScreen/QuizScreen'
 import LoginScreen from './Screens/LoginScreen/LoginScreen'
+import ProfileScreen from './Screens/ProfileScreen/ProfileScreen'
 import CreateAccoutScreen from './Screens/CreateAccountScreen/CreateAccountScreen'
 import React from 'react'
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="CreateAccount" component={CreateAccoutScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

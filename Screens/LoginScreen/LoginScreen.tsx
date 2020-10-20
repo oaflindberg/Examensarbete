@@ -19,6 +19,7 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<boolean>(false)
   const signIn = () => {
     firebase
       .auth()
@@ -27,13 +28,15 @@ export default function LoginScreen({
         // Handle Errors here.
         var errorCode = error.code
         var errorMessage = error.message
-        // ...
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 2000);
       })
   }
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      console.log(user)
       navigation.navigate('Home')
     } else {
     }
@@ -42,6 +45,9 @@ export default function LoginScreen({
   return (
     <Layout>
       <StyledText>Välkommen!</StyledText>
+      {error && (
+      <StyledText>Någonting gick fel. Testa igen!</StyledText>
+      )}
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
