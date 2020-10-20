@@ -31,7 +31,7 @@ export default function LoginScreen({
         setError(true)
         setTimeout(() => {
           setError(false)
-        }, 2000);
+        }, 2000)
       })
   }
 
@@ -45,9 +45,7 @@ export default function LoginScreen({
   return (
     <Layout>
       <StyledText>Välkommen!</StyledText>
-      {error && (
-      <StyledText>Någonting gick fel. Testa igen!</StyledText>
-      )}
+      {error && <StyledText>Någonting gick fel. Testa igen!</StyledText>}
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"

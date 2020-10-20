@@ -33,17 +33,17 @@ export default function HomeScreen({
       <StyledText>BLÅVITA</StyledText>
       <StyledText>QUIZZET!</StyledText>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
-      { !loggedIn? (
+      {!loggedIn ? (
         <Button
           handleClick={() => navigation.navigate('Login')}
           text="Logga in"
         />
       ) : (
         <>
-        <Button
-        handleClick={() => navigation.navigate('Profile')}
-        text="Profilsida"
-        />
+          <Button
+            handleClick={() => navigation.navigate('Profile')}
+            text="Profilsida"
+          />
         </>
       )}
       <StatusBar style="auto" />

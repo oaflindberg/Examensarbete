@@ -18,7 +18,7 @@ export default function LoginScreen({
 }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [username, setUsername] = useState<string>('')
+
   const createAccount = () => {
     firebase
       .auth()
@@ -35,6 +35,7 @@ export default function LoginScreen({
     if (user) {
       navigation.navigate('Profile')
     } else {
+      // Do something here
     }
   })
 

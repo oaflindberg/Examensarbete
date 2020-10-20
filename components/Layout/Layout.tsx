@@ -9,13 +9,13 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [points, setPoints] = useState<number>(0)
-   const [loaded, error] = useFonts({
-     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
-   })
+  const [loaded, error] = useFonts({
+    Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
+  })
 
-   if (!loaded) {
-     return null
-   }
+  if (!loaded) {
+    return null
+  }
 
   return (
     <PointsProvider value={[points, setPoints]}>

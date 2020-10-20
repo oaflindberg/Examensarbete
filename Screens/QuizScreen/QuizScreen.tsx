@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
-
 // COMPONENTS & STYLES
 import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
 import Button from './../../components/Button/Button'
@@ -16,7 +15,6 @@ import firebase from './../../firebase/firebase'
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
 import { RouteStackParamList } from 'typings/RouteParams'
-import { useCardAnimation } from '@react-navigation/stack'
 
 export default function QuizScreen({
   navigation,
@@ -28,7 +26,6 @@ export default function QuizScreen({
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
-
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -76,8 +73,6 @@ export default function QuizScreen({
     }
   }
 
-  
-  
   if (question == undefined && quizCompleted == false) {
     return (
       <Layout>
@@ -85,9 +80,8 @@ export default function QuizScreen({
       </Layout>
     )
   }
-  
-  if (quizCompleted) {
 
+  if (quizCompleted) {
     // THIS WILL BE HIGHSCORE IN THE FUTURE
 
     //  function writeUserData(userId:string, highscore:string) {
@@ -111,8 +105,9 @@ export default function QuizScreen({
     )
   }
 
-  
-    const questionsArray = Object.entries(question.alternatives).sort( () => Math.random() - 0.5)
+  const questionsArray = Object.entries(question.alternatives).sort(
+    () => Math.random() - 0.5
+  )
 
   return (
     <Layout>
@@ -121,22 +116,20 @@ export default function QuizScreen({
         questionNumber={`Fråga ${index + 1}`}
         question={question.question}
       />
-      {questionsArray.map(
-        ([key, value]: [string, any], i: number) => {
-          return (
-            <Button
-              correct={clickedButton === i && isCorrect}
-              incorrect={clickedButton === i && isIncorrect}
-              key={i}
-              handleClick={() => {
-                checkAnswer(value)
-                saveButtonClick(value, i)
-              }}
-              text={value}
-            />
-          )
-        }
-      )}
+      {questionsArray.map(([key, value]: [string, any], i: number) => {
+        return (
+          <Button
+            correct={clickedButton === i && isCorrect}
+            incorrect={clickedButton === i && isIncorrect}
+            key={i}
+            handleClick={() => {
+              checkAnswer(value)
+              saveButtonClick(value, i)
+            }}
+            text={value}
+          />
+        )
+      })}
       <StatusBar style="auto" />
     </Layout>
   )
