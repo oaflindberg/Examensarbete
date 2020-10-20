@@ -1,12 +1,12 @@
 // REACT & EXPO
 import React, { useState, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { StyledText, CreateAccount } from '../../styles/Text'
+import { MainHeading, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
@@ -45,8 +45,8 @@ export default function LoginScreen({
 
   return (
     <Layout>
-      <StyledText>Välkommen!</StyledText>
-      {error && <StyledText>Någonting gick fel. Testa igen!</StyledText>}
+      <MainHeading>Välkommen!</MainHeading>
+      {error && <InfoText>Någonting gick fel. Försök igen!</InfoText>}
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
@@ -60,9 +60,7 @@ export default function LoginScreen({
       />
       <Button text={'Logga in'} handleClick={signIn} />
       <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
-        <CreateAccount>
-          Har du inget konto? Klicka här för att skapa ett
-        </CreateAccount>
+        <InfoText>Har du inget konto? Klicka här för att skapa ett</InfoText>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </Layout>

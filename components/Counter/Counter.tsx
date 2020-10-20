@@ -10,7 +10,9 @@ interface CounterProps {
 const Counter = ({ correct, quizCompleted }: CounterProps) => {
   const [points, setPoints] = useContext(PointsContext)
   const [time, setTime] = useState<number>(20)
+
   const timer = () => setTime(time - 1)
+  const countDown = setInterval(timer, 1000)
 
   useEffect(() => {
     if (time >= 0 && correct == true) {
@@ -31,7 +33,6 @@ const Counter = ({ correct, quizCompleted }: CounterProps) => {
       return
     }
 
-    const countDown = setInterval(timer, 1000)
     return () => clearInterval(countDown)
   }, [time])
 

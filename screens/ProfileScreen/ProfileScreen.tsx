@@ -8,7 +8,7 @@ import firebase from '../../firebase/firebase'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { StyledText } from '../../styles/Text'
+import { MainHeading, Heading, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // TYPINGS
@@ -68,9 +68,7 @@ export default function ProfileScreen({
     if (user.displayName === null) {
       return (
         <Layout>
-          <StyledText style={{ marginBottom: '20%' }}>
-            Välj användarnamn
-          </StyledText>
+          <Heading style={{ marginBottom: '20%' }}>Välj användarnamn</Heading>
           <StyledInput
             onChangeText={(text: string) => setUsername(text)}
             autoCapitalize="none"
@@ -84,11 +82,11 @@ export default function ProfileScreen({
 
   return (
     <Layout>
-      <StyledText>Hej {user?.displayName}!</StyledText>
-      <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
-      <Button handleClick={deleteUser} text="Ta bort konto" />
-      {confrimation == 1 && <StyledText>Är du säker?</StyledText>}
+      <MainHeading>Hej {user?.displayName}!</MainHeading>
+      <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={signOut} text="Logga ut" />
+      <Button handleClick={deleteUser} text="Ta bort konto" />
+      {confrimation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
       <StatusBar style="auto" />
     </Layout>
   )

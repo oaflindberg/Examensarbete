@@ -1,5 +1,5 @@
 //REACT & EXPO
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // COMPONENTS & STYLES
@@ -7,7 +7,7 @@ import QuestionContainer from '../../components/QuestionContainer/QuestionContai
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
 import Counter from '../../components/Counter/Counter'
-import { StyledText } from '../../styles/Text'
+import { MainHeading, Heading } from '../../styles/Text'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
@@ -76,7 +76,7 @@ export default function QuizScreen({
   if (question == undefined && quizCompleted == false) {
     return (
       <Layout>
-        <StyledText>Loading...</StyledText>
+        <Heading>Loading...</Heading>
       </Layout>
     )
   }
@@ -95,7 +95,7 @@ export default function QuizScreen({
 
     return (
       <Layout>
-        <StyledText>Grattis....</StyledText>
+        <MainHeading>Grattis....</MainHeading>
         <Counter />
         <Button
           handleClick={() => navigation.navigate('Home')}

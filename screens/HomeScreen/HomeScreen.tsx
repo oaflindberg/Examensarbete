@@ -8,7 +8,7 @@ import firebase from '../../firebase/firebase'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { StyledText } from '../../styles/Text'
+import { StyledText, MainHeading } from '../../styles/Text'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -28,9 +28,7 @@ export default function HomeScreen({
 
   return (
     <Layout>
-      <StyledText>DET STORA</StyledText>
-      <StyledText>BLÅVITA</StyledText>
-      <StyledText style={{ marginBottom: '20%' }}>QUIZZET!</StyledText>
+      <MainHeading>DET STORA BLÅVITA QUIZZET</MainHeading>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
       {!loggedIn ? (
         <Button
