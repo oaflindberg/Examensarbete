@@ -1,11 +1,5 @@
 import styled from 'styled-components/native'
-import { Text, TextInput } from 'react-native'
-
-export const StyledText = styled(Text)`
-  color: #fefefe;
-  font-family: 'Akkurat';
-  font-size: 50px;
-`
+import { TextInput } from 'react-native'
 
 export const StyledInput = styled(TextInput)`
   background-color: #fefefe;

@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeScreen from './Screens/HomeScreen/HomeScreen'
-import QuizScreen from './Screens/QuizScreen/QuizScreen'
-import LoginScreen from './Screens/LoginScreen/LoginScreen'
-import ProfileScreen from './Screens/ProfileScreen/ProfileScreen'
-import CreateAccoutScreen from './Screens/CreateAccountScreen/CreateAccountScreen'
+import HomeScreen from './screens/HomeScreen/HomeScreen'
+import QuizScreen from './screens/QuizScreen/QuizScreen'
+import LoginScreen from './screens/LoginScreen/LoginScreen'
+import ProfileScreen from './screens/ProfileScreen/ProfileScreen'
+import CreateAccoutScreen from './screens/CreateAccountScreen/CreateAccountScreen'
 import React from 'react'
 
 export default function App() {

@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // COMPONENTS & STYLES
-import Button from './../../components/Button/Button'
-import Layout from './../../components/Layout/Layout'
-import { StyledText, StyledInput } from './Style'
+import Button from '../../components/Button/Button'
+import Layout from '../../components/Layout/Layout'
+import { StyledText } from '../../styles/Text'
+import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
-import firebase from './../../firebase/firebase'
+import firebase from '../../firebase/firebase'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -25,8 +26,8 @@ export default function LoginScreen({
       .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
+        let errorCode = error.code
+        let errorMessage = error.message
         // ...
       })
   }

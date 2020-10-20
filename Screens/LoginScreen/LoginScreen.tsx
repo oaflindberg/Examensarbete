@@ -4,12 +4,13 @@ import { StatusBar } from 'expo-status-bar'
 import { Text, TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
-import Button from './../../components/Button/Button'
-import Layout from './../../components/Layout/Layout'
-import { StyledText, StyledInput, CreateAccount } from './Style'
+import Button from '../../components/Button/Button'
+import Layout from '../../components/Layout/Layout'
+import { StyledText, CreateAccount } from '../../styles/Text'
+import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
-import firebase from './../../firebase/firebase'
+import firebase from '../../firebase/firebase'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -26,8 +27,8 @@ export default function LoginScreen({
       .signInWithEmailAndPassword(email, password)
       .catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
+        let errorCode = error.code
+        let errorMessage = error.message
         setError(true)
         setTimeout(() => {
           setError(false)

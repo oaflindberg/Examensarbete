@@ -6,3 +6,9 @@ export const StyledText = styled(Text)`
   font-family: 'Akkurat';
   font-size: 50px;
 `
+
+export const CreateAccount = styled(Text)`
+  color: #fefefe;
+  font-family: 'Akkurat';
+  font-size: 14px;
+`

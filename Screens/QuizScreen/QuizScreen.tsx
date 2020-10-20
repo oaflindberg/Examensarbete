@@ -3,14 +3,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // COMPONENTS & STYLES
-import QuestionContainer from './../../components/QuestionContainer/QuestionContainer'
-import Button from './../../components/Button/Button'
-import Layout from './../../components/Layout/Layout'
-import Counter from './../../components/Counter/Counter'
-import { StyledText } from './Style'
+import QuestionContainer from '../../components/QuestionContainer/QuestionContainer'
+import Button from '../../components/Button/Button'
+import Layout from '../../components/Layout/Layout'
+import Counter from '../../components/Counter/Counter'
+import { StyledText } from '../../styles/Text'
 
 // FUNCTIONS & FIREBASE
-import firebase from './../../firebase/firebase'
+import firebase from '../../firebase/firebase'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'

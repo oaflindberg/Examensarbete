@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
-import firebase from './../../firebase/firebase'
+import firebase from '../../firebase/firebase'
 
 // COMPONENTS & STYLES
-import Button from './../../components/Button/Button'
-import Layout from './../../components/Layout/Layout'
-import { StyledText } from './Style'
+import Button from '../../components/Button/Button'
+import Layout from '../../components/Layout/Layout'
+import { StyledText } from '../../styles/Text'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
