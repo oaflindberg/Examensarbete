@@ -40,8 +40,6 @@ export default function LoginScreen({
     }
   })
 
-  console.log('Hej hej')
-
   return (
     <Layout>
       <MainHeading>Skapa konto</MainHeading>

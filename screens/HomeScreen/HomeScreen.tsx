@@ -13,7 +13,6 @@ import { MainHeading } from '../../styles/Text'
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-console.log('Hej hej')
 export default function HomeScreen({
   navigation,
 }: RouteStackParamList<'Home'>) {

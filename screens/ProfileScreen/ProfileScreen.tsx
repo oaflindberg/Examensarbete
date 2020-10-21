@@ -80,7 +80,7 @@ export default function ProfileScreen({
       )
     }
   }
-  console.log(user)
+
   return (
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>

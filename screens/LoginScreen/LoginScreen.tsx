@@ -43,8 +43,6 @@ export default function LoginScreen({
     }
   })
 
-  console.log('Hej hej')
-
   return (
     <Layout>
       <MainHeading>Välkommen!</MainHeading>

@@ -1,6 +1,7 @@
 //REACT & EXPO
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import { Vibration } from 'react-native'
 
 // COMPONENTS & STYLES
 import QuestionContainer from '../../components/QuestionContainer/QuestionContainer'
@@ -26,6 +27,7 @@ export default function QuizScreen({
   const [clickedButton, setClickedButton] = useState<number | undefined>()
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
+  const [hardMode, setHardMode] = useState<boolean | undefined>()
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -57,10 +59,13 @@ export default function QuizScreen({
         setIndex(index + 1)
       }, 750)
     }
+
     if (selectedAnswer != question.answer) {
       setIsIncorrect(true)
+      Vibration.vibrate()
       setTimeout(() => {
         setIndex(index + 1)
+        Vibration.cancel()
       }, 750)
     }
   }
@@ -108,11 +113,24 @@ export default function QuizScreen({
   const questionsArray = Object.entries(question.alternatives).sort(
     () => Math.random() - 0.5
   )
-  // console.log(questionsArray)
+
+  if (hardMode == undefined) {
+    return (
+      <Layout>
+        <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
+        <Button text="Normal" handleClick={() => setHardMode(false)} />
+        <Button text="Hets" handleClick={() => setHardMode(true)} />
+      </Layout>
+    )
+  }
 
   return (
     <Layout>
-      <Counter quizCompleted={quizCompleted} correct={isCorrect} />
+      <Counter
+        hardMode={hardMode}
+        quizCompleted={quizCompleted}
+        correct={isCorrect}
+      />
       <QuestionContainer
         questionNumber={`Fråga ${index + 1}`}
         question={question.question}

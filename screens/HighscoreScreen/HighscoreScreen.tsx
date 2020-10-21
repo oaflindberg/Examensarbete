@@ -16,8 +16,6 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function HighscoreScreen({
   navigation,
 }: RouteStackParamList<'Highscore'>) {
-                        console.log('Hej hej')
-
   return (
     <Layout>
       <Button

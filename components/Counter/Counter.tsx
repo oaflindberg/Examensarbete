@@ -5,24 +5,25 @@ import PointsContext from './../../context/PointsContext'
 interface CounterProps {
   correct?: boolean | null
   quizCompleted?: boolean | undefined
+  hardMode?: boolean | undefined
 }
 
-const Counter = ({ correct, quizCompleted }: CounterProps) => {
+const Counter = ({ correct, quizCompleted, hardMode }: CounterProps) => {
   const [points, setPoints] = useContext(PointsContext)
-  const [time, setTime] = useState<number>(20)
+  const [time, setTime] = useState<number>(30)
 
   useEffect(() => {
     if (time >= 0 && correct == true) {
-      setTime(20)
+      setPoints(points + time * 150)
       setTimeout(() => {
-        setPoints(points + time * 125)
+        setTime(30)
       }, 750)
     }
 
     if (time <= 0 && correct == true) {
-      setPoints(points + 125)
+      setPoints(points + 150)
       setTimeout(() => {
-        setTime(20)
+        setTime(30)
       }, 750)
     }
 
@@ -31,17 +32,40 @@ const Counter = ({ correct, quizCompleted }: CounterProps) => {
     }
 
     const timer = () => setTime(time - 1)
-    const countDown = setInterval(timer, 1000)
 
-    return () => clearInterval(countDown)
+    if (hardMode == true) {
+      let countDown = setInterval(timer, 600)
+      if (time <= 0) {
+        clearInterval(countDown)
+      }
+      return () => clearInterval(countDown)
+    } else {
+      let countDown = setInterval(timer, 1000)
+      if (time <= 0) {
+        clearInterval(countDown)
+      }
+
+      return () => clearInterval(countDown)
+    }
   }, [time])
 
   console.log(time)
 
   return (
-    <CounterText quizCompleted={quizCompleted} correct={correct}>
-      Poäng: {points}
-    </CounterText>
+    <>
+      <CounterText quizCompleted={quizCompleted} correct={correct}>
+        Poäng: {points}
+      </CounterText>
+      {hardMode && (
+        <CounterText
+          quizCompleted={quizCompleted}
+          correct={correct}
+          hardMode={hardMode}
+        >
+          {time}
+        </CounterText>
+      )}
+    </>
   )
 }
 
