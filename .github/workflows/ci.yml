@@ -3,6 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs: 
+  run:
     runs-on: ubuntu-latest
 
     name: Check with prettier
