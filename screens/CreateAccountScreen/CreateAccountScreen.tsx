@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading } from '../../styles/Text'
+import { MainHeading, Label } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
@@ -40,14 +40,18 @@ export default function LoginScreen({
     }
   })
 
+  console.log('Hej hej')
+
   return (
     <Layout>
       <MainHeading>Skapa konto</MainHeading>
+      <Label>Email</Label>
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
         placeholder={'Example@example.com'}
       />
+      <Label>Lösenord</Label>
       <StyledInput
         secureTextEntry={true}
         autoCapitalize="none"

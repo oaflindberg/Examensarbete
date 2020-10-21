@@ -8,6 +8,7 @@ import firebase from '../../firebase/firebase'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
+import HighscoreContainer from './../../components/HighscoreContainer/HighscoreContainer'
 import { MainHeading, Heading, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
@@ -79,10 +80,17 @@ export default function ProfileScreen({
       )
     }
   }
-
+  console.log(user)
   return (
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>
+      <HighscoreContainer
+        title="Här är dina 3 bästa resultat"
+        score1="9340"
+        score2="8763"
+        score3="7493"
+        handleClick={() => navigation.navigate('Highscore')}
+      />
       <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={signOut} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />

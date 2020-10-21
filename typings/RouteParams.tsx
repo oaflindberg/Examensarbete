@@ -6,6 +6,7 @@ type RouteParamList = {
   Login: undefined
   CreateAccount: undefined
   Profile: undefined
+  Highscore: undefined
 }
 
 export type RouteStackParamList<T extends keyof RouteParamList> = {

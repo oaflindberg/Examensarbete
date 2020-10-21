@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading, InfoText } from '../../styles/Text'
+import { MainHeading, InfoText, Label } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
@@ -43,15 +43,19 @@ export default function LoginScreen({
     }
   })
 
+  console.log('Hej hej')
+
   return (
     <Layout>
       <MainHeading>Välkommen!</MainHeading>
       {error && <InfoText>Någonting gick fel. Försök igen!</InfoText>}
+      <Label>Email</Label>
       <StyledInput
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
         placeholder={'Example@example.com'}
       />
+      <Label>Lösenord</Label>
       <StyledInput
         secureTextEntry={true}
         autoCapitalize="none"

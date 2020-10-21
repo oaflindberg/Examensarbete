@@ -20,7 +20,7 @@ export default function QuizScreen({
   navigation,
 }: RouteStackParamList<'Quiz'>) {
   const [index, setIndex] = useState<number>(0)
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<object>()
   const [isCorrect, setIsCorrect] = useState<boolean | null>()
   const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
   const [clickedButton, setClickedButton] = useState<number | undefined>()
@@ -108,6 +108,7 @@ export default function QuizScreen({
   const questionsArray = Object.entries(question.alternatives).sort(
     () => Math.random() - 0.5
   )
+  // console.log(questionsArray)
 
   return (
     <Layout>

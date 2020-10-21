@@ -8,11 +8,12 @@ import firebase from '../../firebase/firebase'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { StyledText, MainHeading } from '../../styles/Text'
+import { MainHeading } from '../../styles/Text'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
+console.log('Hej hej')
 export default function HomeScreen({
   navigation,
 }: RouteStackParamList<'Home'>) {

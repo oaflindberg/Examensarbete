@@ -11,14 +11,11 @@ const Counter = ({ correct, quizCompleted }: CounterProps) => {
   const [points, setPoints] = useContext(PointsContext)
   const [time, setTime] = useState<number>(20)
 
-  const timer = () => setTime(time - 1)
-  const countDown = setInterval(timer, 1000)
-
   useEffect(() => {
     if (time >= 0 && correct == true) {
-      setPoints(points + time * 125)
+      setTime(20)
       setTimeout(() => {
-        setTime(20)
+        setPoints(points + time * 125)
       }, 750)
     }
 
@@ -33,8 +30,13 @@ const Counter = ({ correct, quizCompleted }: CounterProps) => {
       return
     }
 
+    const timer = () => setTime(time - 1)
+    const countDown = setInterval(timer, 1000)
+
     return () => clearInterval(countDown)
   }, [time])
+
+  console.log(time)
 
   return (
     <CounterText quizCompleted={quizCompleted} correct={correct}>
