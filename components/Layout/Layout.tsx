@@ -16,7 +16,6 @@ export default function Layout({ children }: LayoutProps) {
   if (!loaded) {
     return null
   }
-
   return (
     <PointsProvider value={[points, setPoints]}>
       <StyledView>{children}</StyledView>

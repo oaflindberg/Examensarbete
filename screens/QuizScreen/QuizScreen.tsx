@@ -18,68 +18,73 @@ import firebase from '../../firebase/firebase'
 import QuestionProps from '../../typings/QuestionProps'
 import { RouteStackParamList } from 'typings/RouteParams'
 
-const test = async () => {
-  const soundObject = new Audio.Sound();
-   try {
-   await soundObject.loadAsync(require('../../assets/BLAVITT.mp3'))
-   await soundObject.playAsync()
-   await soundObject.setIsLoopingAsync(true)
-   // Your sound is playing!
-
-   // Don't forget to unload the sound from memory
-   // when you are done using the Sound object
-  //  await soundObject.unloadAsync();
- } catch (error) {
-   // An error occurred
- }
-}
-
- 
-
 export default function QuizScreen({
   navigation,
 }: RouteStackParamList<'Quiz'>) {
   const [questionId, setQuestionId] = useState<number>(0)
   const [user, setUser] = useState<object>()
-  const [isCorrect, setIsCorrect] = useState<boolean | null>()
-  const [isIncorrect, setIsIncorrect] = useState<boolean | null>()
-  const [clickedButton, setClickedButton] = useState<number | undefined>()
+  const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined)
+  const [isIncorrect, setIsIncorrect] = useState<boolean | undefined>(undefined)
+  const [clickedButton, setClickedButton] = useState<number | undefined>(undefined)
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
-  const [level, setLevel] = useState<string | undefined>()
+  const [level, setLevel] = useState<string | undefined>(undefined)
+  const [audio, setAudio] = useState<boolean | null>(null)
 
   // TODO: IsCorrect/IsIncorrect
 
   // Fetches user from database
 
+  
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       setUser(user)
     }
   })
-  })
-  
-  // Fetches questions from database
+  }, [user, setUser])
 
+  // Looping audio for hardmode (Not working as it should, check looping(Might be rendering-bugg))
+
+  const loopingAudio = async () => {
+    const soundObject = new Audio.Sound();
+     try {
+     await soundObject.loadAsync(require('../../assets/BLAVITT.mp3'))
+     if (audio == true) {
+       await soundObject.playAsync()
+       await soundObject.setIsLoopingAsync(true)
+      } else {
+        await soundObject.unloadAsync();
+      }
+   } catch (error) {
+     // An error occurred
+   }
+  }
+
+  // Fetches questions from database
   
   useEffect(() => {
-    setIsCorrect(undefined)
+    setIsCorrect(false)
+    setIsIncorrect(false)
     const database = firebase.database()
     database
       .ref(`/questions/${questionId}`)
       .once('value')
       .then((dataSnapshot) => {
         let questions = dataSnapshot.toJSON()
-        console.log(isCorrect)
         setQuestion(questions)
-        setClickedButton(undefined)
+        setAudio(true)
 
         if (questions == null) {
           setQuizCompleted(true)
         }
       })
-  }, [questionId])
+  }, [questionId,
+      setQuestion,
+      setAudio,
+      setIsCorrect,
+      setIsIncorrect,
+      setQuizCompleted])
 
   // Checks if answer is correct 
 
@@ -103,14 +108,10 @@ export default function QuizScreen({
     }
   }
 
-  // Kolla detta
+  // Checks index on the button that is clicked (saved)
 
-  const saveButtonClick = (buttonValue: string, index: number) => {
-    if (buttonValue == question.answer) {
-      setClickedButton(index)
-    } else {
-      setClickedButton(index)
-    }
+  const saveButtonClick = (clickedId: number) => {
+    setClickedButton(clickedId)
   }
 
   // This is a loading screen for when the questions are being printed
@@ -126,8 +127,9 @@ export default function QuizScreen({
   // A layout with a <Counter> that displays your points
 
   if (quizCompleted) {
+    //
     // THIS WILL BE HIGHSCORE IN THE FUTURE
-    // 
+    // Hur hämtar vi poängen hit?
 
     //  function writeUserData(userId:string, highscore:string) {
     //    firebase.database().ref('/highscore/').set({
@@ -158,10 +160,6 @@ export default function QuizScreen({
     () => Math.random() - 0.5
   )
 
-  if (level == "Hard") {
-    test()
-  }
-
   // Here you can choose the how difficult you want the quiz to be
 
   if (level == undefined) {
@@ -174,8 +172,13 @@ export default function QuizScreen({
     )
   }
 
+  // If you choose the level "Hard", an audio file will begin playing
+ if (level == "Hard") {
+    loopingAudio()
+  }
+
   // This is the <Layout> you get when playing the quiz
-console.log("Hej")
+
   return (
     <Layout>
       <Counter
@@ -190,12 +193,12 @@ console.log("Hej")
        {questionsArray.map(([key, value]: [string, any], buttonId: number) => {
         return (
           <Button
-            correct={clickedButton === buttonId && isCorrect}
-            incorrect={clickedButton === buttonId && isIncorrect}
+            isCorrect={clickedButton === buttonId && isCorrect}
+            isIncorrect={clickedButton === buttonId && isIncorrect}
             key={buttonId}
             handleClick={() => {
               checkAnswer(value)
-              saveButtonClick(value, buttonId)
+              saveButtonClick(buttonId)
             }}
             text={value}
           />

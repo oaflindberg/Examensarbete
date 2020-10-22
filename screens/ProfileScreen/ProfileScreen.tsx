@@ -1,5 +1,5 @@
 // REACT & EXPO
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
@@ -64,6 +64,16 @@ export default function ProfileScreen({
         })
     }
   }
+
+  useEffect(() => {
+    const database = firebase.database()
+    database
+      .ref(`/highscores/highscore`)
+      .once('value')
+      .then((dataSnapshot) => {
+        let questions = dataSnapshot.toJSON()
+      })
+  }, [])
 
   if (user !== null) {
     if (user.displayName === null) {

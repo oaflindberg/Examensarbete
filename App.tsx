@@ -10,7 +10,6 @@ import HighscoreScreen from './screens/HighscoreScreen/HighscoreScreen'
 
 export default function App() {
   const Stack = createStackNavigator()
-
   return (
     <NavigationContainer>
       <Stack.Navigator
