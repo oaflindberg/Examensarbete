@@ -1,5 +1,5 @@
 // REACT & EXPO
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
@@ -18,14 +18,17 @@ export default function HomeScreen({
 }: RouteStackParamList<'Home'>) {
   const [loggedIn, setLoggedIn] = useState(false)
 
-  firebase.auth().onAuthStateChanged(function (user) {
+  useEffect(() => {
+   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       setLoggedIn(true)
     } else {
       setLoggedIn(false)
     }
   })
+  })
 
+ 
   return (
     <Layout>
       <MainHeading>DET STORA BLÅVITA QUIZZET</MainHeading>

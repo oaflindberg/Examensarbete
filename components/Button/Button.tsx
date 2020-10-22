@@ -4,18 +4,18 @@ import { StyledButton, ButtonText } from './Style'
 interface ButtonProps {
   text: string
   handleClick?: () => void
-  correct?: boolean | null
-  incorrect?: boolean | null
+  isCorrect?: boolean | null
+  isIncorrect?: boolean | null
 }
 
 export default function Button({
   text,
-  correct,
-  incorrect,
+  isCorrect,
+  isIncorrect,
   handleClick,
 }: ButtonProps) {
   return (
-    <StyledButton onPress={handleClick} correct={correct} incorrect={incorrect}>
+    <StyledButton onPress={handleClick} isCorrect={isCorrect} isIncorrect={isIncorrect}>
       <ButtonText>{text}</ButtonText>
     </StyledButton>
   )

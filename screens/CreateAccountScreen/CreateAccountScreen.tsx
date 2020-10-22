@@ -57,6 +57,7 @@ export default function LoginScreen({
         placeholder={'Lösenord'}
       />
       <Button text={'Skapa konto'} handleClick={createAccount} />
+      <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
       <StatusBar style="auto" />
     </Layout>
   )

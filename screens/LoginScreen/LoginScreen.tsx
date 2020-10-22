@@ -61,6 +61,7 @@ export default function LoginScreen({
         placeholder={'Lösenord'}
       />
       <Button text={'Logga in'} handleClick={signIn} />
+      <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
         <InfoText>Har du inget konto? Klicka här för att skapa ett</InfoText>
       </TouchableOpacity>
