@@ -5,10 +5,10 @@ import PointsContext from './../../context/PointsContext'
 interface CounterProps {
   correct?: boolean | null
   quizCompleted?: boolean | undefined
-  hardMode?: boolean | undefined
+  level?: string | undefined
 }
 
-const Counter = ({ correct, quizCompleted, hardMode }: CounterProps) => {
+const Counter = ({ correct, quizCompleted, level }: CounterProps) => {
   const [points, setPoints] = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
 
@@ -33,7 +33,7 @@ const Counter = ({ correct, quizCompleted, hardMode }: CounterProps) => {
 
     const timer = () => setTime(time - 1)
 
-    if (hardMode == true) {
+    if (level == "Hard") {
       let countDown = setInterval(timer, 600)
       if (time <= 0) {
         clearInterval(countDown)
@@ -56,11 +56,11 @@ const Counter = ({ correct, quizCompleted, hardMode }: CounterProps) => {
       <CounterText quizCompleted={quizCompleted} correct={correct}>
         Poäng: {points}
       </CounterText>
-      {hardMode && (
+      {level == "Hard" && (
         <CounterText
           quizCompleted={quizCompleted}
           correct={correct}
-          hardMode={hardMode}
+          level={"Hard"}
         >
           {time}
         </CounterText>

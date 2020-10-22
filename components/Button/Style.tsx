@@ -6,6 +6,8 @@ interface Correct {
   incorrect?: boolean | null
 }
 
+// State = Status(State) Correct, Incorrect, Default (IsCorrect == Null)
+
 export const StyledButton = styled(TouchableOpacity)<Correct>`
   width: 50%;
   height: auto;
@@ -16,9 +18,9 @@ export const StyledButton = styled(TouchableOpacity)<Correct>`
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
   ${({ correct, incorrect }) => {
     switch (true) {
-      case correct == true:
+      case correct:
         return `background: #c2fc0a`
-      case incorrect == true:
+      case incorrect:
         return `background: #fc0a49`
       default: {
         return `background: #fefefe`
