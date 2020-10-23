@@ -10,27 +10,14 @@ import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
+import createAccount from './../../functions/CreateAccout'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-export default function LoginScreen({
-  navigation,
-}: RouteStackParamList<'Login'>) {
+export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-
-  const createAccount = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(function (error) {
-        // Handle Errors here.
-        let errorCode = error.code
-        let errorMessage = error.message
-        // ...
-      })
-  }
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -44,11 +31,7 @@ export default function LoginScreen({
     <Layout>
       <MainHeading>Skapa konto</MainHeading>
       <Label>Email</Label>
-      <StyledInput
-        onChangeText={(text) => setEmail(text)}
-        autoCapitalize="none"
-        placeholder={'Example@example.com'}
-      />
+      <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
       <Label>Lösenord</Label>
       <StyledInput
         secureTextEntry={true}
@@ -56,7 +39,7 @@ export default function LoginScreen({
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <Button text={'Skapa konto'} handleClick={createAccount} />
+      <Button text={'Skapa konto'} handleClick={() => createAccount(firebase, email, password)} />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
       <StatusBar style="auto" />
     </Layout>

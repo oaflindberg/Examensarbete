@@ -1,5 +1,5 @@
 // REACT & EXPO
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
@@ -13,36 +13,27 @@ import { MainHeading } from '../../styles/Text'
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-export default function HomeScreen({
-  navigation,
-}: RouteStackParamList<'Home'>) {
+export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) {
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
-   firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      setLoggedIn(true)
-    } else {
-      setLoggedIn(false)
-    }
-  })
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        setLoggedIn(true)
+      } else {
+        setLoggedIn(false)
+      }
+    })
   })
 
- 
   return (
     <Layout>
       <MainHeading>DET STORA BLÅVITA QUIZZET</MainHeading>
       <Button handleClick={() => navigation.navigate('Quiz')} text="Starta" />
       {!loggedIn ? (
-        <Button
-          handleClick={() => navigation.navigate('Login')}
-          text="Logga in"
-        />
+        <Button handleClick={() => navigation.navigate('Login')} text="Logga in" />
       ) : (
-        <Button
-          handleClick={() => navigation.navigate('Profile')}
-          text="Profilsida"
-        />
+        <Button handleClick={() => navigation.navigate('Profile')} text="Profilsida" />
       )}
       <StatusBar style="auto" />
     </Layout>

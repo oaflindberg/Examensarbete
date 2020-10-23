@@ -7,42 +7,37 @@ import PointsContext from './../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
+import saveHighscore from './../../functions/SaveHighscore'
 
 interface CounterProps {
-  correct?: boolean | null
+  isCorrect?: boolean | null
+  isIncorrect?: boolean | null
   quizCompleted?: boolean | undefined
-  level?: string | undefined
+  level?: string
 }
 
-
-function writeUserData(userId: string, highscore: any) {
-  firebase.database().ref('/highscores/').push({
-    highscore : highscore,
-    user : userId
-  });  
-}
-
-  const Counter = ({ correct, quizCompleted, level }: CounterProps) => {
+const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps) => {
   const [points, setPoints] = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
-  
+
   let user = firebase.auth().currentUser
 
-
-if (user !== null && quizCompleted == undefined) {
-  writeUserData(user.uid, points)
-}
+  if (user !== null && quizCompleted == undefined) {
+    saveHighscore(firebase, user.uid, points)
+  }
 
   useEffect(() => {
-    if (time >= 0 && correct == true) {
+    // If time remaining is more than 0
+    if (time >= 0 && isCorrect) {
       setPoints(points + time * 150)
       setTimeout(() => {
         setTime(30)
       }, 750)
       console.log('ETT')
     }
-    console.log('coorecctte', time <= 0 && !correct)
-    if (time <= 0 && correct == true) {
+
+    // If time remaining is 0
+    if (time <= 0 && isCorrect) {
       setPoints(points + 150)
       setTimeout(() => {
         setTime(30)
@@ -50,45 +45,52 @@ if (user !== null && quizCompleted == undefined) {
       console.log('TVÅ')
     }
 
+    // If incorrect answer
+    if (isIncorrect) {
+      setTimeout(() => {
+        setTime(30)
+      }, 750)
+    }
+
+    // If all questions has been answered
     if (quizCompleted == undefined) {
       return
     }
 
     const timer = () => setTime(time - 1)
 
-    if (level == "Hard") {
+    // If game mode is set to hard set interval to count down faster, else normal countdown speed.
+    if (level == 'Hard') {
       let countDown = setInterval(timer, 600)
+      // If time remaining is 0 clear interval
       if (time <= 0) {
         clearInterval(countDown)
       }
+
       return () => clearInterval(countDown)
     } else {
       let countDown = setInterval(timer, 1000)
+      // If time remaining is 0 clear interval
       if (time <= 0) {
         console.log('TRE')
         clearInterval(countDown)
       }
 
-      console.log("FYRA")
+      console.log('FYRA')
 
       return () => clearInterval(countDown)
     }
   }, [time])
- 
 
   console.log(time)
 
   return (
     <>
-      <CounterText quizCompleted={quizCompleted} correct={correct}>
+      <CounterText quizCompleted={quizCompleted} isIncorrect={isIncorrect} isCorrect={isCorrect}>
         Poäng: {points}
       </CounterText>
-      {level == "Hard" && (
-        <CounterText
-          quizCompleted={quizCompleted}
-          correct={correct}
-          level={"Hard"}
-        >
+      {level == 'Hard' && (
+        <CounterText quizCompleted={quizCompleted} isIncorrect={isIncorrect} isCorrect={isCorrect} level={'Hard'}>
           {time}
         </CounterText>
       )}

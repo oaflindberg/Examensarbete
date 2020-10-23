@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 
-// FIREBASE
+// FIREBASE & FUNCTIONS
 import firebase from '../../firebase/firebase'
+// import getHighscores from './../../functions/GetHighscores'
+import signOut from './../../functions/SignOut'
+import updateUsername from './../../functions/UpdateUsername'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
@@ -11,69 +14,42 @@ import Layout from '../../components/Layout/Layout'
 import HighscoreContainer from './../../components/HighscoreContainer/HighscoreContainer'
 import { MainHeading, Heading, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
+import HighscoreText from './../../components/Highscore/Highscore'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-export default function ProfileScreen({
-  navigation,
-}: RouteStackParamList<'Profile'>) {
+export default function ProfileScreen({ navigation }: RouteStackParamList<'Profile'>) {
   const [username, setUsername] = useState<string>('')
-  const [confrimation, setConfrimation] = useState<number>(0)
-
+  const [confirmation, setConfirmation] = useState<number>(0)
+  const [highscores, setHighscores] = useState<any>()
+  useEffect(() => {
+    firebase
+      .database()
+      .ref(`/highscores/${user?.uid}/`)
+      .once('value')
+      .then((dataSnapshot: firebase.database.DataSnapshot) => {
+        if (dataSnapshot !== null) {
+          setHighscores(dataSnapshot.toJSON())
+        }
+      })
+  }, [])
   let user = firebase.auth().currentUser
 
   const deleteUser = () => {
     if (user !== null) {
-      setConfrimation(confrimation + 1)
-      if (confrimation == 1) {
+      setConfirmation(confirmation + 1)
+      if (confirmation == 1) {
         user
           .delete()
           .then(function () {
-            setConfrimation(0)
+            setConfirmation(0)
             navigation.navigate('Home')
           })
           .catch(function (error) {})
       }
     }
   }
-
-  const signOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        navigation.navigate('Home')
-      })
-      .catch(function (error) {
-        console.log(error.message)
-      })
-  }
-
-  const updateUsername = () => {
-    if (user !== null) {
-      user
-        .updateProfile({
-          displayName: username,
-        })
-        .then(function () {
-          navigation.navigate('Login')
-        })
-        .catch(function (error) {
-          console.log(error.message)
-        })
-    }
-  }
-
-  useEffect(() => {
-    const database = firebase.database()
-    database
-      .ref(`/highscores/highscore`)
-      .once('value')
-      .then((dataSnapshot) => {
-        let questions = dataSnapshot.toJSON()
-      })
-  }, [])
 
   if (user !== null) {
     if (user.displayName === null) {
@@ -85,26 +61,31 @@ export default function ProfileScreen({
             autoCapitalize="none"
             placeholder={'Tobias Hysén'}
           ></StyledInput>
-          <Button text={'OK'} handleClick={updateUsername} />
+          <Button text={'OK'} handleClick={() => updateUsername(user, username, navigation.navigate('Login'))} />
         </Layout>
       )
     }
   }
 
+  console.log(highscores)
+
   return (
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>
-      <HighscoreContainer
-        title="Här är dina 3 bästa resultat"
-        score1="9340"
-        score2="8763"
-        score3="7493"
-        handleClick={() => navigation.navigate('Highscore')}
-      />
+      <HighscoreContainer title="Här är dina 3 bästa resultat" handleClick={() => navigation.navigate('Highscore')}>
+        {/* // TODO: Fix this. (might need to use a map on the map on the map on the map on the map) */}
+        {/* {highscores != undefined ? (
+          highscores.map(([key, value]: [string, any], highscoreId: number) => {
+            return <HighscoreText key={highscoreId} text={value} />
+          })
+        ) : (
+          <Heading>Loading Highscores...</Heading>
+        )} */}
+      </HighscoreContainer>
       <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
-      <Button handleClick={signOut} text="Logga ut" />
+      <Button handleClick={() => signOut(firebase, navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
-      {confrimation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
+      {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
       <StatusBar style="auto" />
     </Layout>
   )

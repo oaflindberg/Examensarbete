@@ -2,7 +2,8 @@ import styled from 'styled-components/native'
 import { Text } from 'react-native'
 
 interface Correct {
-  correct?: boolean | null
+  isCorrect?: boolean | null
+  isIncorrect?: boolean | null
   quizCompleted?: boolean | null
   level?: string | undefined
 }

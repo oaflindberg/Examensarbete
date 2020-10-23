@@ -15,12 +15,11 @@ import firebase from '../../firebase/firebase'
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
 
-export default function LoginScreen({
-  navigation,
-}: RouteStackParamList<'Login'>) {
+export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
+
   const signIn = () => {
     firebase
       .auth()
@@ -48,11 +47,7 @@ export default function LoginScreen({
       <MainHeading>Välkommen!</MainHeading>
       {error && <InfoText>Någonting gick fel. Försök igen!</InfoText>}
       <Label>Email</Label>
-      <StyledInput
-        onChangeText={(text) => setEmail(text)}
-        autoCapitalize="none"
-        placeholder={'Example@example.com'}
-      />
+      <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
       <Label>Lösenord</Label>
       <StyledInput
         secureTextEntry={true}
