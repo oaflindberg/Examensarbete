@@ -25,3 +25,19 @@ export const Label = styled(StyledText)`
 export const InfoText = styled(StyledText)`
   font-size: 14px;
 `
+
+export const HighscoreHeading = styled(Text)`
+  color: #fefefe;
+  font-size: 24px;
+  font-family: 'Akkurat';
+  text-align: center;
+  margin-bottom: 10%;
+`
+
+export const HighscoreInfo = styled(Text)`
+  color: #fefefe;
+  font-size: 18px;
+  font-family: 'Akkurat';
+  text-align: center;
+  margin-bottom: 10%;
+`

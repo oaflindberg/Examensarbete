@@ -24,7 +24,7 @@ export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) 
         setLoggedIn(false)
       }
     })
-  })
+  }, [loggedIn, setLoggedIn])
 
   return (
     <Layout>

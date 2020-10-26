@@ -32,6 +32,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [level, setLevel] = useState<string>('Not set')
   const [audio, setAudio] = useState<boolean>(false)
 
+
   // TODO: isCorrect / isIncorrect - Try to solve it using just one state.
   // TODO: Use useContext for user instead of fetching current user on all screens
 
@@ -41,7 +42,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         setUser(user)
-        console.log(user.uid)
       }
     })
   }, [user, setUser])
@@ -63,7 +63,8 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
           setQuizCompleted(true)
         }
       })
-  }, [questionId, setQuestion, setAudio, setQuizCompleted])
+  }, [questionId])
+
 
   // Checks if answer is correct
 
@@ -103,7 +104,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
-  console.log(user)
   // A layout with a <Counter> that displays your points
 
   if (quizCompleted) {
@@ -124,6 +124,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
         <Button text="Normal" handleClick={() => setLevel('Normal')} />
         <Button text="Hets" handleClick={() => setLevel('Hard')} />
+        <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )
   }

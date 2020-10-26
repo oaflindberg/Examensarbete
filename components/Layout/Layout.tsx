@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useFonts } from 'expo-font'
 import { StyledView } from './Style'
 import { PointsProvider } from './../../context/PointsContext'

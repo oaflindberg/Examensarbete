@@ -6,4 +6,5 @@ export const HighscoreText = styled(Text)`
   font-family: 'Akkurat';
   margin-bottom: 10px;
   color: #fefefe;
+  text-align: center;
 `

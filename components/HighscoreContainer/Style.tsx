@@ -19,7 +19,6 @@ export const ButtonText = styled(Text)`
   font-family: 'Akkurat';
   font-size: 16px;
   text-align: center;
-  margin-top: 10%;
 `
 
 export const Highscores = styled(Text)`

@@ -2,7 +2,7 @@ import React from 'react'
 import { HighscoreText } from './Style'
 
 interface HighscoreProps {
-  text: string
+  text: number
 }
 
 export default function Button({ text }: HighscoreProps) {

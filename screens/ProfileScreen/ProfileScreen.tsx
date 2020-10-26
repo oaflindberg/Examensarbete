@@ -12,7 +12,7 @@ import updateUsername from './../../functions/UpdateUsername'
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
 import HighscoreContainer from './../../components/HighscoreContainer/HighscoreContainer'
-import { MainHeading, Heading, InfoText } from '../../styles/Text'
+import { MainHeading, Heading, InfoText, HighscoreInfo } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 import HighscoreText from './../../components/Highscore/Highscore'
 
@@ -23,6 +23,7 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
   const [username, setUsername] = useState<string>('')
   const [confirmation, setConfirmation] = useState<number>(0)
   const [highscores, setHighscores] = useState<any>()
+
   useEffect(() => {
     firebase
       .database()
@@ -33,7 +34,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
           setHighscores(dataSnapshot.toJSON())
         }
       })
-  }, [])
+  }, [highscores, setHighscores])
+
   let user = firebase.auth().currentUser
 
   const deleteUser = () => {
@@ -67,20 +69,20 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
     }
   }
 
-  console.log(highscores)
-
   return (
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>
       <HighscoreContainer title="Här är dina 3 bästa resultat" handleClick={() => navigation.navigate('Highscore')}>
-        {/* // TODO: Fix this. (might need to use a map on the map on the map on the map on the map) */}
-        {/* {highscores != undefined ? (
-          highscores.map(([key, value]: [string, any], highscoreId: number) => {
-            return <HighscoreText key={highscoreId} text={value} />
+          {highscores != undefined ? (
+            Object.values(highscores)
+            .sort((a: any, b: any) => b.highscore - a.highscore)
+            .slice(0, 3)
+            .map((value: any, highscoreId: number) => {
+            return <HighscoreText key={highscoreId} text={value.highscore} />
           })
         ) : (
-          <Heading>Loading Highscores...</Heading>
-        )} */}
+          <HighscoreInfo>Det verkar inte finns något här. Testa att spela en gång!</HighscoreInfo>
+        )} 
       </HighscoreContainer>
       <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={() => signOut(firebase, navigation.navigate('Home'))} text="Logga ut" />

@@ -33,7 +33,6 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
       setTimeout(() => {
         setTime(30)
       }, 750)
-      console.log('ETT')
     }
 
     // If time remaining is 0
@@ -42,7 +41,6 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
       setTimeout(() => {
         setTime(30)
       }, 750)
-      console.log('TVÅ')
     }
 
     // If incorrect answer
@@ -72,17 +70,14 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
       let countDown = setInterval(timer, 1000)
       // If time remaining is 0 clear interval
       if (time <= 0) {
-        console.log('TRE')
         clearInterval(countDown)
       }
-
-      console.log('FYRA')
-
       return () => clearInterval(countDown)
     }
-  }, [time])
+  }, [time, isCorrect, isIncorrect])
 
-  console.log(time)
+  console.log(time, points)
+
 
   return (
     <>
