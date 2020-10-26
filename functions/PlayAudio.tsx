@@ -4,7 +4,7 @@ const playAudio = async (audio: boolean) => {
   const soundObject = new Audio.Sound()
   try {
     await soundObject.loadAsync(require('./../assets/BLAVITT.mp3'))
-    if (audio) {
+    if (!audio) {
       await soundObject.playAsync()
       await soundObject.setIsLoopingAsync(true)
     } else {

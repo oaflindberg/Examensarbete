@@ -30,7 +30,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [question, setQuestion] = useState<QuestionProps | any>({})
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [audio, setAudio] = useState<boolean>(false)
 
 
   // TODO: isCorrect / isIncorrect - Try to solve it using just one state.
@@ -51,7 +50,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   useEffect(() => {
     isCorrect = false
     isIncorrect = false
-    setAudio(true)
     const database = firebase.database()
     database
       .ref(`/questions/${questionId}`)
@@ -131,7 +129,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   // If you choose the level "Hard", an audio file will begin playing
   if (level == 'Hard') {
-    // playAudio(audio)
+    // playAudio(quizCompleted)
   }
 
   // This is the <Layout> you get when playing the quiz
@@ -154,7 +152,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
           />
         )
       })}
-      <StatusBar style="auto" />
+        <StatusBar style="auto" />
     </Layout>
   )
 }
