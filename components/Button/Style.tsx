@@ -2,11 +2,8 @@ import styled from 'styled-components/native'
 import { Text, TouchableOpacity } from 'react-native'
 
 interface Correct {
-  isCorrect?: boolean | null
-  isIncorrect?: boolean | null
+  isCorrect?: boolean | undefined
 }
-
-// State = Status(State) Correct, Incorrect, Default (IsCorrect == Null)
 
 export const StyledButton = styled(TouchableOpacity)<Correct>`
   width: 50%;
@@ -16,12 +13,14 @@ export const StyledButton = styled(TouchableOpacity)<Correct>`
   align-items: center;
   border-radius: 28px;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
-  ${({ isCorrect, isIncorrect }) => {
-    switch (true) {
-      case isCorrect:
+  ${({ isCorrect }) => {
+    switch (isCorrect) {
+      case true:
         return `background: #c2fc0a`
-      case isIncorrect:
+      case false:
         return `background: #fc0a49`
+      case undefined:
+        return `background: #fefefe`
       default: {
         return `background: #fefefe`
       }

@@ -1,5 +1,5 @@
 //REACT & EXPO
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Vibration } from 'react-native'
 
@@ -9,78 +9,94 @@ import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
 import Counter from '../../components/Counter/Counter'
 import { MainHeading, Heading } from '../../styles/Text'
+import PointsContext from './../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
 import playAudio from './../../functions/PlayAudio'
 import shuffleAlternatives from './../../functions/ShuffleAlternatives'
+import shareOnTwitter from './../../functions/ShareOnTwitter'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
 import { RouteStackParamList } from 'typings/RouteParams'
 
 // VARIABLES
-let isCorrect: boolean | undefined
-let isIncorrect: boolean | undefined
+let isCorrect: boolean | undefined = undefined
 
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
   const [questionId, setQuestionId] = useState<number>(0)
-  const [user, setUser] = useState<object>()
   const [clickedButton, setClickedButton] = useState<number | undefined>(undefined)
-  const [question, setQuestion] = useState<QuestionProps | any>({})
+  const [question, setQuestion] = useState<QuestionProps | any>()
+  const [alternatives, setAlternatives] = useState<any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
+  const [questionIndex, setQuestionIndex] = useState<number>(0)
+  let { points } = useContext(PointsContext)
 
-
-  // TODO: isCorrect / isIncorrect - Try to solve it using just one state.
-  // TODO: Use useContext for user instead of fetching current user on all screens
-
-  // Fetches user from database
-
+  // Fetches all questions from database
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        setUser(user)
-      }
-    })
-  }, [user, setUser])
-
-  // Fetches questions from database
-
-  useEffect(() => {
-    isCorrect = false
-    isIncorrect = false
     const database = firebase.database()
     database
-      .ref(`/questions/${questionId}`)
+      .ref(`/questions/`)
       .once('value')
       .then((dataSnapshot) => {
-        setQuestion(dataSnapshot.toJSON())
-
         if (dataSnapshot.toJSON() == null) {
           setQuizCompleted(true)
+        } else {
+          setQuestion(Object.entries(dataSnapshot.toJSON()))
+          if (question != undefined) {
+            let index = Math.floor(Math.random() * question.length)
+            setQuestionIndex(index)
+          }
         }
       })
-  }, [questionId])
+  }, [])
 
+  // Get next question after the previous has been answered
+  useEffect(() => {
+    setTimeout(() => {
+      isCorrect = undefined
+      setQuestionId(questionId + 1)
+      if (question != undefined) {
+        let index = Math.floor(Math.random() * question.length)
+        setQuestionIndex(index)
+      }
+    }, 750)
+    if (question.length < 1) {
+      setQuizCompleted(true)
+    }
+  }, [isCorrect])
+
+  console.log(questionIndex)
+
+  const removeQuestion = (arr: object[]) => {
+    arr.splice(questionIndex, 1)
+  }
 
   // Checks if answer is correct
 
-  const checkAnswer = (selectedAnswer: string) => {
-    if (selectedAnswer == question.answer) {
+  console.log(question)
+
+  const checkAnswer = (selectedAnswer: string | unknown) => {
+    if (selectedAnswer == question[questionIndex].answer) {
       isCorrect = true
-      setTimeout(() => {
-        setQuestionId(questionId + 1)
-      }, 750)
+      if (question != null || question != undefined) {
+        setTimeout(() => {
+          removeQuestion(question)
+        }, 750)
+      }
     }
 
     // Checks if answer is incorrect, a vibration should go off
 
-    if (selectedAnswer != question.answer) {
-      isIncorrect = true
+    if (selectedAnswer != question[questionIndex].answer) {
+      isCorrect = false
       Vibration.vibrate()
       setTimeout(() => {
-        setQuestionId(questionId + 1)
+        if (question != null || question != undefined) {
+          removeQuestion(question)
+        }
         Vibration.cancel()
       }, 750)
     }
@@ -110,6 +126,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         <MainHeading>Grattis....</MainHeading>
         <Counter />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
+        <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
       </Layout>
     )
   }
@@ -133,26 +150,28 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // This is the <Layout> you get when playing the quiz
-
   return (
     <Layout>
-      <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} isIncorrect={isIncorrect} />
-      <QuestionContainer questionNumber={`Fråga ${questionId + 1}`} question={question.question} />
-      {shuffleAlternatives(question.alternatives).map(([key, value]: [string, any], buttonId: number) => {
-        return (
-          <Button
-            isCorrect={clickedButton === buttonId && isCorrect}
-            isIncorrect={clickedButton === buttonId && isIncorrect}
-            key={buttonId}
-            handleClick={() => {
-              checkAnswer(value)
-              saveButtonClick(buttonId)
-            }}
-            text={value}
-          />
-        )
-      })}
-        <StatusBar style="auto" />
+      <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
+      <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex][1].question} />
+      {question[questionIndex][1].alternatives != undefined ? (
+        Object.values(question[questionIndex][1].alternatives).map((value: unknown, buttonId: number) => {
+          return (
+            <Button
+              isCorrect={isCorrect && clickedButton === buttonId}
+              key={buttonId}
+              handleClick={() => {
+                checkAnswer(value)
+                saveButtonClick(buttonId)
+              }}
+              text={value}
+            />
+          )
+        })
+      ) : (
+        <Heading>Loading...</Heading>
+      )}
+      <StatusBar style="auto" />
     </Layout>
   )
 }

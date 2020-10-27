@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useFonts } from 'expo-font'
 import { StyledView } from './Style'
-import { PointsProvider } from './../../context/PointsContext'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [points, setPoints] = useState<number>(0)
-  const [user, setUser] = useState<any>()
   const [loaded, error] = useFonts({
     Akkurat: require('./../../assets/fonts/Akkurat.ttf'),
   })
@@ -18,9 +15,5 @@ export default function Layout({ children }: LayoutProps) {
     return null
   }
 
-  return (
-    <PointsProvider value={[points, setPoints]}>
-      <StyledView>{children}</StyledView>
-    </PointsProvider>
-  )
+  return <StyledView>{children}</StyledView>
 }
