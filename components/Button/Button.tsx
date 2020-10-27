@@ -2,20 +2,14 @@ import React from 'react'
 import { StyledButton, ButtonText } from './Style'
 
 interface ButtonProps {
-  text: string
+  text: string | unknown
   handleClick?: () => void
-  isCorrect?: boolean | null
-  isIncorrect?: boolean | null
+  isCorrect?: boolean | undefined
 }
 
-export default function Button({
-  text,
-  isCorrect,
-  isIncorrect,
-  handleClick,
-}: ButtonProps) {
+export default function Button({ text, isCorrect, handleClick }: ButtonProps) {
   return (
-    <StyledButton onPress={handleClick} isCorrect={isCorrect} isIncorrect={isIncorrect}>
+    <StyledButton onPress={handleClick} isCorrect={isCorrect}>
       <ButtonText>{text}</ButtonText>
     </StyledButton>
   )

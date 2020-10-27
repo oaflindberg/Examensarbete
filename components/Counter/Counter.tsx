@@ -17,7 +17,7 @@ interface CounterProps {
 }
 
 const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps) => {
-  const [points, setPoints] = useContext(PointsContext)
+  const { points, setPoints } = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
 
   let user = firebase.auth().currentUser
@@ -75,9 +75,6 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
       return () => clearInterval(countDown)
     }
   }, [time, isCorrect, isIncorrect])
-
-  console.log(time, points)
-
 
   return (
     <>
