@@ -2,7 +2,7 @@ import React from 'react'
 import { StyledButton, ButtonText } from './Style'
 
 interface ButtonProps {
-  text: string | unknown
+  text: any | unknown
   handleClick?: () => void
   isCorrect?: boolean | undefined
 }

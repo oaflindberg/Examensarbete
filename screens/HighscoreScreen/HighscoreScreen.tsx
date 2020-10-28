@@ -29,7 +29,7 @@ export default function HighscoreScreen({
           setHighscores(dataSnapshot.toJSON())
         }
       })
-  }, [highscores, setHighscores])
+  }, [])
   
   let user = firebase.auth().currentUser
 

@@ -31,68 +31,74 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [alternatives, setAlternatives] = useState<any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [questionIndex, setQuestionIndex] = useState<number>(0)
+  const [questionIndex, setQuestionIndex] = useState<number>()
+  // Hardcoded values, check if there is time
+  const [length, setLength] = useState<number>(13)
   let { points } = useContext(PointsContext)
 
   // Fetches all questions from database
+
   useEffect(() => {
     const database = firebase.database()
     database
       .ref(`/questions/`)
       .once('value')
       .then((dataSnapshot) => {
-        if (dataSnapshot.toJSON() == null) {
-          setQuizCompleted(true)
-        } else {
           setQuestion(Object.entries(dataSnapshot.toJSON()))
-          if (question != undefined) {
-            let index = Math.floor(Math.random() * question.length)
+            let index = Math.floor(Math.random() * length)
             setQuestionIndex(index)
-          }
-        }
       })
-  }, [])
+    }, [])
+  console.log("Array: ", question)
+
 
   // Get next question after the previous has been answered
+
   useEffect(() => {
     setTimeout(() => {
       isCorrect = undefined
       setQuestionId(questionId + 1)
       if (question != undefined) {
-        let index = Math.floor(Math.random() * question.length)
+        let index = Math.floor(Math.random() * length)
         setQuestionIndex(index)
       }
     }, 750)
-    if (question.length < 1) {
+    if (length < 0) {
       setQuizCompleted(true)
     }
   }, [isCorrect])
-
-  console.log(questionIndex)
 
   const removeQuestion = (arr: object[]) => {
     arr.splice(questionIndex, 1)
   }
 
+  // Shuffles the alternatives
+
+  useEffect(() => {
+    if (question != undefined && length > 0) {
+      setAlternatives(shuffleAlternatives(question[questionIndex][1].alternatives))
+    }
+  }, [questionIndex])
+
   // Checks if answer is correct
 
-  console.log(question)
-
   const checkAnswer = (selectedAnswer: string | unknown) => {
-    if (selectedAnswer == question[questionIndex].answer) {
+    if (selectedAnswer == question[questionIndex][1].answer) {
       isCorrect = true
       if (question != null || question != undefined) {
+        setLength(length - 1)
         setTimeout(() => {
           removeQuestion(question)
         }, 750)
       }
     }
-
+ 
     // Checks if answer is incorrect, a vibration should go off
 
-    if (selectedAnswer != question[questionIndex].answer) {
+    if (selectedAnswer != question[questionIndex][1].answer) {
       isCorrect = false
       Vibration.vibrate()
+      setLength(length - 1)
       setTimeout(() => {
         if (question != null || question != undefined) {
           removeQuestion(question)
@@ -108,7 +114,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     setClickedButton(clickedId)
   }
 
-  // This is a loading screen for when the questions are being printed
+  // A loading screen for when the questions are being printed
 
   if (question == undefined && quizCompleted == false) {
     return (
@@ -144,6 +150,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
+
   // If you choose the level "Hard", an audio file will begin playing
   if (level == 'Hard') {
     // playAudio(quizCompleted)
@@ -155,7 +162,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
       <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex][1].question} />
       {question[questionIndex][1].alternatives != undefined ? (
-        Object.values(question[questionIndex][1].alternatives).map((value: unknown, buttonId: number) => {
+          alternatives.map((value: unknown, buttonId: number) => {
           return (
             <Button
               isCorrect={isCorrect && clickedButton === buttonId}
