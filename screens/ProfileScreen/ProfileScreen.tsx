@@ -1,6 +1,5 @@
 // REACT & EXPO
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE & FUNCTIONS
 import firebase from '../../firebase/firebase'
@@ -24,6 +23,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
   const [confirmation, setConfirmation] = useState<number>(0)
   const [highscores, setHighscores] = useState<any>()
 
+  // Fetches highscores for logged in user
+
   useEffect(() => {
     firebase
       .database()
@@ -37,6 +38,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
   }, [])
 
   let user = firebase.auth().currentUser
+
+  // Function to delete account
 
   const deleteUser = () => {
     if (user !== null) {
@@ -53,6 +56,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
     }
   }
 
+  // User needs a username - set one here
+
   if (user !== null) {
     if (user.displayName === null) {
       return (
@@ -68,6 +73,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       )
     }
   }
+
+  // Profile view
 
   return (
     <Layout>
@@ -88,7 +95,6 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       <Button handleClick={() => signOut(firebase, navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
       {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
-      <StatusBar style="auto" />
     </Layout>
   )
 }

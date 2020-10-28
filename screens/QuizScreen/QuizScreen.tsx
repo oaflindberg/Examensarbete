@@ -1,6 +1,5 @@
 //REACT & EXPO
 import React, { useState, useEffect, useContext } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { Vibration } from 'react-native'
 
 // COMPONENTS & STYLES
@@ -51,7 +50,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     }, [])
   console.log("Array: ", question)
 
-
   // Get next question after the previous has been answered
 
   useEffect(() => {
@@ -93,7 +91,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       }
     }
  
-    // Checks if answer is incorrect, a vibration should go off
+    // Checks if answer is incorrect. A vibration should go off
 
     if (selectedAnswer != question[questionIndex][1].answer) {
       isCorrect = false
@@ -124,7 +122,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
-  // A layout with a <Counter> that displays your points
+  // A layout that displays your points
 
   if (quizCompleted) {
     return (
@@ -137,7 +135,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
-  // Here you can choose the how difficult you want the quiz to be
+  // Choose the how difficult you want the quiz to be
 
   if (level == 'Not set') {
     return (
@@ -156,7 +154,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     // playAudio(quizCompleted)
   }
 
-  // This is the <Layout> you get when playing the quiz
+  // Quiz view
   return (
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
@@ -178,7 +176,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       ) : (
         <Heading>Loading...</Heading>
       )}
-      <StatusBar style="auto" />
+      
     </Layout>
   )
 }

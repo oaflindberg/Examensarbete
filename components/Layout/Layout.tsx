@@ -14,6 +14,6 @@ export default function Layout({ children }: LayoutProps) {
   if (!loaded) {
     return null
   }
-
+  
   return <StyledView>{children}</StyledView>
 }

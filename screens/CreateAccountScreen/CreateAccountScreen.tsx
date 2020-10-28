@@ -1,6 +1,5 @@
 // REACT & EXPO
 import React, { useState } from 'react'
-import { StatusBar } from 'expo-status-bar'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
@@ -19,13 +18,15 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  // Navigates to "ProfileScreen" if logged in user
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       navigation.navigate('Profile')
-    } else {
-      // Do something here
     }
   })
+
+  // Register view
 
   return (
     <Layout>
@@ -41,7 +42,6 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
       />
       <Button text={'Skapa konto'} handleClick={() => createAccount(firebase, email, password)} />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
-      <StatusBar style="auto" />
     </Layout>
   )
 }

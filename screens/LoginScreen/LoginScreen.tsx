@@ -1,6 +1,5 @@
 // REACT & EXPO
 import React, { useState, useContext } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
@@ -20,6 +19,8 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
 
+  // Function to sign in user
+
   const signIn = () => {
     firebase
       .auth()
@@ -34,6 +35,8 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         }, 2000)
       })
   }
+  
+  // Navigates to "HomeScreen"
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -41,6 +44,8 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
     } else {
     }
   })
+
+  // Login view
 
   return (
     <Layout>
@@ -60,7 +65,6 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
       <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
         <InfoText>Har du inget konto? Klicka här för att skapa ett</InfoText>
       </TouchableOpacity>
-      <StatusBar style="auto" />
     </Layout>
   )
 }

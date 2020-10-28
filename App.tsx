@@ -3,12 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-// FIREBASE
-import firebase from './firebase/firebase'
-
 // CONTEXTS
 import PointsContext from './context/PointsContext'
-import UserContext from './context/PointsContext'
 
 // SCREENS
 import HomeScreen from './screens/HomeScreen/HomeScreen'

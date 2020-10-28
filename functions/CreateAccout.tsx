@@ -6,7 +6,7 @@ const createAccount = (firebase: any, email: string, password: string) => {
       // Handle Errors here.
       let errorCode = error.code
       let errorMessage = error.message
-      // ...
+      console.log(errorMessage)
     })
 }
 

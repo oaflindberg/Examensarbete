@@ -1,6 +1,5 @@
 // REACT & EXPO
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
 import firebase from '../../firebase/firebase'
@@ -19,6 +18,8 @@ export default function HighscoreScreen({
 }: RouteStackParamList<'Highscore'>) {
   const [highscores, setHighscores] = useState<any>()
 
+  // Fetches highscores for logged in user
+
   useEffect(() => {
     firebase
       .database()
@@ -32,6 +33,8 @@ export default function HighscoreScreen({
   }, [])
   
   let user = firebase.auth().currentUser
+
+  // Highscore view
 
   return (
     <Layout>
@@ -51,7 +54,6 @@ export default function HighscoreScreen({
         text="Tillbaka"
         handleClick={() => navigation.navigate('Profile')}
       />
-      <StatusBar style="auto" />
     </Layout>
   )
 }

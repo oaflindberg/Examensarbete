@@ -1,6 +1,5 @@
 // REACT & EXPO
 import React, { useEffect, useState, useContext } from 'react'
-import { StatusBar } from 'expo-status-bar'
 
 // FIREBASE
 import firebase from '../../firebase/firebase'
@@ -16,6 +15,8 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) {
   const [loggedIn, setLoggedIn] = useState(false)
 
+  // Checks if user is logged in
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -26,6 +27,8 @@ export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) 
     })
   }, [loggedIn, setLoggedIn])
 
+  // Home view
+
   return (
     <Layout>
       <MainHeading>DET STORA BLÅVITA QUIZZET</MainHeading>
@@ -35,7 +38,6 @@ export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) 
       ) : (
         <Button handleClick={() => navigation.navigate('Profile')} text="Profilsida" />
       )}
-      <StatusBar style="auto" />
     </Layout>
   )
 }
