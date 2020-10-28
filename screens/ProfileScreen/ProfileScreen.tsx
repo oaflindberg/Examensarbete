@@ -33,8 +33,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
         if (dataSnapshot !== null) {
           setHighscores(dataSnapshot.toJSON())
         }
-      })
-  }, [highscores, setHighscores])
+      }) 
+  }, [])
 
   let user = firebase.auth().currentUser
 
