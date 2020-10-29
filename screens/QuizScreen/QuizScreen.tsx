@@ -22,6 +22,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 
 // VARIABLES
 let isCorrect: boolean | undefined = undefined
+// let randomFirstQuestion = Math.floor(Math.random() * 13)
 
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
   const [questionId, setQuestionId] = useState<number>(0)
@@ -30,10 +31,30 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [alternatives, setAlternatives] = useState<any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
+  const [gameLength, setGameLength] = useState<number | undefined>()
   const [questionIndex, setQuestionIndex] = useState<number>()
-  // Hardcoded values, check if there is time
+  // TODO: Use gameLength as length instead of 13
   const [length, setLength] = useState<number>(13)
   let { points } = useContext(PointsContext)
+
+  let message: string
+  if (gameLength != undefined) {
+    switch (true) {
+      case points == gameLength * 30 * 150:
+        message = 'KINGEN'
+        break
+      case points >= gameLength * 15 * 150:
+        message = 'WÖÖÖ'
+        break
+      case points <= gameLength * 15 * 150 && points > 0:
+        message = 'BÄTTRE KAN DU'
+        break
+      case points === 0:
+        message = 'SOPA!'
+        break
+    }
+    console.log(points, message)
+  }
 
   // Fetches all questions from database
 
@@ -43,12 +64,12 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       .ref(`/questions/`)
       .once('value')
       .then((dataSnapshot) => {
-          setQuestion(Object.entries(dataSnapshot.toJSON()))
-            let index = Math.floor(Math.random() * length)
-            setQuestionIndex(index)
+        setQuestion(Object.entries(dataSnapshot.toJSON()))
+        let index = Math.floor(Math.random() * length)
+        setQuestionIndex(index)
       })
-    }, [])
-  console.log("Array: ", question)
+  }, [])
+  // console.log('Array: ', question)
 
   // Get next question after the previous has been answered
 
@@ -90,7 +111,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         }, 750)
       }
     }
- 
+
     // Checks if answer is incorrect. A vibration should go off
 
     if (selectedAnswer != question[questionIndex][1].answer) {
@@ -127,7 +148,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   if (quizCompleted) {
     return (
       <Layout>
-        <MainHeading>Grattis....</MainHeading>
+        <MainHeading>{message}</MainHeading>
         <Counter />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
@@ -137,7 +158,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   // Choose the how difficult you want the quiz to be
 
-  if (level == 'Not set') {
+  if (level == 'Not set' && gameLength == undefined) {
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
@@ -148,6 +169,17 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
+  if (gameLength == undefined) {
+    return (
+      <Layout>
+        <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
+        <Button text="15" handleClick={() => setGameLength(15)} />
+        <Button text="25" handleClick={() => setGameLength(25)} />
+        <Button text="50" handleClick={() => setGameLength(50)} />
+        <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
+      </Layout>
+    )
+  }
 
   // If you choose the level "Hard", an audio file will begin playing
   if (level == 'Hard') {
@@ -158,12 +190,15 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   return (
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
-      <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex][1].question} />
+      <QuestionContainer
+        questionNumber={`Fråga ${questionId} av ${gameLength}`}
+        question={question[questionIndex][1].question}
+      />
       {question[questionIndex][1].alternatives != undefined ? (
-          alternatives.map((value: unknown, buttonId: number) => {
+        alternatives.map((value: string, buttonId: number) => {
           return (
             <Button
-              isCorrect={isCorrect && clickedButton === buttonId}
+              isCorrect={isCorrect && clickedButton == buttonId}
               key={buttonId}
               handleClick={() => {
                 checkAnswer(value)
@@ -176,7 +211,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       ) : (
         <Heading>Loading...</Heading>
       )}
-      
     </Layout>
   )
 }

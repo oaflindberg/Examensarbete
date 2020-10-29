@@ -8,7 +8,7 @@
 //     .once('value')
 //     .then((dataSnapshot: firebase.database.DataSnapshot) => {
 //       // console.log('datasnapshot', dataSnapshot)
-//       if (dataSnapshot !== null) {
+//       if (dataSnapshot != null) {
 //         // console.log('datasnapshot toJSON', dataSnapshot.toJSON())
 //         highscores = dataSnapshot.toJSON()
 //       }

@@ -1,4 +1,6 @@
-const createAccount = (firebase: any, email: string, password: string) => {
+import firebase from './../firebase/firebase'
+
+const createAccount = (email: string, password: string) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)

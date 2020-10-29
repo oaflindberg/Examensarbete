@@ -31,10 +31,10 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       .ref(`/highscores/${user?.uid}/`)
       .once('value')
       .then((dataSnapshot: firebase.database.DataSnapshot) => {
-        if (dataSnapshot !== null) {
+        if (dataSnapshot != null) {
           setHighscores(dataSnapshot.toJSON())
         }
-      }) 
+      })
   }, [])
 
   let user = firebase.auth().currentUser
@@ -42,7 +42,7 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
   // Function to delete account
 
   const deleteUser = () => {
-    if (user !== null) {
+    if (user != null) {
       setConfirmation(confirmation + 1)
       if (confirmation == 1) {
         user
@@ -58,8 +58,8 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
 
   // User needs a username - set one here
 
-  if (user !== null) {
-    if (user.displayName === null) {
+  if (user != null) {
+    if (user.displayName == null) {
       return (
         <Layout>
           <Heading style={{ marginBottom: '20%' }}>Välj användarnamn</Heading>
@@ -67,7 +67,9 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
             onChangeText={(text: string) => setUsername(text)}
             autoCapitalize="none"
             placeholder={'Tobias Hysén'}
+            maxLength={8}
           ></StyledInput>
+          <InfoText>Användarnamn får max vara 8 tecken långt.</InfoText>
           <Button text={'OK'} handleClick={() => updateUsername(user, username, navigation.navigate('Login'))} />
         </Layout>
       )
@@ -80,19 +82,19 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>
       <HighscoreContainer title="Här är dina 3 bästa resultat" handleClick={() => navigation.navigate('Highscore')}>
-          {highscores != undefined ? (
-            Object.values(highscores)
+        {highscores != undefined ? (
+          Object.values(highscores)
             .sort((a: any, b: any) => b.highscore - a.highscore)
             .slice(0, 3)
             .map((value: any, highscoreId: number) => {
-            return <HighscoreText key={highscoreId} text={value.highscore} />
-          })
+              return <HighscoreText key={highscoreId} text={value.highscore} />
+            })
         ) : (
           <HighscoreInfo>Det verkar inte finns något här. Testa att spela en gång!</HighscoreInfo>
-        )} 
+        )}
       </HighscoreContainer>
       <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
-      <Button handleClick={() => signOut(firebase, navigation.navigate('Home'))} text="Logga ut" />
+      <Button handleClick={() => signOut(navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
       {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
     </Layout>

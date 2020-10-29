@@ -11,18 +11,17 @@ import saveHighscore from './../../functions/SaveHighscore'
 
 interface CounterProps {
   isCorrect?: boolean | null
-  isIncorrect?: boolean | null
   quizCompleted?: boolean | undefined
   level?: string
 }
 
-const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps) => {
+const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
   const { points, setPoints } = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
 
   let user = firebase.auth().currentUser
 
-  if (user !== null && quizCompleted == undefined) {
+  if (user != null && quizCompleted == undefined) {
     saveHighscore(firebase, user.uid, points)
   }
 
@@ -44,7 +43,7 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
     }
 
     // If incorrect answer
-    if (isIncorrect) {
+    if (!isCorrect) {
       setTimeout(() => {
         setTime(30)
       }, 750)
@@ -74,15 +73,15 @@ const Counter = ({ isCorrect, isIncorrect, quizCompleted, level }: CounterProps)
       }
       return () => clearInterval(countDown)
     }
-  }, [time, isCorrect, isIncorrect])
+  }, [time, isCorrect])
 
   return (
     <>
-      <CounterText quizCompleted={quizCompleted} isIncorrect={isIncorrect} isCorrect={isCorrect}>
+      <CounterText quizCompleted={quizCompleted} isCorrect={isCorrect}>
         Poäng: {points}
       </CounterText>
       {level == 'Hard' && (
-        <CounterText quizCompleted={quizCompleted} isIncorrect={isIncorrect} isCorrect={isCorrect} level={'Hard'}>
+        <CounterText quizCompleted={quizCompleted} isCorrect={isCorrect} level={'Hard'}>
           {time}
         </CounterText>
       )}

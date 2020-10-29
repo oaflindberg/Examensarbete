@@ -23,6 +23,7 @@ export const Label = styled(StyledText)`
 `
 
 export const InfoText = styled(StyledText)`
+  text-align: center;
   font-size: 14px;
 `
 
