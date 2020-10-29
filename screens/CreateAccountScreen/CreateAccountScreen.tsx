@@ -4,12 +4,12 @@ import React, { useState } from 'react'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading, Label } from '../../styles/Text'
+import { MainHeading, Label, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
-import createAccount from './../../functions/CreateAccout'
+import createAccount from '../../functions/CreateAccount'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -31,6 +31,7 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   return (
     <Layout>
       <MainHeading>Skapa konto</MainHeading>
+      <InfoText>Genom att skapa ett konto så kan du se dina tidigare bästa resultat.</InfoText>
       <Label>Email</Label>
       <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
       <Label>Lösenord</Label>
@@ -40,7 +41,7 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <Button text={'Skapa konto'} handleClick={() => createAccount(firebase, email, password)} />
+      <Button text={'Skapa konto'} handleClick={() => createAccount(email, password)} />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
     </Layout>
   )

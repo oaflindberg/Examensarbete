@@ -17,12 +17,16 @@ export const StyledButton = styled(TouchableOpacity)<Correct>`
     switch (isCorrect) {
       case true:
         return `background: #c2fc0a`
+        break
       case false:
         return `background: #fc0a49`
+        break
       case undefined:
         return `background: #fefefe`
+        break
       default: {
         return `background: #fefefe`
+        break
       }
     }
   }}

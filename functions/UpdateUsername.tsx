@@ -1,5 +1,5 @@
-const updateUsername = (user: any, username: any, navigate: any) => {
-  if (user !== null) {
+const updateUsername = (user: any, username: string, navigate: any) => {
+  if (user != null) {
     user
       .updateProfile({
         displayName: username,

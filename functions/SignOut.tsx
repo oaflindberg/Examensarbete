@@ -1,4 +1,6 @@
-const signOut = (firebase: any, navigate: any) => {
+import firebase from './../firebase/firebase'
+
+const signOut = (navigate: any) => {
   firebase
     .auth()
     .signOut()

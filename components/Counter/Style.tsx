@@ -3,7 +3,6 @@ import { Text } from 'react-native'
 
 interface Correct {
   isCorrect?: boolean | null
-  isIncorrect?: boolean | null
   quizCompleted?: boolean | null
   level?: string | undefined
 }
