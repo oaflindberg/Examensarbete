@@ -22,6 +22,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 
 // VARIABLES
 let isCorrect: boolean | undefined = undefined
+let message: string
 // let randomFirstQuestion = Math.floor(Math.random() * 13)
 
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
@@ -37,7 +38,8 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [length, setLength] = useState<number>(13)
   let { points } = useContext(PointsContext)
 
-  let message: string
+  // Sets message that's show after quiz completed based on amount of points
+
   if (gameLength != undefined) {
     switch (true) {
       case points == gameLength * 30 * 150:
