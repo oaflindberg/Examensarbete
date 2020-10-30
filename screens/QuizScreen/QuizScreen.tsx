@@ -15,6 +15,7 @@ import firebase from '../../firebase/firebase'
 import playAudio from './../../functions/PlayAudio'
 import shuffleAlternatives from './../../functions/ShuffleAlternatives'
 import shareOnTwitter from './../../functions/ShareOnTwitter'
+import removeQuestion from './../../functions/RemoveQuestion'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
@@ -24,8 +25,6 @@ import { RouteStackParamList } from 'typings/RouteParams'
 let isCorrect: boolean | undefined = undefined
 let questionAnswered: boolean = false
 let message: string
-
-// let randomFirstQuestion = Math.floor(Math.random() * 13)
 
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
   const [questionId, setQuestionId] = useState<number>(0)
@@ -38,27 +37,28 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   let { points, setPoints } = useContext(PointsContext)
 
   // Sets message that's show after quiz completed based on amount of points
-
-  if (numberOfQuestions != undefined) {
-    switch (true) {
-      case points == numberOfQuestions * 30 * 150:
-        message = 'KINGEN'
-        break
-      case points >= numberOfQuestions * 15 * 150:
-        message = 'WÖÖÖ'
-        break
-      case points <= numberOfQuestions * 15 * 150 && points > 0:
-        message = 'BÄTTRE KAN DU'
-        break
-      case points === 0:
-        message = 'SOPA!'
-        break
+  useEffect(() => {
+    if (numberOfQuestions != undefined) {
+      switch (true) {
+        case points == numberOfQuestions * 30 * 150:
+          message = 'KINGEN'
+          break
+        case points >= numberOfQuestions * 15 * 150:
+          message = 'WÖÖÖ'
+          break
+        case points <= numberOfQuestions * 15 * 150 && points > 0:
+          message = 'BÄTTRE KAN DU'
+          break
+        case points === 0:
+          message = 'SOPA!'
+          break
+      }
     }
-  }
+  }, [quizCompleted])
 
   // Fetches all questions from database
-
   useEffect(() => {
+    setPoints(0)
     const database = firebase.database()
     database
       .ref(`/questions/`)
@@ -71,7 +71,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
           q.alternatives = shuffledAlternatives
           return q
         })
-        setPoints(0)
         setQuestion(allQuestions.sort(() => Math.random() - 0.5))
         if (numberOfQuestions != undefined) {
           let index = Math.floor(Math.random() * numberOfQuestions)
@@ -81,7 +80,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }, [])
 
   // Get next question after the previous has been answered
-
   useEffect(() => {
     setTimeout(() => {
       isCorrect = undefined
@@ -96,12 +94,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     }
   }, [questionAnswered])
 
-  const removeQuestion = (arr: object[]) => {
-    arr.splice(questionIndex, 1)
-  }
-
   // Checks if answer is correct
-
   const checkAnswer = (selectedAnswer: string | unknown) => {
     if (selectedAnswer == question[questionIndex].answer) {
       isCorrect = true
@@ -109,13 +102,12 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       if (question != null || question != undefined) {
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
-          removeQuestion(question)
+          removeQuestion(question, questionIndex)
         }, 750)
       }
     }
 
     // Checks if answer is incorrect. A vibration should go off
-
     if (selectedAnswer != question[questionIndex].answer) {
       isCorrect = false
       questionAnswered = !questionAnswered
@@ -123,7 +115,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       if (question != null || question != undefined) {
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
-          removeQuestion(question)
+          removeQuestion(question, questionIndex)
           Vibration.cancel()
         }, 750)
       }
@@ -131,13 +123,11 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Checks index on the button that is clicked (saved)
-
   const saveButtonClick = (clickedId: number) => {
     setClickedButton(clickedId)
   }
 
   // A loading screen for when the questions are being printed
-
   if (question == undefined && quizCompleted == false) {
     return (
       <Layout>
@@ -147,7 +137,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // A layout that displays your points
-
   if (quizCompleted) {
     return (
       <Layout>
@@ -160,7 +149,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose the how difficult you want the quiz to be
-
   if (level == 'Not set' && numberOfQuestions == undefined) {
     return (
       <Layout>
@@ -173,7 +161,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose how many questions you want to answer
-
   if (numberOfQuestions == undefined) {
     return (
       <Layout>

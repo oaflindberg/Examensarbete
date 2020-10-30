@@ -20,7 +20,6 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   const [error, setError] = useState<boolean>(false)
 
   // Function to sign in user
-
   const signIn = () => {
     firebase
       .auth()
@@ -35,9 +34,8 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         }, 3500)
       })
   }
-  
-  // Navigates to "HomeScreen"
 
+  // Navigates to "HomeScreen"
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       navigation.navigate('Home')
@@ -46,7 +44,6 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   })
 
   // Login view
-
   return (
     <Layout>
       <MainHeading>Välkommen!</MainHeading>

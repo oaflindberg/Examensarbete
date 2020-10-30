@@ -16,7 +16,6 @@ export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) 
   const [loggedIn, setLoggedIn] = useState(false)
 
   // Checks if user is logged in
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -28,7 +27,6 @@ export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) 
   }, [loggedIn, setLoggedIn])
 
   // Home view
-
   return (
     <Layout>
       <MainHeading>DET STORA BLÅVITA QUIZZET</MainHeading>

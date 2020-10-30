@@ -17,7 +17,6 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
   const [highscores, setHighscores] = useState<any>()
 
   // Fetches highscores for logged in user
-
   useEffect(() => {
     let user = firebase.auth().currentUser
     firebase
@@ -31,9 +30,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
       })
   }, [])
 
-
   // Highscore view
-
   return (
     <Layout>
       <HighscoreHeading>Här är dina 10 bästa resultat</HighscoreHeading>
