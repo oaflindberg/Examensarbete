@@ -21,6 +21,8 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
 
   let user = firebase.auth().currentUser
 
+console.log(time)
+
   if (user != null && quizCompleted == undefined) {
     saveHighscore(firebase, user.uid, points)
   }
@@ -43,7 +45,7 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
     }
 
     // If incorrect answer
-    if (!isCorrect) {
+    if (isCorrect == false) {
       setTimeout(() => {
         setTime(30)
       }, 750)

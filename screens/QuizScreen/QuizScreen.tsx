@@ -23,6 +23,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 // VARIABLES
 let isCorrect: boolean | undefined = undefined
 let message: string
+
 // let randomFirstQuestion = Math.floor(Math.random() * 13)
 
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
@@ -32,10 +33,9 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [alternatives, setAlternatives] = useState<any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [gameLength, setGameLength] = useState<number | undefined>()
-  const [questionIndex, setQuestionIndex] = useState<number>()
-  // TODO: Use gameLength as length instead of 13
-  const [length, setLength] = useState<number>(13)
+  const [gameLength, setGameLength] = useState<number>(15)
+  const [questionIndex, setQuestionIndex] = useState<number>(0)
+  // const [length, setLength] = useState<number>(15)
   let { points } = useContext(PointsContext)
 
   // Sets message that's show after quiz completed based on amount of points
@@ -66,8 +66,8 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       .ref(`/questions/`)
       .once('value')
       .then((dataSnapshot) => {
-        setQuestion(Object.entries(dataSnapshot.toJSON()))
-        let index = Math.floor(Math.random() * length)
+        setQuestion(Object.entries(dataSnapshot.toJSON()).sort(() => Math.random() - 0.5))
+        let index = Math.floor(Math.random() * gameLength)
         setQuestionIndex(index)
       })
   }, [])
@@ -80,11 +80,11 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       isCorrect = undefined
       setQuestionId(questionId + 1)
       if (question != undefined) {
-        let index = Math.floor(Math.random() * length)
+        let index = Math.floor(Math.random() * gameLength)
         setQuestionIndex(index)
       }
     }, 750)
-    if (length < 0) {
+    if (gameLength < 0) {
       setQuizCompleted(true)
     }
   }, [isCorrect])
@@ -96,7 +96,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   // Shuffles the alternatives
 
   useEffect(() => {
-    if (question != undefined && length > 0) {
+    if (question != undefined && gameLength > 0) {
       setAlternatives(shuffleAlternatives(question[questionIndex][1].alternatives))
     }
   }, [questionIndex])
@@ -107,7 +107,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     if (selectedAnswer == question[questionIndex][1].answer) {
       isCorrect = true
       if (question != null || question != undefined) {
-        setLength(length - 1)
+        setGameLength(gameLength - 1)
         setTimeout(() => {
           removeQuestion(question)
         }, 750)
@@ -119,7 +119,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     if (selectedAnswer != question[questionIndex][1].answer) {
       isCorrect = false
       Vibration.vibrate()
-      setLength(length - 1)
+      setGameLength(gameLength - 1)
       setTimeout(() => {
         if (question != null || question != undefined) {
           removeQuestion(question)

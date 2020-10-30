@@ -17,6 +17,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string | undefined>()
 
   // Navigates to "ProfileScreen" if logged in user
 
@@ -26,12 +27,36 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
     }
   })
 
+  // Function to create account
+
+  const createAccount = (email: string, password: string) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (err: any) {
+        if (err.message == "The email address is badly formatted." ) {
+          setError("Emailadressen är inte en giltig emailadress.")
+        } else if (err.message == "The email address is already in use by another account.") {
+          setError("Den här emailadressen är redan registrerad på en användare.")
+        } else if (err.message == "Password should be at least 6 characters") {
+          setError("Lösenordet måste vara minst 6 tecken.")
+        }
+        setTimeout(() => {
+          setError(undefined)
+        }, 3500)
+      console.log(err.message)
+      })
+  }
+
   // Register view
 
   return (
     <Layout>
       <MainHeading>Skapa konto</MainHeading>
       <InfoText>Genom att skapa ett konto så kan du se dina tidigare bästa resultat.</InfoText>
+      {error && (
+        <InfoText>{error}</InfoText>
+      )}
       <Label>Email</Label>
       <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
       <Label>Lösenord</Label>
