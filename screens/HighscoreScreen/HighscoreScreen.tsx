@@ -19,6 +19,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
   // Fetches highscores for logged in user
 
   useEffect(() => {
+    let user = firebase.auth().currentUser
     firebase
       .database()
       .ref(`/highscores/${user?.uid}/`)
@@ -30,7 +31,6 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
       })
   }, [])
 
-  let user = firebase.auth().currentUser
 
   // Highscore view
 
