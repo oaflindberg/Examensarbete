@@ -35,7 +35,8 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
   // const [length, setLength] = useState<number>(15)
-  let { points } = useContext(PointsContext)
+  let { points, setPoints } = useContext(PointsContext)
+
 
   // Sets message that's show after quiz completed based on amount of points
 
@@ -54,7 +55,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         message = 'SOPA!'
         break
     }
-    console.log(points, message)
   }
 
   // Fetches all questions from database
@@ -72,6 +72,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
           q.alternatives = shuffledAlternatives
           return q
         })
+        setPoints(0)
         setQuestion(allQuestions.sort(() => Math.random() - 0.5))
         if (numberOfQuestions != undefined) {
           let index = Math.floor(Math.random() * numberOfQuestions)
@@ -84,7 +85,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   useEffect(() => {
     setTimeout(() => {
-      isCorrect = undefined
+        // isCorrect = undefined
       setQuestionId(questionId + 1)
       if (question != undefined && numberOfQuestions != undefined) {
         let index = Math.floor(Math.random() * numberOfQuestions)
@@ -94,6 +95,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     if (numberOfQuestions < 0) {
       setQuizCompleted(true)
     }
+    return() => (isCorrect = undefined)
   }, [isCorrect])
 
   const removeQuestion = (arr: object[]) => {
@@ -177,9 +179,9 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
-        <Button text="15" handleClick={() => setNumberOfQuestions(15)} />
-        <Button text="25" handleClick={() => setNumberOfQuestions(25)} />
-        <Button text="50" handleClick={() => setNumberOfQuestions(50)} />
+        <Button text="15" handleClick={() => setNumberOfQuestions(14)} />
+        <Button text="25" handleClick={() => setNumberOfQuestions(24)} />
+        <Button text="50" handleClick={() => setNumberOfQuestions(49)} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )
@@ -194,10 +196,14 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   return (
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
+      {question[questionIndex].question != undefined ? (
       <QuestionContainer
         questionNumber={`Fråga ${questionId}`}
         question={question[questionIndex].question}
       />
+      ) : (
+        <Heading>Loading...</Heading>
+      )}
       {question[questionIndex].alternatives != undefined ? (
         question[questionIndex].alternatives.map((value: string, buttonId: number) => {
           return (
