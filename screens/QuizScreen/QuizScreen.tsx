@@ -32,7 +32,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(49)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
   let { points, setPoints } = useContext(PointsContext)
 
@@ -51,6 +51,9 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
           break
         case points === 0:
           message = 'SOPA!'
+          break
+        default:
+          message = 'Laddar resultat'
           break
       }
     }
@@ -149,7 +152,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose the how difficult you want the quiz to be
-  if (level == 'Not set' && numberOfQuestions == undefined) {
+  if (level == 'Not set') {
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
@@ -161,7 +164,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose how many questions you want to answer
-  if (numberOfQuestions == undefined) {
+  if (numberOfQuestions == 49) {
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
