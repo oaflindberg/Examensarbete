@@ -22,6 +22,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 
 // VARIABLES
 let isCorrect: boolean | undefined = undefined
+let questionAnswered: boolean = false
 let message: string
 
 // let randomFirstQuestion = Math.floor(Math.random() * 13)
@@ -34,9 +35,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [level, setLevel] = useState<string>('Not set')
   const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
-  // const [length, setLength] = useState<number>(15)
   let { points, setPoints } = useContext(PointsContext)
-
 
   // Sets message that's show after quiz completed based on amount of points
 
@@ -80,12 +79,12 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         }
       })
   }, [])
- 
+
   // Get next question after the previous has been answered
 
   useEffect(() => {
     setTimeout(() => {
-        // isCorrect = undefined
+      isCorrect = undefined
       setQuestionId(questionId + 1)
       if (question != undefined && numberOfQuestions != undefined) {
         let index = Math.floor(Math.random() * numberOfQuestions)
@@ -95,19 +94,18 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     if (numberOfQuestions < 0) {
       setQuizCompleted(true)
     }
-    return() => (isCorrect = undefined)
-  }, [isCorrect])
+  }, [questionAnswered])
 
   const removeQuestion = (arr: object[]) => {
     arr.splice(questionIndex, 1)
   }
-
 
   // Checks if answer is correct
 
   const checkAnswer = (selectedAnswer: string | unknown) => {
     if (selectedAnswer == question[questionIndex].answer) {
       isCorrect = true
+      questionAnswered = !questionAnswered
       if (question != null || question != undefined) {
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
@@ -120,14 +118,15 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
     if (selectedAnswer != question[questionIndex].answer) {
       isCorrect = false
+      questionAnswered = !questionAnswered
       Vibration.vibrate()
-      setNumberOfQuestions(numberOfQuestions - 1)
-      setTimeout(() => {
-        if (question != null || question != undefined) {
+      if (question != null || question != undefined) {
+        setNumberOfQuestions(numberOfQuestions - 1)
+        setTimeout(() => {
           removeQuestion(question)
-        }
-        Vibration.cancel()
-      }, 750)
+        }, 750)
+      }
+      Vibration.cancel()
     }
   }
 
@@ -197,10 +196,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
       {question[questionIndex].question != undefined ? (
-      <QuestionContainer
-        questionNumber={`Fråga ${questionId}`}
-        question={question[questionIndex].question}
-      />
+        <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex].question} />
       ) : (
         <Heading>Loading...</Heading>
       )}
