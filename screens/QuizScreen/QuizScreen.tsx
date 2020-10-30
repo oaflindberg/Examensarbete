@@ -124,9 +124,9 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
           removeQuestion(question)
+          Vibration.cancel()
         }, 750)
       }
-      Vibration.cancel()
     }
   }
 

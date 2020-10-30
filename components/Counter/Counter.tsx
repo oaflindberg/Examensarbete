@@ -19,8 +19,6 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
   const { points, setPoints } = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
 
-  
-
 
     let user = firebase.auth().currentUser
 
@@ -30,18 +28,19 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
 
 
   useEffect(() => {
+
     // If time remaining is more than 0
     if (time >= 0 && isCorrect) {
-      setPoints(points + time * 150)
       setTimeout(() => {
+        setPoints(points + time * 150)
         setTime(30)
       }, 750)
     }
 
     // If time remaining is 0
     if (time <= 0 && isCorrect) {
-      setPoints(points + 150)
       setTimeout(() => {
+        setPoints(points + 150)
         setTime(30)
       }, 750)
     }
@@ -78,6 +77,7 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
       return () => clearInterval(countDown)
     }
   }, [time, isCorrect])
+
 
   return (
     <>
