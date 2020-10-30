@@ -13,6 +13,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen'
 import ProfileScreen from './screens/ProfileScreen/ProfileScreen'
 import CreateAccoutScreen from './screens/CreateAccountScreen/CreateAccountScreen'
 import HighscoreScreen from './screens/HighscoreScreen/HighscoreScreen'
+import ResetScreen from './screens/ResetScreen/ResetScreen'
 
 export default function App() {
   const [points, setPoints] = useState<number>(0)
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="Quiz" component={QuizScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Highscore" component={HighscoreScreen} />
+          <Stack.Screen name="Reset" component={ResetScreen} />
         </Stack.Navigator>
       </PointsContext.Provider>
     </NavigationContainer>
