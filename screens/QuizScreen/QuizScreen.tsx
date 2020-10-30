@@ -121,14 +121,14 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     if (selectedAnswer != question[questionIndex].answer) {
       isCorrect = false
       Vibration.vibrate()
+      if (question != null || question != undefined) {
       setNumberOfQuestions(numberOfQuestions - 1)
       setTimeout(() => {
-        if (question != null || question != undefined) {
-          removeQuestion(question)
-        }
+        removeQuestion(question)
         Vibration.cancel()
-      }, 750)
-    }
+        }, 750)
+      }
+    } 
   }
 
   // Checks index on the button that is clicked (saved)
