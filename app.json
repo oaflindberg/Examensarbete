@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "Det Stora Blåvita Quizzet",
+    "slug": "Det-Stora-Blavita-Quizzet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#234b9a"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,6 +17,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.github",
       "supportsTablet": true
     },
     "web": {

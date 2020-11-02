@@ -91,7 +91,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         let index = Math.floor(Math.random() * numberOfQuestions)
         setQuestionIndex(index)
       }
-    }, 750)
+    }, 600)
     if (numberOfQuestions < 0) {
       setQuizCompleted(true)
     }
@@ -106,7 +106,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
           removeQuestion(question, questionIndex)
-        }, 750)
+        }, 700)
       }
     }
 
@@ -120,7 +120,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setTimeout(() => {
           removeQuestion(question, questionIndex)
           Vibration.cancel()
-        }, 750)
+        }, 700)
       }
     }
   }

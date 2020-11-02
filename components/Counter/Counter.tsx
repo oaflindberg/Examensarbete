@@ -19,16 +19,13 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
   const { points, setPoints } = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
 
-
-    let user = firebase.auth().currentUser
-
-    if (user != null && quizCompleted == undefined) {
+  // Fetches current user and uploads final score to database
+  let user = firebase.auth().currentUser
+  if (user != null && quizCompleted == undefined) {
     saveHighscore(firebase, user.uid, points)
-    }
-
+  }
 
   useEffect(() => {
-
     // If time remaining is more than 0
     if (time >= 0 && isCorrect) {
       setTimeout(() => {
@@ -54,7 +51,7 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
 
     // If all questions has been answered
     if (quizCompleted == undefined) {
-      return 
+      return
     }
 
     const timer = () => setTime(time - 1)
@@ -77,7 +74,6 @@ const Counter = ({ isCorrect, quizCompleted, level }: CounterProps) => {
       return () => clearInterval(countDown)
     }
   }, [time, isCorrect])
-
 
   return (
     <>
