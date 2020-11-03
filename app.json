@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.github",
+      "bundleIdentifier": "app.netlify.detstorablavitaquizzet",
       "supportsTablet": true
     },
     "web": {
