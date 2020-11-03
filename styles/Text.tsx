@@ -27,17 +27,18 @@ export const InfoText = styled(StyledText)`
   font-size: 14px;
 `
 
+export const ErrorText = styled(StyledText)`
+  text-align: center;
+  font-size: 14px;
+  color: #fc0a49;
+`
+
 export const HighscoreHeading = styled(Text)`
   color: #fefefe;
   font-size: 24px;
   font-family: 'Akkurat';
   text-align: center;
   margin-bottom: 10%;
-
-  &[aria-selected = 'true']{
-    color: black;
-    text-decoration: underline;
-  }
 `
 
 export const HighscoreInfo = styled(Text)`

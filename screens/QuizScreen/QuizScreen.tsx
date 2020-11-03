@@ -150,7 +150,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
         <Button text="Normal" handleClick={() => setLevel('Normal')} />
-        <Button text="Hets" handleClick={() => setLevel('Hard')} />
+        <Button style={{ marginBottom: "15%" }} text="Hets" handleClick={() => setLevel('Hard')} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )
@@ -163,7 +163,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
         <Button text="15" handleClick={() => setNumberOfQuestions(14)} />
         <Button text="25" handleClick={() => setNumberOfQuestions(24)} />
-        <Button text="50" handleClick={() => setNumberOfQuestions(49)} />
+        <Button style={{ marginBottom: "15%" }} text="50" handleClick={() => setNumberOfQuestions(49)} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )

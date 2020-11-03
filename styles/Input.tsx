@@ -6,7 +6,7 @@ export const StyledInput = styled(TextInput)`
   width: 50%;
   height: auto;
   margin: 5px;
-  border-radius: 28px;
+  border-radius: 8px;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
   padding: 10px 10px;
 `

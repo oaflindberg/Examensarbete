@@ -9,7 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 yarn-error.log
-screens/QuizScreen/Test.tsx
+firebase/*
 
 # macOS
 .DS_Store

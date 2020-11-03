@@ -81,7 +81,7 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       <TouchableOpacity onPress={() => navigation.navigate('Highscore')}>
         <HighscoreInfo>Vill du se dina resultat? Klicka här</HighscoreInfo>
       </TouchableOpacity>
-      <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
+      <Button style={{ marginBottom: "15%" }} handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={() => signOut(navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
       {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}

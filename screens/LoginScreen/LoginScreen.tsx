@@ -58,11 +58,12 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         placeholder={'Lösenord'}
       />
       <Button text={'Logga in'} handleClick={signIn} />
-      <Button handleClick={() => navigation.navigate('Reset')} text="Glömt lösenord?" />
-      <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
-      <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
+      <TouchableOpacity style={{ marginBottom: "15%" }} onPress={() => navigation.navigate('CreateAccount')}>
         <InfoText>Har du inget konto? Klicka här för att skapa ett</InfoText>
       </TouchableOpacity>
+      <Button handleClick={() => navigation.navigate('Reset')} text="Glömt lösenord?" />
+      <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
+
     </Layout>
   )
 }

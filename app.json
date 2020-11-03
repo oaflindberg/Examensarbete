@@ -22,6 +22,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "app.netlify.detstorablavitaquizzet",
+      "versionCode": 1
     }
   }
 }

@@ -61,7 +61,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
             return <HighscoreText key={highscoreId} text={value.highscore} />
           })
       ) : (
-        <HighscoreInfo>Det verkar inte finns något här. Testa att spela en gång!</HighscoreInfo>
+        <HighscoreInfo style={{ marginBottom: "15%" }} >Det verkar inte finns något här. Testa att spela en gång!</HighscoreInfo>
       )}
 
       <Button text="Tillbaka" handleClick={() => navigation.navigate('Profile')} />
