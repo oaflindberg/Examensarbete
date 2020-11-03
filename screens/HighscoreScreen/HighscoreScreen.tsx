@@ -35,7 +35,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
   // Highscore view
   return (
     <Layout>
-      <HighscoreHeading>Välj vilken quizlängd du vill se dina resultat</HighscoreHeading>
+      <HighscoreHeading>Välj vilken quizlängd du vill se resultat för:</HighscoreHeading>
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly', marginBottom: '10%' }} >
       <TouchableOpacity onPress={() => setNumberOfQuestions(15)}>
         <HighscoreHeading>15</HighscoreHeading>
