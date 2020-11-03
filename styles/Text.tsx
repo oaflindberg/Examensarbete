@@ -33,6 +33,11 @@ export const HighscoreHeading = styled(Text)`
   font-family: 'Akkurat';
   text-align: center;
   margin-bottom: 10%;
+
+  &[aria-selected = 'true']{
+    color: black;
+    text-decoration: underline;
+  }
 `
 
 export const HighscoreInfo = styled(Text)`
@@ -42,3 +47,5 @@ export const HighscoreInfo = styled(Text)`
   text-align: center;
   margin-bottom: 10%;
 `
+
+

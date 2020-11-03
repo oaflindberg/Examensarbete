@@ -32,7 +32,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [question, setQuestion] = useState<QuestionProps | any>()
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(49)
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
   let { points, setPoints } = useContext(PointsContext)
 
@@ -40,23 +40,23 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   useEffect(() => {
     if (numberOfQuestions != undefined) {
       switch (true) {
-        case points == numberOfQuestions * 30 * 150:
-          message = 'KINGEN'
+        case points == questionId * 30 * 150:
+          message = 'Kingen!'
           break
-        case points >= numberOfQuestions * 15 * 150:
-          message = 'WÖÖÖ'
+        case points >= questionId * 15 * 150:
+          message = 'Mycket bra!'
           break
-        case points <= numberOfQuestions * 15 * 150 && points > 0:
-          message = 'BÄTTRE KAN DU'
+        case points <= questionId * 15 * 150 && points > 0:
+          message = 'Bra!'
           break
         case points === 0:
-          message = 'SOPA!'
+          message = 'Oj...'
           break
         default:
           message = 'Laddar resultat'
           break
+        }
       }
-    }
   }, [quizCompleted])
 
   // Fetches all questions from database
@@ -86,12 +86,14 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   useEffect(() => {
     setTimeout(() => {
       isCorrect = undefined
-      setQuestionId(questionId + 1)
+      if (numberOfQuestions >= 0) {
+        setQuestionId(questionId + 1)
+      }
       if (question != undefined && numberOfQuestions != undefined) {
         let index = Math.floor(Math.random() * numberOfQuestions)
         setQuestionIndex(index)
       }
-    }, 600)
+    }, 500)
     if (numberOfQuestions < 0) {
       setQuizCompleted(true)
     }
@@ -106,7 +108,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setNumberOfQuestions(numberOfQuestions - 1)
         setTimeout(() => {
           removeQuestion(question, questionIndex)
-        }, 700)
+        }, 500)
       }
     }
 
@@ -120,7 +122,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setTimeout(() => {
           removeQuestion(question, questionIndex)
           Vibration.cancel()
-        }, 700)
+        }, 500)
       }
     }
   }
@@ -130,21 +132,12 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     setClickedButton(clickedId)
   }
 
-  // A loading screen for when the questions are being printed
-  if (question == undefined && quizCompleted == false) {
-    return (
-      <Layout>
-        <Heading>Loading...</Heading>
-      </Layout>
-    )
-  }
-
   // A layout that displays your points
   if (quizCompleted) {
     return (
       <Layout>
         <MainHeading>{message}</MainHeading>
-        <Counter />
+        <Counter numberOfQuestions={questionId} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
       </Layout>
@@ -164,7 +157,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose how many questions you want to answer
-  if (numberOfQuestions == 49) {
+  if (numberOfQuestions == undefined) {
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
@@ -179,6 +172,15 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   // If you choose the level "Hard", an audio file will begin playing
   if (level == 'Hard') {
     // playAudio(quizCompleted)
+  }
+
+  // A loading screen for when the questions are being printed
+  if (question == undefined && quizCompleted == false) {
+    return (
+      <Layout>
+        <Heading>Loading...</Heading>
+      </Layout>
+    )
   }
 
   // Quiz view

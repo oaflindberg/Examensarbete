@@ -1,5 +1,6 @@
 // REACT & EXPO
 import React, { useState, useEffect } from 'react'
+import { TouchableOpacity } from 'react-native'
 
 // FIREBASE & FUNCTIONS
 import firebase from '../../firebase/firebase'
@@ -77,18 +78,9 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
   return (
     <Layout>
       <MainHeading>Hej {user?.displayName}!</MainHeading>
-      <HighscoreContainer title="Här är dina 3 bästa resultat" handleClick={() => navigation.navigate('Highscore')}>
-        {highscores != undefined ? (
-          Object.values(highscores)
-            .sort((a: any, b: any) => b.highscore - a.highscore)
-            .slice(0, 3)
-            .map((value: any, highscoreId: number) => {
-              return <HighscoreText key={highscoreId} text={value.highscore} />
-            })
-        ) : (
-          <HighscoreInfo>Det verkar inte finns något här. Testa att spela en gång!</HighscoreInfo>
-        )}
-      </HighscoreContainer>
+      <TouchableOpacity onPress={() => navigation.navigate('Highscore')}>
+        <HighscoreInfo>Vill du se dina resultat? Klicka här</HighscoreInfo>
+      </TouchableOpacity>
       <Button handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={() => signOut(navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />

@@ -1,6 +1,6 @@
 import { StyledText, Highscores, Container, ButtonText } from './Style'
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 
 interface QuestionContainerProps {
   title: string
@@ -14,7 +14,7 @@ const QuestionContainer = ({ title, children, handleClick }: QuestionContainerPr
       <StyledText>{title}</StyledText>
       {children}
       <TouchableOpacity onPress={handleClick}>
-        <ButtonText>Vill du se fler resultat? Klicka här</ButtonText>
+        <ButtonText>Vill du se dina resultat? Klicka här</ButtonText>
       </TouchableOpacity>
     </Container>
   )
