@@ -10,7 +10,6 @@ import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
-import createAccount from '../../functions/CreateAccount'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -57,7 +56,9 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
   return (
     <Layout>
       <MainHeading>Skapa konto</MainHeading>
-      <InfoText>Genom att skapa ett konto så kan du se dina tidigare bästa resultat.</InfoText>
+      <InfoText style={{ marginBottom: '5%' }}>
+        Genom att skapa ett konto så kan du se dina tidigare bästa resultat.
+      </InfoText>
       {error && <ErrorText>{error}</ErrorText>}
       <Label>Email</Label>
       <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
@@ -68,14 +69,15 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         onChangeText={(text) => setPassword(text)}
         placeholder={'Lösenord'}
       />
-      <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly', padding: '5%' }} >
-      <CheckBox style={{ marginRight: "1%" }}
-      value={acceptTerms}
-      onValueChange={setAcceptTerms}
-      />
-      <InfoText>Genom att skapa ett konto godkänner du att vi sparar din emailadress.</InfoText>
+      <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly', padding: '5%' }}>
+        <CheckBox style={{ marginRight: '1%' }} value={acceptTerms} onValueChange={setAcceptTerms} />
+        <InfoText>Genom att skapa ett konto godkänner du att vi sparar din emailadress.</InfoText>
       </View>
-      <Button style={{ marginBottom: "15%" }} text={'Skapa konto'} handleClick={() => acceptTerms ? createAccount(email, password) : setError("Du måste godkänna villkoren.")} />
+      <Button
+        style={{ marginBottom: '15%' }}
+        text={'Skapa konto'}
+        handleClick={() => (acceptTerms ? createAccount(email, password) : setError('Du måste godkänna villkoren.'))}
+      />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
     </Layout>
   )

@@ -1,11 +1,10 @@
 // REACT & EXPO
-import React, { useState, useContext } from 'react'
-import { TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading, InfoText, Label } from '../../styles/Text'
+import { MainHeading, InfoText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
@@ -41,10 +40,11 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Reset'>
   // Reset view
   return (
     <Layout>
+      <MainHeading>Återställ lösenord</MainHeading>
       {success && <InfoText>Ett mail har skickats till ditt konto!</InfoText>}
       {error && <InfoText>Någonting gick fel. Försök igen!</InfoText>}
       <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
-      <Button handleClick={() => resetPassword(email)} text="Återställ lösenord" />
+      <Button style={{ marginBottom: '15%' }} handleClick={() => resetPassword(email)} text="Återställ lösenord" />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />
     </Layout>
   )

@@ -9,7 +9,7 @@ interface Correct {
 
 export const CounterText = styled(Text)<Correct>`
   font-size: 18px;
-  font-family: 'Akkurat';
+  font-family: 'Dosis';
   margin-bottom: 10px;
   color: #fefefe;
 `
