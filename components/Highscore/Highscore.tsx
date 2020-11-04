@@ -5,6 +5,6 @@ interface HighscoreProps {
   text: string | number
 }
 
-export default function Button({ text }: HighscoreProps) {
+export default function HighScoreText({ text }: HighscoreProps) {
   return <HighscoreText>{text}</HighscoreText>
 }

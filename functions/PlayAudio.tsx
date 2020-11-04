@@ -11,7 +11,7 @@ const playAudio = async (audio: boolean) => {
       await soundObject.unloadAsync()
     }
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
 }
 

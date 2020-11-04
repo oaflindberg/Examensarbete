@@ -5,7 +5,6 @@ const signOut = (navigate: any) => {
     .auth()
     .signOut()
     .then(function () {
-      // navigation.navigate('Home')
       navigate
     })
     .catch(function (error: any) {

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading, InfoText } from '../../styles/Text'
+import { MainHeading, InfoText, ErrorText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // FUNCTIONS & FIREBASE
@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Reset'>
     <Layout>
       <MainHeading>Återställ lösenord</MainHeading>
       {success && <InfoText>Ett mail har skickats till ditt konto!</InfoText>}
-      {error && <InfoText>Någonting gick fel. Försök igen!</InfoText>}
+      {error && <ErrorText>Någonting gick fel. Försök igen!</ErrorText>}
       <StyledInput onChangeText={(text) => setEmail(text)} autoCapitalize="none" placeholder={'Example@example.com'} />
       <Button style={{ marginBottom: '15%' }} handleClick={() => resetPassword(email)} text="Återställ lösenord" />
       <Button handleClick={() => navigation.navigate('Login')} text="Tillbaka" />

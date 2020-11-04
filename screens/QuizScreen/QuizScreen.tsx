@@ -67,7 +67,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     database
       .ref(`/questions/`)
       .once('value')
-      .then((dataSnapshot) => {
+      .then((dataSnapshot: any) => {
         let data = Object.values(dataSnapshot.toJSON())
         let allQuestions = data.map((q: any) => {
           let shuffledAlternatives = shuffleAlternatives(q.alternatives)
@@ -136,7 +136,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     return (
       <Layout>
         {!test ? <MainHeading>Laddar resultat</MainHeading> : <MainHeading>{message}</MainHeading>}
-        {/* <MainHeading>{message}</MainHeading> */}
         <Counter numberOfQuestions={questionId} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />

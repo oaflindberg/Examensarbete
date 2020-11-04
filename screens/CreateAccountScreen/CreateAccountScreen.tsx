@@ -1,6 +1,7 @@
 // REACT & EXPO
 import React, { useState } from 'react'
-import { CheckBox, View } from 'react-native'
+import { View } from 'react-native'
+import CheckBox from 'react-native-check-box'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
@@ -70,7 +71,12 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         placeholder={'Lösenord'}
       />
       <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-evenly', padding: '5%' }}>
-        <CheckBox style={{ marginRight: '1%' }} value={acceptTerms} onValueChange={setAcceptTerms} />
+        <CheckBox
+          style={{ marginRight: '2%' }}
+          isChecked={acceptTerms}
+          onClick={() => setAcceptTerms(!acceptTerms)}
+          checkBoxColor="#fefefe"
+        />
         <InfoText>Genom att skapa ett konto godkänner du att vi sparar din emailadress.</InfoText>
       </View>
       <Button

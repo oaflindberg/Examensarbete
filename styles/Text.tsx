@@ -24,27 +24,23 @@ export const Label = styled(StyledText)`
 
 export const InfoText = styled(StyledText)`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
 `
 
 export const ErrorText = styled(StyledText)`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #fc0a49;
 `
 
-export const HighscoreHeading = styled(Text)`
-  color: #fefefe;
+export const HighscoreHeading = styled(StyledText)`
   font-size: 24px;
-  font-family: 'Dosis';
   text-align: center;
   margin-bottom: 10%;
 `
 
-export const HighscoreInfo = styled(Text)`
-  color: #fefefe;
+export const HighscoreInfo = styled(StyledText)`
   font-size: 18px;
-  font-family: 'Dosis';
   text-align: center;
   margin-bottom: 10%;
 `
