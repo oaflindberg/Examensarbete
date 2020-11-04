@@ -1,5 +1,5 @@
 // REACT & EXPO
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 
 // COMPONENTS & STYLES
@@ -25,9 +25,6 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function (error) {
-        // Handle Errors here.
-        let errorCode = error.code
-        let errorMessage = error.message
         setError(true)
         setTimeout(() => {
           setError(false)
@@ -58,12 +55,11 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
         placeholder={'Lösenord'}
       />
       <Button text={'Logga in'} handleClick={signIn} />
-      <TouchableOpacity style={{ marginBottom: "15%" }} onPress={() => navigation.navigate('CreateAccount')}>
+      <TouchableOpacity style={{ marginBottom: '15%' }} onPress={() => navigation.navigate('CreateAccount')}>
         <InfoText>Har du inget konto? Klicka här för att skapa ett</InfoText>
       </TouchableOpacity>
       <Button handleClick={() => navigation.navigate('Reset')} text="Glömt lösenord?" />
       <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
-
     </Layout>
   )
 }

@@ -1,20 +1,17 @@
 // REACT & EXPO
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 
 // FIREBASE & FUNCTIONS
 import firebase from '../../firebase/firebase'
-// import getHighscores from './../../functions/GetHighscores'
 import signOut from './../../functions/SignOut'
 import updateUsername from './../../functions/UpdateUsername'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import HighscoreContainer from './../../components/HighscoreContainer/HighscoreContainer'
 import { MainHeading, Heading, InfoText, HighscoreInfo } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
-import HighscoreText from './../../components/Highscore/Highscore'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
@@ -22,20 +19,6 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function ProfileScreen({ navigation }: RouteStackParamList<'Profile'>) {
   const [username, setUsername] = useState<string>('')
   const [confirmation, setConfirmation] = useState<number>(0)
-  const [highscores, setHighscores] = useState<any>()
-
-  // Fetches highscores for logged in user
-  useEffect(() => {
-    firebase
-      .database()
-      .ref(`/highscores/${user?.uid}/`)
-      .once('value')
-      .then((dataSnapshot: firebase.database.DataSnapshot) => {
-        if (dataSnapshot != null) {
-          setHighscores(dataSnapshot.toJSON())
-        }
-      })
-  }, [])
 
   let user = firebase.auth().currentUser
 
@@ -81,7 +64,7 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       <TouchableOpacity onPress={() => navigation.navigate('Highscore')}>
         <HighscoreInfo>Vill du se dina resultat? Klicka här</HighscoreInfo>
       </TouchableOpacity>
-      <Button style={{ marginBottom: "15%" }} handleClick={() => navigation.navigate('Home')} text="Hem" />
+      <Button style={{ marginBottom: '15%' }} handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={() => signOut(navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
       {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}

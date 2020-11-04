@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 
 export const StyledText = styled(Text)`
   color: #fefefe;
-  font-family: 'Akkurat';
+  font-family: 'Dosis';
 `
 
 export const MainHeading = styled(StyledText)`
@@ -36,7 +36,7 @@ export const ErrorText = styled(StyledText)`
 export const HighscoreHeading = styled(Text)`
   color: #fefefe;
   font-size: 24px;
-  font-family: 'Akkurat';
+  font-family: 'Dosis';
   text-align: center;
   margin-bottom: 10%;
 `
@@ -44,9 +44,7 @@ export const HighscoreHeading = styled(Text)`
 export const HighscoreInfo = styled(Text)`
   color: #fefefe;
   font-size: 18px;
-  font-family: 'Akkurat';
+  font-family: 'Dosis';
   text-align: center;
   margin-bottom: 10%;
 `
-
-

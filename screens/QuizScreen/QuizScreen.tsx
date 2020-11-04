@@ -34,6 +34,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [level, setLevel] = useState<string>('Not set')
   const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
+  const [test, setTest] = useState<boolean>(false)
   let { points, setPoints } = useContext(PointsContext)
 
   // Sets message that's show after quiz completed based on amount of points
@@ -55,8 +56,8 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         default:
           message = 'Laddar resultat'
           break
-        }
       }
+    }
   }, [quizCompleted])
 
   // Fetches all questions from database
@@ -101,30 +102,25 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   // Checks if answer is correct
   const checkAnswer = (selectedAnswer: string | unknown) => {
-    if (selectedAnswer == question[questionIndex].answer) {
+    if (selectedAnswer === question[questionIndex].answer) {
       isCorrect = true
-      questionAnswered = !questionAnswered
-      if (question != null || question != undefined) {
-        setNumberOfQuestions(numberOfQuestions - 1)
-        setTimeout(() => {
-          removeQuestion(question, questionIndex)
-        }, 500)
-      }
+      setNumberOfQuestions(numberOfQuestions - 1)
+      setTimeout(() => {
+        removeQuestion(question, questionIndex)
+      }, 500)
     }
 
     // Checks if answer is incorrect. A vibration should go off
-    if (selectedAnswer != question[questionIndex].answer) {
+    if (selectedAnswer !== question[questionIndex].answer) {
       isCorrect = false
-      questionAnswered = !questionAnswered
       Vibration.vibrate()
-      if (question != null || question != undefined) {
-        setNumberOfQuestions(numberOfQuestions - 1)
-        setTimeout(() => {
-          removeQuestion(question, questionIndex)
-          Vibration.cancel()
-        }, 500)
-      }
+      setNumberOfQuestions(numberOfQuestions - 1)
+      setTimeout(() => {
+        removeQuestion(question, questionIndex)
+        Vibration.cancel()
+      }, 500)
     }
+    questionAnswered = !questionAnswered
   }
 
   // Checks index on the button that is clicked (saved)
@@ -134,9 +130,13 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   // A layout that displays your points
   if (quizCompleted) {
+    setTimeout(() => {
+      setTest(true)
+    }, 500)
     return (
       <Layout>
-        <MainHeading>{message}</MainHeading>
+        {!test ? <MainHeading>Laddar resultat</MainHeading> : <MainHeading>{message}</MainHeading>}
+        {/* <MainHeading>{message}</MainHeading> */}
         <Counter numberOfQuestions={questionId} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
@@ -150,7 +150,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj svårighetsgrad</Heading>
         <Button text="Normal" handleClick={() => setLevel('Normal')} />
-        <Button style={{ marginBottom: "15%" }} text="Hets" handleClick={() => setLevel('Hard')} />
+        <Button style={{ marginBottom: '15%' }} text="Hets" handleClick={() => setLevel('Hard')} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )
@@ -163,7 +163,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
         <Button text="15" handleClick={() => setNumberOfQuestions(14)} />
         <Button text="25" handleClick={() => setNumberOfQuestions(24)} />
-        <Button style={{ marginBottom: "15%" }} text="50" handleClick={() => setNumberOfQuestions(49)} />
+        <Button style={{ marginBottom: '15%' }} text="50" handleClick={() => setNumberOfQuestions(49)} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
       </Layout>
     )
@@ -188,7 +188,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
       {question[questionIndex].question != undefined ? (
-        <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex].question} />
+        <QuestionContainer questionNumber={`Fråga ${questionId + 1}`} question={question[questionIndex].question} />
       ) : (
         <Heading>Loading...</Heading>
       )}
