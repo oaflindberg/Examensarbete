@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }: RouteStackParamList<'Login'>
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .catch(function (err: any) {
+      .catch(function (err) {
         if (err.message == 'The email address is badly formatted.') {
           setError('Emailadressen är inte en giltig emailadress.')
         } else if (err.message == 'The email address is already in use by another account.') {

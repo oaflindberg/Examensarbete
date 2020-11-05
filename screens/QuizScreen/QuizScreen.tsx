@@ -67,7 +67,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     database
       .ref(`/questions/`)
       .once('value')
-      .then((dataSnapshot: any) => {
+      .then((dataSnapshot: firebase.database.DataSnapshot) => {
         let data = Object.values(dataSnapshot.toJSON())
         let allQuestions = data.map((q: any) => {
           let shuffledAlternatives = shuffleAlternatives(q.alternatives)
@@ -97,9 +97,9 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     }, 500)
     setTimeout(() => {
       if (numberOfQuestions < 0) {
-      setQuizCompleted(true)
-    }
-    }, 400);
+        setQuizCompleted(true)
+      }
+    }, 400)
   }, [questionAnswered])
 
   // Checks if answer is correct

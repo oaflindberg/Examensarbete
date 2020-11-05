@@ -7,7 +7,7 @@ const updateUsername = (user: any, username: string, navigate: any) => {
       .then(function () {
         navigate
       })
-      .catch(function (error: any) {
+      .catch(function (error) {
         console.log(error.message)
       })
   }

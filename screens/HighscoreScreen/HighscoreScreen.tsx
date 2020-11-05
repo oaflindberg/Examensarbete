@@ -16,7 +16,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 
 export default function HighscoreScreen({ navigation }: RouteStackParamList<'Highscore'>) {
   const [highscores, setHighscores] = useState<any>()
-  const [numberOfQuestions, setNumberOfQuestions] = useState<any>()
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0)
 
   // Fetches highscores for logged in user
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
           <HighscoreHeading>50</HighscoreHeading>
         </TouchableOpacity>
       </View>
-      {numberOfQuestions != undefined ? (
+      {numberOfQuestions != 0 ? (
         <HighscoreInfo style={{ paddingLeft: '5%', paddingRight: '5%' }}>
           Här är dina tio bästa resultat med {numberOfQuestions + 1} frågor:{' '}
         </HighscoreInfo>
