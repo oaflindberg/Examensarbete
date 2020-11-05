@@ -95,9 +95,11 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         setQuestionIndex(index)
       }
     }, 500)
-    if (numberOfQuestions < 0) {
+    setTimeout(() => {
+      if (numberOfQuestions < 0) {
       setQuizCompleted(true)
     }
+    }, 400);
   }, [questionAnswered])
 
   // Checks if answer is correct
@@ -208,6 +210,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       ) : (
         <Heading>Loading...</Heading>
       )}
+      <Button style={{ marginTop: '15%' }} handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
     </Layout>
   )
 }
