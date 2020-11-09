@@ -39,24 +39,22 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
 
   // Sets message that's show after quiz completed based on amount of points
   useEffect(() => {
-    if (numberOfQuestions != undefined) {
-      switch (true) {
-        case points == questionId * 30 * 150:
-          message = 'Kingen!'
-          break
-        case points >= questionId * 15 * 150:
-          message = 'Mycket bra!'
-          break
-        case points <= questionId * 15 * 150 && points > 0:
-          message = 'Bra!'
-          break
-        case points === 0:
-          message = 'Oj...'
-          break
-        default:
-          message = 'Laddar resultat'
-          break
-      }
+    switch (true) {
+      case points == questionId * 30 * 150:
+        message = 'Kingen!'
+        break
+      case points >= questionId * 15 * 150:
+        message = 'Mycket bra!'
+        break
+      case points <= questionId * 15 * 150 && points > 0:
+        message = 'Bra!'
+        break
+      case points === 0:
+        message = 'Oj...'
+        break
+      default:
+        message = 'Laddar resultat'
+        break
     }
   }, [quizCompleted])
 
