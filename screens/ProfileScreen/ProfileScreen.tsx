@@ -10,7 +10,7 @@ import updateUsername from './../../functions/UpdateUsername'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import { MainHeading, Heading, InfoText, HighscoreInfo } from '../../styles/Text'
+import { MainHeading, Heading, InfoText, HighscoreInfo, ErrorText } from '../../styles/Text'
 import { StyledInput } from '../../styles/Input'
 
 // TYPINGS
@@ -19,6 +19,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 export default function ProfileScreen({ navigation }: RouteStackParamList<'Profile'>) {
   const [username, setUsername] = useState<string>('')
   const [confirmation, setConfirmation] = useState<number>(0)
+  const [error, setError] = useState<boolean>(false)
 
   let user = firebase.auth().currentUser
 
@@ -33,7 +34,12 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
             setConfirmation(0)
             navigation.navigate('Home')
           })
-          .catch(function (error) {})
+          .catch(function (error) {
+            setError(true)
+            setTimeout(() => {
+              setError(false)
+            }, 3500)
+          })
       }
     }
   }
@@ -67,6 +73,7 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
       <Button style={{ marginBottom: '15%' }} handleClick={() => navigation.navigate('Home')} text="Hem" />
       <Button handleClick={() => signOut(navigation.navigate('Home'))} text="Logga ut" />
       <Button handleClick={deleteUser} text="Ta bort konto" />
+      {error && <ErrorText>Logga ut och in igen för att bekräfta att det är ditt konto du försöker ta bort</ErrorText>}
       {confirmation == 1 && <InfoText>Klicka igen för att bekräfta</InfoText>}
     </Layout>
   )
