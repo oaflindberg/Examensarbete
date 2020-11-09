@@ -8,18 +8,18 @@ import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
 import Counter from '../../components/Counter/Counter'
 import { MainHeading, Heading } from '../../styles/Text'
-import PointsContext from './../../context/PointsContext'
+import PointsContext from '../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
-import playAudio from './../../functions/PlayAudio'
-import shuffleAlternatives from './../../functions/ShuffleAlternatives'
-import shareOnTwitter from './../../functions/ShareOnTwitter'
-import removeQuestion from './../../functions/RemoveQuestion'
+import playAudio from '../../functions/PlayAudio'
+import shuffleAlternatives from '../../functions/ShuffleAlternatives'
+import shareOnTwitter from '../../functions/ShareOnTwitter'
+import removeQuestion from '../../functions/RemoveQuestion'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
-import { RouteStackParamList } from 'typings/RouteParams'
+import { RouteStackParamList } from '../../typings/RouteParams'
 
 // VARIABLES
 let isCorrect: boolean | undefined = undefined

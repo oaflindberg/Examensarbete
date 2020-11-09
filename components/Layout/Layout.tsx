@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [loaded, error] = useFonts({
-    Dosis: require('./../../assets/fonts/Dosis.ttf'),
+    Dosis: require('../../assets/fonts/Dosis.ttf'),
   })
 
   if (!loaded) {

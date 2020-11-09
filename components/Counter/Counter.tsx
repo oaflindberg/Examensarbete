@@ -3,11 +3,11 @@ import React, { useEffect, useState, useContext } from 'react'
 
 // COMPONENTS & STYLES
 import { CounterText } from './Style'
-import PointsContext from './../../context/PointsContext'
+import PointsContext from '../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
-import saveHighscore from './../../functions/SaveHighscore'
+import saveHighscore from '../../functions/SaveHighscore'
 
 interface CounterProps {
   isCorrect?: boolean | null
@@ -24,7 +24,7 @@ const Counter = ({ isCorrect, quizCompleted, level, numberOfQuestions }: Counter
   // Fetches current user and uploads final score to database
   useEffect(() => {
     let user = firebase.auth().currentUser
-    if (user != null && quizCompleted == undefined) {
+    if (user != null && quizCompleted == undefined && numberOfQuestions != undefined) {
       saveHighscore(user.uid, points, numberOfQuestions)
     }
   }, [quizCompleted])

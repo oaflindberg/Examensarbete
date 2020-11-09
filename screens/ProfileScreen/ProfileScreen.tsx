@@ -4,8 +4,8 @@ import { TouchableOpacity } from 'react-native'
 
 // FIREBASE & FUNCTIONS
 import firebase from '../../firebase/firebase'
-import signOut from './../../functions/SignOut'
-import updateUsername from './../../functions/UpdateUsername'
+import signOut from '../../functions/SignOut'
+import updateUsername from '../../functions/UpdateUsername'
 
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
@@ -14,7 +14,7 @@ import { MainHeading, Heading, InfoText, HighscoreInfo, ErrorText } from '../../
 import { StyledInput } from '../../styles/Input'
 
 // TYPINGS
-import { RouteStackParamList } from 'typings/RouteParams'
+import { RouteStackParamList } from '../../typings/RouteParams'
 
 export default function ProfileScreen({ navigation }: RouteStackParamList<'Profile'>) {
   const [username, setUsername] = useState<string>('')

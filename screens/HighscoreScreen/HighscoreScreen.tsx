@@ -12,8 +12,8 @@ import HighscoreText from '../../components/Highscore/Highscore'
 import { HighscoreHeading, HighscoreInfo } from '../../styles/Text'
 
 // TYPINGS
-import { RouteStackParamList } from 'typings/RouteParams'
-import HighscoreProps from 'typings/HighscoreProps'
+import { RouteStackParamList } from '../../typings/RouteParams'
+import HighscoreProps from '../../typings/HighscoreProps'
 
 export default function HighscoreScreen({ navigation }: RouteStackParamList<'Highscore'>) {
   const [highscores, setHighscores] = useState<undefined | HighscoreProps>(undefined)
@@ -47,19 +47,19 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
           marginBottom: '10%',
         }}
       >
-        <TouchableOpacity onPress={() => setNumberOfQuestions(14)}>
+        <TouchableOpacity onPress={() => setNumberOfQuestions(15)}>
           <HighscoreHeading>15</HighscoreHeading>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setNumberOfQuestions(24)}>
+        <TouchableOpacity onPress={() => setNumberOfQuestions(25)}>
           <HighscoreHeading>25</HighscoreHeading>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setNumberOfQuestions(49)}>
+        <TouchableOpacity onPress={() => setNumberOfQuestions(50)}>
           <HighscoreHeading>50</HighscoreHeading>
         </TouchableOpacity>
       </View>
       {numberOfQuestions != 0 ? (
         <HighscoreInfo style={{ paddingLeft: '5%', paddingRight: '5%' }}>
-          Här är dina tio bästa resultat med {numberOfQuestions + 1} frågor:{' '}
+          Här är dina tio bästa resultat med {numberOfQuestions} frågor:{' '}
         </HighscoreInfo>
       ) : (
         <></>

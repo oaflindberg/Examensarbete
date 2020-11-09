@@ -11,7 +11,7 @@ import { StyledInput } from '../../styles/Input'
 import firebase from '../../firebase/firebase'
 
 // TYPINGS
-import { RouteStackParamList } from 'typings/RouteParams'
+import { RouteStackParamList } from '../../typings/RouteParams'
 
 export default function LoginScreen({ navigation }: RouteStackParamList<'Reset'>) {
   const [email, setEmail] = useState<string>('')

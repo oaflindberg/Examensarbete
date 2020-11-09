@@ -10,7 +10,7 @@ import Layout from '../../components/Layout/Layout'
 import { MainHeading } from '../../styles/Text'
 
 // TYPINGS
-import { RouteStackParamList } from 'typings/RouteParams'
+import { RouteStackParamList } from '../../typings/RouteParams'
 
 export default function HomeScreen({ navigation }: RouteStackParamList<'Home'>) {
   const [loggedIn, setLoggedIn] = useState(false)
