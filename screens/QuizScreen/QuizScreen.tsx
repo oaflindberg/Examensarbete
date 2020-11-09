@@ -32,7 +32,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [question, setQuestion] = useState<QuestionProps[]>([])
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(50)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
   const [test, setTest] = useState<boolean>(false)
   let { points, setPoints } = useContext(PointsContext)
@@ -158,7 +158,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   }
 
   // Choose how many questions you want to answer
-  if (numberOfQuestions == undefined) {
+  if (numberOfQuestions == 50) {
     return (
       <Layout>
         <Heading style={{ marginBottom: '20%' }}>Välj antal frågor</Heading>
@@ -183,13 +183,14 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       </Layout>
     )
   }
+  console.log(question[questionIndex].alternatives)
 
   // Quiz view
   return (
     <Layout>
       <Counter level={level} quizCompleted={quizCompleted} isCorrect={isCorrect} />
       {question[questionIndex].question != undefined ? (
-        <QuestionContainer questionNumber={`Fråga ${questionId + 1}`} question={question[questionIndex].question} />
+        <QuestionContainer questionNumber={`Fråga ${questionId}`} question={question[questionIndex].question} />
       ) : (
         <Heading>Loading...</Heading>
       )}

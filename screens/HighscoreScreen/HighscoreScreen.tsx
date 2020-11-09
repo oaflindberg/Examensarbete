@@ -8,7 +8,7 @@ import firebase from '../../firebase/firebase'
 // COMPONENTS & STYLES
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
-import HighscoreText from './../../components/Highscore/Highscore'
+import HighscoreText from '../../components/Highscore/Highscore'
 import { HighscoreHeading, HighscoreInfo } from '../../styles/Text'
 
 // TYPINGS
@@ -16,7 +16,7 @@ import { RouteStackParamList } from 'typings/RouteParams'
 import HighscoreProps from 'typings/HighscoreProps'
 
 export default function HighscoreScreen({ navigation }: RouteStackParamList<'Highscore'>) {
-  const [highscores, setHighscores] = useState<HighscoreProps>()
+  const [highscores, setHighscores] = useState<undefined | HighscoreProps>(undefined)
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0)
 
   // Fetches highscores for logged in user

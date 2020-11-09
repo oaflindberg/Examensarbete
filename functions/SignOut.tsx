@@ -7,7 +7,7 @@ const signOut = (navigate: any) => {
     .then(function () {
       navigate
     })
-    .catch(function (error) {
+    .catch(function (error: any) {
       console.log(error.message)
     })
 }
