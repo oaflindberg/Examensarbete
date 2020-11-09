@@ -161,7 +161,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   if (numberOfQuestions == undefined) {
     return (
       <Layout>
-        <Heading style={{ marginBottom: '20%' }}>Välj quizlängd</Heading>
+        <Heading style={{ marginBottom: '20%' }}>Välj antal frågor</Heading>
         <Button text="15" handleClick={() => setNumberOfQuestions(14)} />
         <Button text="25" handleClick={() => setNumberOfQuestions(24)} />
         <Button style={{ marginBottom: '15%' }} text="50" handleClick={() => setNumberOfQuestions(49)} />
