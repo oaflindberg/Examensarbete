@@ -36,9 +36,6 @@ export default function ProfileScreen({ navigation }: RouteStackParamList<'Profi
           })
           .catch(function (error) {
             setError(true)
-            setTimeout(() => {
-              setError(false)
-            }, 3500)
           })
       }
     }

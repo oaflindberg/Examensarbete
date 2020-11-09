@@ -19,7 +19,7 @@ interface CounterProps {
 const Counter = ({ isCorrect, quizCompleted, level, numberOfQuestions }: CounterProps) => {
   const { points, setPoints } = useContext(PointsContext)
   const [time, setTime] = useState<number>(30)
-  const [test, setTest] = useState<boolean>(false)
+  const [finalPoints, setFinalPoints] = useState<boolean>(false)
 
   // Fetches current user and uploads final score to database
   useEffect(() => {
@@ -81,9 +81,9 @@ const Counter = ({ isCorrect, quizCompleted, level, numberOfQuestions }: Counter
 
   if (quizCompleted == undefined) {
     setTimeout(() => {
-      setTest(true)
+      setFinalPoints(true)
     }, 500)
-    return <>{!test ? <></> : <CounterText>Poäng: {points}</CounterText>}</>
+    return <>{!finalPoints ? <></> : <CounterText>Poäng: {points}</CounterText>}</>
   }
 
   return (
