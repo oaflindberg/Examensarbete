@@ -13,9 +13,10 @@ import { HighscoreHeading, HighscoreInfo } from '../../styles/Text'
 
 // TYPINGS
 import { RouteStackParamList } from 'typings/RouteParams'
+import HighscoreProps from 'typings/HighscoreProps'
 
 export default function HighscoreScreen({ navigation }: RouteStackParamList<'Highscore'>) {
-  const [highscores, setHighscores] = useState<any>()
+  const [highscores, setHighscores] = useState<HighscoreProps>()
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0)
 
   // Fetches highscores for logged in user
@@ -25,7 +26,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
       .database()
       .ref(`/highscores/${user?.uid}/${numberOfQuestions}`)
       .once('value')
-      .then((dataSnapshot: firebase.database.DataSnapshot) => {
+      .then((dataSnapshot) => {
         if (dataSnapshot != null) {
           setHighscores(dataSnapshot.toJSON())
         }
@@ -65,9 +66,9 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
       )}
       {highscores != undefined ? (
         Object.values(highscores)
-          .sort((a: any, b: any) => b.highscore - a.highscore)
+          .sort((a: HighscoreProps, b: HighscoreProps) => b.highscore - a.highscore)
           .slice(0, 10)
-          .map((value: any, highscoreId: number) => {
+          .map((value: HighscoreProps, highscoreId: number) => {
             return <HighscoreText key={highscoreId} text={`${highscoreId + 1}. ${value.highscore}`} />
           })
       ) : (

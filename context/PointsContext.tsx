@@ -1,5 +1,10 @@
 import { createContext } from 'react'
 
-const PointsContext = createContext<any>(0)
+type PointsContextType = {
+  points: number
+  setPoints: (points: number) => void
+}
+
+const PointsContext = createContext<PointsContextType>({ points: 0, setPoints: () => {} })
 
 export default PointsContext

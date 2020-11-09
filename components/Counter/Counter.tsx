@@ -25,7 +25,7 @@ const Counter = ({ isCorrect, quizCompleted, level, numberOfQuestions }: Counter
   useEffect(() => {
     let user = firebase.auth().currentUser
     if (user != null && quizCompleted == undefined) {
-      saveHighscore(firebase, user.uid, points, numberOfQuestions)
+      saveHighscore(user.uid, points, numberOfQuestions)
     }
   }, [quizCompleted])
 

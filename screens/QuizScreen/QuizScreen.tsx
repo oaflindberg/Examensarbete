@@ -29,7 +29,7 @@ let message: string
 export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) {
   const [questionId, setQuestionId] = useState<number>(0)
   const [clickedButton, setClickedButton] = useState<number | undefined>(undefined)
-  const [question, setQuestion] = useState<QuestionProps | any>()
+  const [question, setQuestion] = useState<QuestionProps[]>([])
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false)
   const [level, setLevel] = useState<string>('Not set')
   const [numberOfQuestions, setNumberOfQuestions] = useState<number | undefined>(undefined)

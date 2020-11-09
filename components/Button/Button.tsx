@@ -5,7 +5,7 @@ interface ButtonProps {
   text?: string
   handleClick?: () => void
   isCorrect?: boolean | undefined
-  [key: string]: any
+  style?: React.CSSProperties
 }
 
 export default function Button({ text, isCorrect, handleClick, style }: ButtonProps) {

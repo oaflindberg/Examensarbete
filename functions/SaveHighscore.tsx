@@ -1,7 +1,9 @@
+import firebase from './../firebase/firebase'
+
 // Saves highscore in database under /highscores/user.uid/
-const saveHighscore = (firebase: any, userId: string, highscore: any, numberOfQuestions: any) => {
+const saveHighscore = (userId: string, points: number, numberOfQuestions: number | undefined) => {
   firebase.database().ref(`/highscores/${userId}/${numberOfQuestions}`).push({
-    highscore: highscore,
+    highscore: points,
   })
 }
 
