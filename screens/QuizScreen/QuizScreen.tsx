@@ -55,6 +55,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
         message = 'Laddar resultat'
         break
     }
+    return () => console.log('quiz completed')
   }, [quizCompleted])
 
   // Fetches all questions from database

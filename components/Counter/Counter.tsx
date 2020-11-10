@@ -55,7 +55,7 @@ const Counter = ({ isCorrect, quizCompleted, level, numberOfQuestions }: Counter
 
     // If all questions has been answered
     if (quizCompleted == undefined) {
-      return
+      return () => console.log('quiz completed')
     }
 
     const timer = () => setTime(time - 1)
