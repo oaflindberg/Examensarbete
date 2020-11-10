@@ -64,7 +64,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     database
       .ref(`/questions/`)
       .once('value')
-      .then((dataSnapshot: firebase.database.DataSnapshot) => {
+      .then((dataSnapshot) => {
         let data = Object.values(dataSnapshot.toJSON())
         let allQuestions = data.map((q: any) => {
           let shuffledAlternatives = shuffleAlternatives(q.alternatives)

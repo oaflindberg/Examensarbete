@@ -16,7 +16,7 @@ import { RouteStackParamList } from '../../typings/RouteParams'
 import HighscoreProps from '../../typings/HighscoreProps'
 
 export default function HighscoreScreen({ navigation }: RouteStackParamList<'Highscore'>) {
-  const [highscores, setHighscores] = useState<undefined | HighscoreProps>(undefined)
+  const [highscores, setHighscores] = useState<HighscoreProps | undefined>()
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0)
 
   // Fetches highscores for logged in user
@@ -59,7 +59,7 @@ export default function HighscoreScreen({ navigation }: RouteStackParamList<'Hig
       </View>
       {numberOfQuestions != 0 ? (
         <HighscoreInfo style={{ paddingLeft: '5%', paddingRight: '5%' }}>
-          Här är dina tio bästa resultat med {numberOfQuestions} frågor:{' '}
+          Här är dina tio bästa resultat med {numberOfQuestions} frågor:
         </HighscoreInfo>
       ) : (
         <></>
