@@ -1,4 +1,4 @@
-const updateUsername = (user: any, username: string, navigate: any) => {
+const updateUsername = (user: firebase.User | null, username: string, navigate: void) => {
   if (user != null) {
     user
       .updateProfile({
@@ -7,7 +7,7 @@ const updateUsername = (user: any, username: string, navigate: any) => {
       .then(function () {
         navigate
       })
-      .catch(function (error: any) {
+      .catch(function (error) {
         console.log(error.message)
       })
   }

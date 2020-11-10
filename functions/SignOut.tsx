@@ -1,13 +1,13 @@
 import firebase from '../firebase/firebase'
 
-const signOut = (navigate: any) => {
+const signOut = (navigate: void) => {
   firebase
     .auth()
     .signOut()
     .then(function () {
       navigate
     })
-    .catch(function (error: any) {
+    .catch(function (error) {
       console.log(error.message)
     })
 }

@@ -12,7 +12,6 @@ import PointsContext from '../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
 import firebase from '../../firebase/firebase'
-import playAudio from '../../functions/PlayAudio'
 import shuffleAlternatives from '../../functions/ShuffleAlternatives'
 import shareOnTwitter from '../../functions/ShareOnTwitter'
 import removeQuestion from '../../functions/RemoveQuestion'
@@ -34,7 +33,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [level, setLevel] = useState<string>('Not set')
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(50)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
-  const [test, setTest] = useState<boolean>(false)
+  const [finalScore, setFinalScore] = useState<boolean>(false)
   let { points, setPoints } = useContext(PointsContext)
 
   // Sets message that's show after quiz completed based on amount of points
@@ -131,11 +130,11 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   // A layout that displays your points
   if (quizCompleted) {
     setTimeout(() => {
-      setTest(true)
+      setFinalScore(true)
     }, 500)
     return (
       <Layout>
-        {!test ? <MainHeading>Laddar resultat</MainHeading> : <MainHeading>{message}</MainHeading>}
+        {!finalScore ? <MainHeading>Laddar resultat</MainHeading> : <MainHeading>{message}</MainHeading>}
         <Counter numberOfQuestions={questionId} />
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
@@ -168,11 +167,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     )
   }
 
-  // If you choose the level "Hard", an audio file will begin playing
-  if (level == 'Hard') {
-    // playAudio(quizCompleted)
-  }
-
   // A loading screen for when the questions are being printed
   if (question == undefined && quizCompleted == false) {
     return (
@@ -181,7 +175,6 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
       </Layout>
     )
   }
-  console.log(question[questionIndex].alternatives)
 
   // Quiz view
   return (
