@@ -34,7 +34,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(50)
   const [questionIndex, setQuestionIndex] = useState<number>(0)
   const [finalScore, setFinalScore] = useState<boolean>(false)
-  let { points, setPoints } = useContext(PointsContext)
+  const { points, setPoints } = useContext(PointsContext)
 
   // Sets message that's show after quiz completed based on amount of points
   useEffect(() => {
