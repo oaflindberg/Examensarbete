@@ -6,10 +6,7 @@ interface QuestionContainerProps {
   question: string
 }
 
-const QuestionContainer = ({
-  questionNumber,
-  question,
-}: QuestionContainerProps) => {
+const QuestionContainer = ({ questionNumber, question }: QuestionContainerProps) => {
   return (
     <Fragment>
       <StyledText>{questionNumber}</StyledText>

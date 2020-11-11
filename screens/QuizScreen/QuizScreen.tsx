@@ -7,7 +7,7 @@ import QuestionContainer from '../../components/QuestionContainer/QuestionContai
 import Button from '../../components/Button/Button'
 import Layout from '../../components/Layout/Layout'
 import Counter from '../../components/Counter/Counter'
-import { MainHeading, Heading } from '../../styles/Text'
+import { MainHeading, Heading, HighscoreHeading } from '../../styles/Text'
 import PointsContext from '../../context/PointsContext'
 
 // FUNCTIONS & FIREBASE
@@ -15,6 +15,7 @@ import firebase from '../../firebase/firebase'
 import shuffleAlternatives from '../../functions/ShuffleAlternatives'
 import shareOnTwitter from '../../functions/ShareOnTwitter'
 import removeQuestion from '../../functions/RemoveQuestion'
+import saveHighscore from '../../functions/SaveHighscore'
 
 // TYPINGS
 import QuestionProps from '../../typings/QuestionProps'
@@ -36,7 +37,17 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
   const [finalScore, setFinalScore] = useState<boolean>(false)
   const { points, setPoints } = useContext(PointsContext)
 
+  // Fetches current user and uploads final score to database
+
+  useEffect(() => {
+    let user = firebase.auth().currentUser
+    if (user != null && quizCompleted == true && numberOfQuestions != undefined) {
+      saveHighscore(user.uid, points, questionId)
+    }
+  }, [finalScore])
+
   // Sets message that's show after quiz completed based on amount of points
+
   useEffect(() => {
     switch (true) {
       case points == questionId * 30 * 150:
@@ -136,7 +147,7 @@ export default function QuizScreen({ navigation }: RouteStackParamList<'Quiz'>) 
     return (
       <Layout>
         {!finalScore ? <MainHeading>Laddar resultat</MainHeading> : <MainHeading>{message}</MainHeading>}
-        <Counter numberOfQuestions={questionId} />
+        <HighscoreHeading>Poäng: {points}</HighscoreHeading>
         <Button handleClick={() => navigation.navigate('Home')} text="Tillbaka" />
         <Button handleClick={() => shareOnTwitter(points)} text="Dela på twitter" />
       </Layout>
