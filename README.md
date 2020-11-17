@@ -1,5 +1,11 @@
 # Examensarbete
 
+## About
+
+We have created an application for iOS and Android called Det Stora Blåvita Quizzet.
+It's a quiz with questions about the Swedish football team IFK Göteborg.
+We've built it using React Native, TypeScript and Firebase.
+
 ## Preview / Mockups
 
 ### Samsung Galaxy S5
